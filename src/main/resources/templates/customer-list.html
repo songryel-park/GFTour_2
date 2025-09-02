@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객명단 - Good Feel Tour</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← 홈으로 돌아가기</a>
+        
+        <header class="page-header">
+            <h1 class="page-title">고객명단</h1>
+            <p class="page-subtitle">고객 정보 관리 및 조회</p>
+        </header>
+
+        <div class="content-area">
+            <h3>고객 관리 시스템</h3>
+            <p>등록된 고객들의 정보를 관리하고 조회할 수 있습니다.</p>
+            <br>
+            
+            <div class="search-filter" style="margin-bottom: 20px;">
+                <input type="text" placeholder="고객명 검색..." style="padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-right: 10px;">
+                <select style="padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-right: 10px;">
+                    <option>전체</option>
+                    <option>VIP 고객</option>
+                    <option>일반 고객</option>
+                    <option>단체 고객</option>
+                </select>
+                <button style="padding: 8px 16px; background-color: #4caf50; color: white; border: none; border-radius: 5px; cursor: pointer;">조회</button>
+            </div>
+            
+            <div class="customer-list">
+                <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+                    <thead>
+                        <tr style="background-color: #f5f5f5;">
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">고객ID</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">이름</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">연락처</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">등급</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">최근 이용</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: center;">관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">C001</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">홍길동</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">010-1234-5678</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><span style="color: gold; font-weight: bold;">VIP</span></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">2024-01-15</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+                                <button style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; margin-right: 5px;">상세</button>
+                                <button style="padding: 5px 10px; background-color: #28a745; color: white; border: none; border-radius: 3px; cursor: pointer;">수정</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">C002</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">김영희</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">010-9876-5432</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">일반</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">2024-02-03</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+                                <button style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; margin-right: 5px;">상세</button>
+                                <button style="padding: 5px 10px; background-color: #28a745; color: white; border: none; border-radius: 3px; cursor: pointer;">수정</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="padding: 20px; text-align: center; color: #666;">더 많은 고객 데이터는 시스템 연동 후 표시됩니다.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2024 Good Feel Tour. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

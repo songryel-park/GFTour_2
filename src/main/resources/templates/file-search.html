@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File 검색 - Good Feel Tour</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← 홈으로 돌아가기</a>
+        
+        <header class="page-header">
+            <h1 class="page-title">File 검색</h1>
+            <p class="page-subtitle">파일 검색 및 관리</p>
+        </header>
+
+        <div class="content-area">
+            <h3>파일 검색 시스템</h3>
+            <p>여행 관련 파일을 검색하고 관리할 수 있습니다.</p>
+            <br>
+            <div class="search-section">
+                <input type="text" placeholder="검색어를 입력하세요..." style="padding: 10px; width: 300px; border: 1px solid #ddd; border-radius: 5px;">
+                <button style="padding: 10px 20px; background-color: #4caf50; color: white; border: none; border-radius: 5px; margin-left: 10px; cursor: pointer;">검색</button>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2024 Good Feel Tour. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

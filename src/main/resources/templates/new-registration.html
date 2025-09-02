@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신규등록 - Good Feel Tour</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← 홈으로 돌아가기</a>
+        
+        <header class="page-header">
+            <h1 class="page-title">신규등록</h1>
+            <p class="page-subtitle">새로운 여행 상품 및 고객 등록</p>
+        </header>
+
+        <div class="content-area">
+            <h3>신규 등록 시스템</h3>
+            <p>새로운 여행 상품이나 고객 정보를 등록할 수 있습니다.</p>
+            <br>
+            <div class="form-section">
+                <form style="max-width: 500px;">
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">등록 유형:</label>
+                        <select style="padding: 8px; width: 100%; border: 1px solid #ddd; border-radius: 5px;">
+                            <option>여행 상품</option>
+                            <option>고객 정보</option>
+                            <option>가이드 정보</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">제목/이름:</label>
+                        <input type="text" style="padding: 8px; width: 100%; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    <button type="submit" style="padding: 12px 30px; background-color: #4caf50; color: white; border: none; border-radius: 5px; cursor: pointer;">등록하기</button>
+                </form>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2024 Good Feel Tour. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
