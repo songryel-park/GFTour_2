@@ -6,6 +6,14 @@
 <head>
     <meta charset="UTF-8">
     <title>AGT 관리 - Good Feel Tour</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts - Noto Sans KR -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <div th:block="content">
@@ -16,8 +24,6 @@
                     <div>
                         <h2 class="gf-secondary mb-0">
                             <i class="fas fa-building me-2"></i>AGT 관리
-                        </h2>
-                        <p class="text-muted mb-0">에이전트 정보를 관리합니다. (주소, 대표자, 담당자, 전화, FAX)</p>
                     </div>
                     <div>
                         <button type="button" class="btn btn-gf-primary" data-bs-toggle="modal" data-bs-target="#agtModal">
@@ -39,7 +45,7 @@
                                     <span class="input-group-text">
                                         <i class="fas fa-search"></i>
                                     </span>
-                                    <input type="text" class="form-control" placeholder="AGT명, 대표자, 담당자 검색" 
+                                    <input type="text" class="form-control" placeholder="AGT, 담당자 검색"
                                            id="searchInput">
                                 </div>
                             </div>
@@ -50,13 +56,6 @@
                                     <option value="부산">부산</option>
                                     <option value="제주">제주</option>
                                     <option value="경기">경기</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <select class="form-select" id="statusFilter">
-                                    <option value="">상태 전체</option>
-                                    <option value="active">활성</option>
-                                    <option value="inactive">비활성</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -109,15 +108,14 @@
                                                 <input class="form-check-input" type="checkbox" id="selectAll">
                                             </div>
                                         </th>
-                                        <th scope="col">AGT명</th>
-                                        <th scope="col">대표자</th>
+                                        <th scope="col">AGT</th>
+                                        <th scope="col">지점/대리점</th>
                                         <th scope="col">담당자</th>
-                                        <th scope="col">전화번호</th>
+                                        <th scope="col">주소</th>
                                         <th scope="col">지역</th>
-                                        <th scope="col">국가</th>
-                                        <th scope="col">상태</th>
-                                        <th scope="col">등록일</th>
-                                        <th scope="col" width="15%">관리</th>
+                                        <th scope="col">전화번호</th>
+                                        <th scope="col">우편번호</th>
+                                        <th scope="col" width="10%">관리</th>
                                     </tr>
                                 </thead>
                                 <tbody id="agtTableBody">
@@ -129,21 +127,21 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <strong>제주도여행사</strong>
-                                            <br><small class="text-muted">사업자번호: 123-45-67890</small>
+                                            <strong>XX여행사</strong>
                                         </td>
-                                        <td>김대표</td>
-                                        <td>이담당</td>
+                                        <td>OO점</td>
+                                        <td>박ㅁㅁ</td>
+                                        <td>
+                                            서울특별시 동대문구 전농로 XXX
+                                        </td>
+                                        <td><span class="badge bg-info">서울</span></td>
                                         <td>
                                             <i class="fas fa-phone text-muted me-1"></i>064-123-4567
                                             <br><small class="text-muted">
-                                                <i class="fas fa-fax me-1"></i>064-123-4568
-                                            </small>
+                                            <i class="fas fa-fax me-1"></i>064-123-4568
+                                        </small>
                                         </td>
-                                        <td><span class="badge bg-info">제주</span></td>
-                                        <td>대한민국</td>
-                                        <td><span class="badge bg-success">활성</span></td>
-                                        <td>2024.01.01</td>
+                                        <td>130-94</td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group">
                                                 <button type="button" class="btn btn-outline-primary" title="상세보기" 
@@ -156,46 +154,6 @@
                                                 </button>
                                                 <button type="button" class="btn btn-outline-danger" title="삭제" 
                                                         onclick="deleteAGT(1)">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="2">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <strong>부산관광</strong>
-                                            <br><small class="text-muted">사업자번호: 987-65-43210</small>
-                                        </td>
-                                        <td>박사장</td>
-                                        <td>최매니저</td>
-                                        <td>
-                                            <i class="fas fa-phone text-muted me-1"></i>051-987-6543
-                                            <br><small class="text-muted">
-                                                <i class="fas fa-fax me-1"></i>051-987-6544
-                                            </small>
-                                        </td>
-                                        <td><span class="badge bg-warning">부산</span></td>
-                                        <td>대한민국</td>
-                                        <td><span class="badge bg-success">활성</span></td>
-                                        <td>2024.01.15</td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-primary" title="상세보기" 
-                                                        onclick="viewAGT(2)">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-warning" title="수정" 
-                                                        onclick="editAGT(2)">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-danger" title="삭제" 
-                                                        onclick="deleteAGT(2)">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -286,32 +244,22 @@
                         <input type="hidden" id="agtId" name="id">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="agtName" class="form-label">AGT명 <span class="text-danger">*</span></label>
+                                <label for="agtName" class="form-label">AGT <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="agtName" name="name" required>
-                                <div class="invalid-feedback">AGT명을 입력해주세요.</div>
+                                <div class="invalid-feedback">AGT를 입력해주세요.</div>
                             </div>
                             <div class="col-md-6">
-                                <label for="businessLicense" class="form-label">사업자번호</label>
-                                <input type="text" class="form-control" id="businessLicense" name="businessLicense" 
-                                       placeholder="123-45-67890">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="contactPerson" class="form-label">대표자</label>
+                                <label for="contactPerson" class="form-label">지점/대리점</label>
                                 <input type="text" class="form-control" id="contactPerson" name="contactPerson">
                             </div>
                             <div class="col-md-6">
                                 <label for="managerName" class="form-label">담당자</label>
                                 <input type="text" class="form-control" id="managerName" name="managerName">
                             </div>
-                            <div class="col-md-6">
-                                <label for="phoneNumber" class="form-label">전화번호</label>
-                                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" 
-                                       placeholder="02-1234-5678">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="faxNumber" class="form-label">FAX 번호</label>
-                                <input type="tel" class="form-control" id="faxNumber" name="faxNumber" 
-                                       placeholder="02-1234-5679">
+                            <div class="col-12">
+                                <label for="address" class="form-label">주소</label>
+                                <textarea class="form-control" id="address" name="address" rows="2"
+                                          placeholder="상세 주소를 입력하세요..."></textarea>
                             </div>
                             <div class="col-md-6">
                                 <label for="region" class="form-label">지역</label>
@@ -337,27 +285,24 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
+                                <label for="phoneNumber" class="form-label">전화번호</label>
+                                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
+                                       placeholder="02-1234-5678">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="faxNumber" class="form-label">FAX 번호</label>
+                                <input type="tel" class="form-control" id="faxNumber" name="faxNumber"
+                                       placeholder="02-1234-5679">
+                            </div>
+                            <div class="col-md-6">
                                 <label for="country" class="form-label">국가</label>
                                 <input type="text" class="form-control" id="country" name="country" 
                                        value="대한민국">
                             </div>
                             <div class="col-12">
-                                <label for="address" class="form-label">주소</label>
-                                <textarea class="form-control" id="address" name="address" rows="2" 
-                                          placeholder="상세 주소를 입력하세요..."></textarea>
-                            </div>
-                            <div class="col-12">
                                 <label for="notes" class="form-label">비고</label>
                                 <textarea class="form-control" id="agtNotes" name="notes" rows="2" 
                                           placeholder="추가 정보나 특이사항을 입력하세요..."></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="active" name="active" checked>
-                                    <label class="form-check-label" for="active">
-                                        활성 상태
-                                    </label>
-                                </div>
                             </div>
                         </div>
                     </form>
