@@ -1,4 +1,4 @@
-package com.gftour
+package com.gftour.system
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableTransactionManagement
-class GFTourApplication
+class GFTourSystemApplication
 
 fun main(args: Array<String>) {
-    runApplication<GFTourApplication>(*args)
+    runApplication<GFTourSystemApplication>(*args)
 }
