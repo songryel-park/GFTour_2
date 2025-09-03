@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      th:replace="~{layout/base :: html}">
+<head>
+    <title>대시보드 - Good Feel Tour</title>
+</head>
+<body>
+    <div th:block="content">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="gf-secondary mb-0">
+                            <i class="fas fa-tachometer-alt me-2"></i>Good Feel Tour 대시보드
+                        </h2>
+                        <p class="text-muted mb-0" sec:authorize="isAuthenticated()">
+                            안녕하세요, <span sec:authentication="name">사용자</span>님!
+                        </p>
+                    </div>
+                    <div class="text-end">
+                        <small class="text-muted" th:text="${#temporals.format(#temporals.createNow(), 'yyyy년 M월 d일 EEEE')}">날짜</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Menu Grid (6 Main Features from Image 1) -->
+        <div class="row g-4 mb-5">
+            <!-- File Search -->
+            <div class="col-lg-4 col-md-6">
+                <a th:href="@{/files}" class="text-decoration-none">
+                    <div class="card h-100 card-hover border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="rounded-circle gf-primary d-inline-flex align-items-center justify-content-center mb-3" 
+                                 style="width: 60px; height: 60px;">
+                                <i class="fas fa-search text-white fa-lg"></i>
+                            </div>
+                            <h5 class="card-title mb-2">File 검색</h5>
+                            <p class="card-text text-muted small">
+                                기존 파일 및 문서 검색<br>
+                                REF No 기반 검색 시스템
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- New Registration -->
+            <div class="col-lg-4 col-md-6">
+                <a th:href="@{/files/new}" class="text-decoration-none">
+                    <div class="card h-100 card-hover border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="rounded-circle gf-primary d-inline-flex align-items-center justify-content-center mb-3" 
+                                 style="width: 60px; height: 60px;">
+                                <i class="fas fa-plus text-white fa-lg"></i>
+                            </div>
+                            <h5 class="card-title mb-2">신규 등록</h5>
+                            <p class="card-text text-muted small">
+                                새로운 고객/상품/예약 등록<br>
+                                REF No 자동 생성
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- AGT Management -->
+            <div class="col-lg-4 col-md-6">
+                <a th:href="@{/agts}" class="text-decoration-none">
+                    <div class="card h-100 card-hover border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="rounded-circle gf-primary d-inline-flex align-items-center justify-content-center mb-3" 
+                                 style="width: 60px; height: 60px;">
+                                <i class="fas fa-building text-white fa-lg"></i>
+                            </div>
+                            <h5 class="card-title mb-2">AGT 관리</h5>
+                            <p class="card-text text-muted small">
+                                에이전트 관리 시스템<br>
+                                주소/대표자/담당자 정보
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Customer Directory -->
+            <div class="col-lg-4 col-md-6">
+                <a th:href="@{/customers}" class="text-decoration-none">
+                    <div class="card h-100 card-hover border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="rounded-circle gf-primary d-inline-flex align-items-center justify-content-center mb-3" 
+                                 style="width: 60px; height: 60px;">
+                                <i class="fas fa-users text-white fa-lg"></i>
+                            </div>
+                            <h5 class="card-title mb-2">고객 명단</h5>
+                            <p class="card-text text-muted small">
+                                고객 정보 데이터베이스<br>
+                                이름, 나이, 여권번호
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Group Guidelines -->
+            <div class="col-lg-4 col-md-6">
+                <a th:href="@{/guides}" class="text-decoration-none">
+                    <div class="card h-100 card-hover border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="rounded-circle gf-primary d-inline-flex align-items-center justify-content-center mb-3" 
+                                 style="width: 60px; height: 60px;">
+                                <i class="fas fa-clipboard-list text-white fa-lg"></i>
+                            </div>
+                            <h5 class="card-title mb-2">단체행동지침서</h5>
+                            <p class="card-text text-muted small">
+                                가이드 및 단체여행 지침<br>
+                                단체행동계획서 관리
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Settlement Reports -->
+            <div class="col-lg-4 col-md-6">
+                <a th:href="@{/financial}" class="text-decoration-none">
+                    <div class="card h-100 card-hover border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="rounded-circle gf-primary d-inline-flex align-items-center justify-content-center mb-3" 
+                                 style="width: 60px; height: 60px;">
+                                <i class="fas fa-chart-line text-white fa-lg"></i>
+                            </div>
+                            <h5 class="card-title mb-2">정산보고서</h5>
+                            <p class="card-text text-muted small">
+                                정산 및 영수증 관리<br>
+                                관광영수증 출력
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="row g-4 mb-4" sec:authorize="isAuthenticated()">
+            <div class="col-lg-3 col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 40px; height: 40px;">
+                                <i class="fas fa-file text-primary"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">총 파일 수</h6>
+                                <h4 class="mb-0 text-primary">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 40px; height: 40px;">
+                                <i class="fas fa-users text-success"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">고객 수</h6>
+                                <h4 class="mb-0 text-success">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-warning bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 40px; height: 40px;">
+                                <i class="fas fa-building text-warning"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">AGT 수</h6>
+                                <h4 class="mb-0 text-warning">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-info bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 40px; height: 40px;">
+                                <i class="fas fa-chart-line text-info"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">이번 달 정산</h6>
+                                <h4 class="mb-0 text-info">₩0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="row" sec:authorize="isAuthenticated()">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent">
+                        <h6 class="mb-0">
+                            <i class="fas fa-clock me-2"></i>최근 활동
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center text-muted py-4">
+                            <i class="fas fa-inbox fa-3x mb-3"></i>
+                            <p class="mb-0">아직 활동 내역이 없습니다.</p>
+                            <p class="small">새로운 파일을 등록하거나 기존 파일을 검색해보세요.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+/* Good Feel Tour Custom Styles */
+
+:root {
+    --gf-primary: #2E86AB;
+    --gf-secondary: #A23B72;
+    --gf-light: #f8f9fa;
+    --gf-dark: #343a40;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.gf-primary {
+    background: linear-gradient(135deg, var(--gf-primary) 0%, var(--gf-secondary) 100%) !important;
+}
+
+.gf-secondary {
+    color: var(--gf-secondary) !important;
+}
+
+.btn-gf-primary {
+    background: linear-gradient(135deg, var(--gf-primary) 0%, var(--gf-secondary) 100%);
+    border: none;
+    color: white;
+}
+
+.btn-gf-primary:hover {
+    background: linear-gradient(135deg, #246b8a 0%, #8b2d5f 100%);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+/* Form Enhancements */
+.form-floating .form-control:focus {
+    border-color: var(--gf-primary);
+    box-shadow: 0 0 0 0.2rem rgba(46, 134, 171, 0.25);
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1.5rem 1rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+}
