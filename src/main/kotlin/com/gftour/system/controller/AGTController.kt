@@ -133,10 +133,9 @@ class AGTController(
     fun searchAGTs(
         @RequestParam(required = false) name: String?,
         @RequestParam(required = false) region: String?,
-        @RequestParam(required = false) country: String?
     ): ResponseEntity<ApiResponse<List<AGTDto>>> {
         return try {
-            val response = agtService.searchAGTs(name, region, country)
+            val response = agtService.searchAGTs(name, region)
             ResponseEntity.ok(
                 ApiResponse(
                     success = true,
