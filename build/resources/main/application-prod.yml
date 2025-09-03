@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gftour
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME:gftour}
+    password: ${DB_PASSWORD:password}
+  
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  
+  sql:
+    init:
+      mode: never
+
+logging:
+  level:
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+    com.gftour: INFO
