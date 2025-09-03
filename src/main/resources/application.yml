@@ -32,6 +32,10 @@ spring:
     cache: false
     prefix: classpath:/templates/
     suffix: .html
+
+  web:
+    resources:
+      add-mappings: true
   
   # Security Configuration
   security:
@@ -44,6 +48,10 @@ spring:
 server:
   port: 8080
   servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
     context-path: /
 
 # Logging Configuration
