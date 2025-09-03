@@ -62,8 +62,8 @@ class AGTService(
         return agts.map { toDto(it) }
     }
     
-    fun searchAGTs(name: String?, region: String?, country: String?): List<AGTDto> {
-        val agts = agtRepository.searchAGTs(name, region, country)
+    fun searchAGTs(name: String?, region: String?): List<AGTDto> {
+        val agts = agtRepository.searchAGTs(name, region)
         return agts.map { toDto(it) }
     }
     
