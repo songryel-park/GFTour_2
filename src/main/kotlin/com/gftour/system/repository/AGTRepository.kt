@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface AGTRepository : JpaRepository<AGT, Long> {
     fun findByName(name: String): AGT?
-    fun findByActive(active: Boolean): List<AGT>
-    
+
     @Query("SELECT a FROM AGT a WHERE " +
            "(:name IS NULL OR a.name LIKE %:name%) AND " +
            "(:region IS NULL OR a.region LIKE %:region%) AND " +

@@ -22,7 +22,6 @@ class AGTService(
             address = request.address,
             region = request.region,
             country = request.country,
-            businessLicense = request.businessLicense,
             notes = request.notes
         )
         
@@ -42,9 +41,7 @@ class AGTService(
             address = request.address,
             region = request.region,
             country = request.country,
-            businessLicense = request.businessLicense,
             notes = request.notes,
-            active = request.active,
             updatedAt = LocalDateTime.now()
         )
         
@@ -63,11 +60,6 @@ class AGTService(
         return agts.map { toDto(it) }
     }
     
-    fun getActiveAGTs(): List<AGTDto> {
-        val agts = agtRepository.findByActive(true)
-        return agts.map { toDto(it) }
-    }
-    
     fun searchAGTs(name: String?, region: String?, country: String?): List<AGTDto> {
         val agts = agtRepository.searchAGTs(name, region, country)
         return agts.map { toDto(it) }
@@ -80,19 +72,6 @@ class AGTService(
         agtRepository.deleteById(id)
     }
     
-    fun deactivateAGT(id: Long): AGTDto {
-        val agt = agtRepository.findById(id)
-            .orElseThrow { IllegalArgumentException("AGT를 찾을 수 없습니다") }
-        
-        val deactivatedAGT = agt.copy(
-            active = false,
-            updatedAt = LocalDateTime.now()
-        )
-        
-        val savedAGT = agtRepository.save(deactivatedAGT)
-        return toDto(savedAGT)
-    }
-    
     private fun toDto(agt: AGT): AGTDto {
         return AGTDto(
             id = agt.id,
@@ -103,9 +82,7 @@ class AGTService(
             address = agt.address,
             region = agt.region,
             country = agt.country,
-            businessLicense = agt.businessLicense,
             notes = agt.notes,
-            active = agt.active,
             createdAt = agt.createdAt,
             updatedAt = agt.updatedAt
         )

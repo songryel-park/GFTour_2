@@ -11,7 +11,6 @@ data class AGTCreateRequest(
     val address: String? = null,
     val region: String? = null,
     val country: String? = null,
-    val businessLicense: String? = null,
     val notes: String? = null
 )
 
@@ -23,9 +22,7 @@ data class AGTUpdateRequest(
     val address: String? = null,
     val region: String? = null,
     val country: String? = null,
-    val businessLicense: String? = null,
     val notes: String? = null,
-    val active: Boolean = true
 )
 
 data class AGTDto(
@@ -37,9 +34,7 @@ data class AGTDto(
     val address: String?,
     val region: String?,
     val country: String?,
-    val businessLicense: String?,
     val notes: String?,
-    val active: Boolean,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime
 )

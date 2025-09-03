@@ -36,12 +36,12 @@ class AGTController(
             )
         }
     }
-    
+
     @GetMapping
     @Operation(summary = "AGT 목록 조회", description = "모든 AGT 목록 조회")
-    fun getAllAGTs(@RequestParam(defaultValue = "true") activeOnly: Boolean): ResponseEntity<ApiResponse<List<AGTDto>>> {
+    fun getAllAGTs(): ResponseEntity<ApiResponse<List<AGTDto>>> {
         return try {
-            val response = if (activeOnly) agtService.getActiveAGTs() else agtService.getAllAGTs()
+            val response = agtService.getAllAGTs()
             ResponseEntity.ok(
                 ApiResponse(
                     success = true,
@@ -123,28 +123,6 @@ class AGTController(
                 ApiResponse(
                     success = false,
                     message = e.message ?: "AGT 삭제 실패"
-                )
-            )
-        }
-    }
-    
-    @PostMapping("/{id}/deactivate")
-    @Operation(summary = "AGT 비활성화", description = "AGT를 비활성화 상태로 변경")
-    fun deactivateAGT(@PathVariable id: Long): ResponseEntity<ApiResponse<AGTDto>> {
-        return try {
-            val response = agtService.deactivateAGT(id)
-            ResponseEntity.ok(
-                ApiResponse(
-                    success = true,
-                    message = "AGT가 비활성화되었습니다",
-                    data = response
-                )
-            )
-        } catch (e: Exception) {
-            ResponseEntity.badRequest().body(
-                ApiResponse(
-                    success = false,
-                    message = e.message ?: "AGT 비활성화 실패"
                 )
             )
         }

@@ -33,14 +33,8 @@ data class AGT(
     @Column(length = 50)
     val country: String? = null,
     
-    @Column(name = "business_license", length = 50)
-    val businessLicense: String? = null,
-    
     @Column(columnDefinition = "TEXT")
     val notes: String? = null,
-    
-    @Column(nullable = false)
-    val active: Boolean = true,
     
     @Column(nullable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
