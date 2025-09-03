@@ -37,8 +37,6 @@ data class CustomerCreateRequest(
     val name: String,
     val age: Int,
     val passportNumber: String,
-    val phoneNumber: String? = null,
-    val email: String? = null,
     val fileRecordId: Long? = null
 )
 
@@ -46,8 +44,6 @@ data class CustomerUpdateRequest(
     val name: String,
     val age: Int,
     val passportNumber: String,
-    val phoneNumber: String? = null,
-    val email: String? = null
 )
 
 data class CustomerDto(
@@ -55,7 +51,5 @@ data class CustomerDto(
     val name: String,
     val age: Int,
     val passportNumber: String,
-    val phoneNumber: String?,
-    val email: String?,
     val fileRecordId: Long?
 )

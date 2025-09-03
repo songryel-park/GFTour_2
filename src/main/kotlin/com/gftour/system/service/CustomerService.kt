@@ -32,8 +32,6 @@ class CustomerService(
             name = request.name,
             age = request.age,
             passportNumber = request.passportNumber,
-            phoneNumber = request.phoneNumber,
-            email = request.email,
             fileRecord = fileRecord
         )
         
@@ -57,8 +55,6 @@ class CustomerService(
             name = request.name,
             age = request.age,
             passportNumber = request.passportNumber,
-            phoneNumber = request.phoneNumber,
-            email = request.email,
             updatedAt = LocalDateTime.now()
         )
         
@@ -109,8 +105,6 @@ class CustomerService(
             name = customer.name,
             age = customer.age,
             passportNumber = customer.passportNumber,
-            phoneNumber = customer.phoneNumber,
-            email = customer.email,
             fileRecordId = customer.fileRecord?.id
         )
     }

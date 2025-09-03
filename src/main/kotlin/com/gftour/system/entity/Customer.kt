@@ -24,12 +24,6 @@ data class Customer(
     @Column(name = "passport_number", nullable = false, length = 20)
     val passportNumber: String = "",
     
-    @Column(name = "phone_number", length = 20)
-    val phoneNumber: String? = null,
-    
-    @Column(length = 100)
-    val email: String? = null,
-    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "file_record_id")
     val fileRecord: FileRecord? = null,
