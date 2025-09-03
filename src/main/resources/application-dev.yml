@@ -1,0 +1,60 @@
+# 개발/테스트용 H2 데이터베이스 설정
+spring:
+  profiles:
+    active: dev
+  
+  datasource:
+    url: jdbc:h2:mem:gftour;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+    
+  # H2 Console 활성화
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+    
+  # JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+        
+  # Spring Security 설정
+  security:
+    user:
+      name: admin
+      password: admin123
+      
+  # 웹 설정
+  web:
+    resources:
+      static-locations: classpath:/static/
+      
+# 로깅 설정
+logging:
+  level:
+    com.gftour: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG
+    
+# 서버 설정
+server:
+  port: 8080
+  servlet:
+    context-path: /gftour
+    encoding:
+      charset: UTF-8
+      force: true
+
+# 애플리케이션 설정
+gftour:
+  app:
+    name: Good Feel Tour 업무 관리 시스템
+    version: 1.0.0
+    description: 여행사 업무 관리를 위한 통합 시스템
