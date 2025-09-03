@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - GfTourApplicationTests</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>GfTourApplicationTests</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.gftour.html">com.gftour</a> &gt; GfTourApplicationTests</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.701s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">contextLoads()</td>
+<td class="success">0.701s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>01:02:49.324 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.gftour.GfTourApplicationTests]: GfTourApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+01:02:49.431 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.gftour.GfTourApplication for test class com.gftour.GfTourApplicationTests
+  _____  ______   _______                   
+ / ____||  ____| |__   __|                  
+| |  __ | |__       | | ___  _   _ _ __      
+| | |_ ||  __|      | |/ _ \| | | | '__|     
+| |__| || |         | | (_) | |_| | |        
+ \_____||_|         |_|\___/ \__,_|_|        
+                                             
+ Good Feel Tour - Spring Boot Application    
+ Version: 
+ Spring Boot: 3.2.0
+ Profile(s): default
+2025-09-03 01:02:49 [Test worker] INFO  com.gftour.GfTourApplicationTests - Starting GfTourApplicationTests using Java 17.0.16 with PID 4779 (started by runner in /home/runner/work/GFTour_2/GFTour_2)
+2025-09-03 01:02:49 [Test worker] INFO  com.gftour.GfTourApplicationTests - No active profile set, falling back to 1 default profile: &quot;default&quot;
+2025-09-03 01:02:50 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-03 01:02:50 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+2025-09-03 01:02:51 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-03 01:02:51 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-09-03 01:02:51 [Test worker] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-03 01:02:51 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-03 01:02:51 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-09-03 01:02:51 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=GFTOUR
+2025-09-03 01:02:51 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-09-03 01:02:51 [Test worker] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-03 01:02:51 [Test worker] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-09-03 01:02:51 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-03 01:02:51 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-09-03 01:02:52 [Test worker] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-03 01:02:52 [Test worker] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-09-03 01:02:52 [Test worker] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@451a4187, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@565c887e, org.springframework.security.web.context.SecurityContextHolderFilter@550f522b, org.springframework.security.web.header.HeaderWriterFilter@6065bcb7, org.springframework.web.filter.CorsFilter@5c215642, org.springframework.security.web.csrf.CsrfFilter@2de96eba, org.springframework.security.web.authentication.logout.LogoutFilter@5a4e492c, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3e0327dd, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@31450fc0, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@1317ac2c, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@8f374de, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6a7fc4c1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@270097ce, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@416c1b0, org.springframework.security.web.access.ExceptionTranslationFilter@5c459194, org.springframework.security.web.access.intercept.AuthorizationFilter@50a1af86]
+2025-09-03 01:02:52 [Test worker] INFO  com.gftour.GfTourApplicationTests - Started GfTourApplicationTests in 3.087 seconds (process running for 4.087)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.5</a> at Sep 3, 2025, 1:02:53 AM</p>
+</div>
+</div>
+</body>
+</html>
