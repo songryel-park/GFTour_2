@@ -85,10 +85,6 @@
                                 <h5 class="text-success mb-0">23</h5>
                                 <small class="text-muted">이번 달</small>
                             </div>
-                            <div class="col-4">
-                                <h5 class="text-warning mb-0">8</h5>
-                                <small class="text-muted">VIP 고객</small>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,10 +124,6 @@
                                         <th scope="col">이름</th>
                                         <th scope="col">나이</th>
                                         <th scope="col">여권번호</th>
-                                        <th scope="col">연락처</th>
-                                        <th scope="col">여행횟수</th>
-                                        <th scope="col">최근 여행</th>
-                                        <th scope="col">고객 등급</th>
                                         <th scope="col" width="15%">관리</th>
                                     </tr>
                                 </thead>
@@ -151,29 +143,16 @@
                                                 </div>
                                                 <div>
                                                     <strong>김여행</strong>
-                                                    <br><small class="text-muted">kim@email.com</small>
                                                 </div>
                                             </div>
                                         </td>
                                         <td><span class="badge bg-info">32세</span></td>
                                         <td><code>M12345678</code></td>
                                         <td>
-                                            <i class="fas fa-phone text-muted me-1"></i>010-1234-5678
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-success">3회</span>
-                                        </td>
-                                        <td>제주도 (2024.01.15)</td>
-                                        <td><span class="badge bg-warning text-dark">VIP</span></td>
-                                        <td>
                                             <div class="btn-group btn-group-sm" role="group">
                                                 <button type="button" class="btn btn-outline-primary" title="상세보기" 
                                                         onclick="viewCustomer(1)">
                                                     <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-info" title="여행 이력" 
-                                                        onclick="viewTravelHistory(1)">
-                                                    <i class="fas fa-history"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-outline-warning" title="수정" 
                                                         onclick="editCustomer(1)">
@@ -197,29 +176,16 @@
                                                 </div>
                                                 <div>
                                                     <strong>이관광</strong>
-                                                    <br><small class="text-muted">lee@email.com</small>
                                                 </div>
                                             </div>
                                         </td>
                                         <td><span class="badge bg-info">28세</span></td>
                                         <td><code>M87654321</code></td>
                                         <td>
-                                            <i class="fas fa-phone text-muted me-1"></i>010-8765-4321
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-secondary">1회</span>
-                                        </td>
-                                        <td>부산 (2024.02.01)</td>
-                                        <td><span class="badge bg-light text-dark">일반</span></td>
-                                        <td>
                                             <div class="btn-group btn-group-sm" role="group">
                                                 <button type="button" class="btn btn-outline-primary" title="상세보기" 
                                                         onclick="viewCustomer(2)">
                                                     <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-info" title="여행 이력" 
-                                                        onclick="viewTravelHistory(2)">
-                                                    <i class="fas fa-history"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-outline-warning" title="수정" 
                                                         onclick="editCustomer(2)">
@@ -243,20 +209,11 @@
                                                 </div>
                                                 <div>
                                                     <strong>박투어</strong>
-                                                    <br><small class="text-muted">park@email.com</small>
                                                 </div>
                                             </div>
                                         </td>
                                         <td><span class="badge bg-info">45세</span></td>
                                         <td><code>M11223344</code></td>
-                                        <td>
-                                            <i class="fas fa-phone text-muted me-1"></i>010-1122-3344
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-danger">5회</span>
-                                        </td>
-                                        <td>서울 (2024.01.30)</td>
-                                        <td><span class="badge bg-warning text-dark">VIP</span></td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group">
                                                 <button type="button" class="btn btn-outline-primary" title="상세보기" 
@@ -334,24 +291,6 @@
                                        placeholder="M12345678" maxlength="9" required>
                                 <div class="invalid-feedback">여권번호를 입력해주세요.</div>
                             </div>
-                            <div class="col-md-6">
-                                <label for="phoneNumber" class="form-label">전화번호</label>
-                                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" 
-                                       placeholder="010-1234-5678">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="email" class="form-label">이메일</label>
-                                <input type="email" class="form-control" id="email" name="email" 
-                                       placeholder="customer@email.com">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="customerGrade" class="form-label">고객 등급</label>
-                                <select class="form-select" id="customerGrade" name="grade">
-                                    <option value="일반">일반</option>
-                                    <option value="VIP">VIP</option>
-                                    <option value="VVIP">VVIP</option>
-                                </select>
-                            </div>
                             <div class="col-12">
                                 <label for="customerNotes" class="form-label">비고</label>
                                 <textarea class="form-control" id="customerNotes" name="notes" rows="2" 
@@ -363,41 +302,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     <button type="button" class="btn btn-primary" id="saveCustomer">저장</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Travel History Modal -->
-    <div class="modal fade" id="travelHistoryModal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">여행 이력</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-sm">
-                            <thead class="bg-light">
-                                <tr>
-                                    <th>REF No</th>
-                                    <th>여행지</th>
-                                    <th>여행 기간</th>
-                                    <th>참가자 수</th>
-                                    <th>금액</th>
-                                    <th>상태</th>
-                                    <th>만족도</th>
-                                </tr>
-                            </thead>
-                            <tbody id="travelHistoryBody">
-                                <!-- Travel history data will be populated here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
