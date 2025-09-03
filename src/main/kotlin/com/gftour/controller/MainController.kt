@@ -63,4 +63,10 @@ class MainController {
         model.addAttribute("pageTitle", "정산보고서")
         return "financial/reports"
     }
+
+    @GetMapping("/documents")
+    fun documentManagement(model: Model): String {
+        model.addAttribute("pageTitle", "문서 관리")
+        return "documents/list"
+    }
 }
