@@ -6,6 +6,14 @@
 <head>
     <meta charset="UTF-8">
     <title>파일 검색 - Good Feel Tour</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts - Noto Sans KR -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <div th:block="content">
@@ -17,12 +25,6 @@
                         <h2 class="gf-secondary mb-0">
                             <i class="fas fa-search me-2"></i>파일 검색
                         </h2>
-                        <p class="text-muted mb-0">기존 파일 및 문서를 검색하고 관리할 수 있습니다.</p>
-                    </div>
-                    <div>
-                        <a th:href="@{/files/new}" class="btn btn-gf-primary">
-                            <i class="fas fa-plus me-2"></i>신규 등록
-                        </a>
                     </div>
                 </div>
             </div>
