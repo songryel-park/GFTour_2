@@ -1,0 +1,244 @@
+# Good Feel Tour Application Configuration
+spring:
+  application:
+    name: Good Feel Tour
+  
+  # Profile Configuration
+  profiles:
+    active: dev
+  
+  # Database Configuration
+  datasource:
+    url: jdbc:mysql://localhost:3306/gftour_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${DB_USERNAME:gftour_user}
+    password: ${DB_PASSWORD:gftour_password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
+    # Connection Pool Configuration (HikariCP - Spring Boot default)
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 20000
+      validation-timeout: 3000
+      leak-detection-threshold: 60000
+
+  # JPA/Hibernate Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+
+  # Thymeleaf Configuration
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+    servlet:
+      content-type: text/html
+
+  # Security Configuration
+  security:
+    oauth2:
+      client:
+        registration: {}
+    remember-me:
+      key: ${REMEMBER_ME_KEY:goodfeeltour-remember-me-key}
+      token-validity-seconds: 1209600  # 2 weeks
+
+  # Session Management
+  session:
+    store-type: none
+    timeout: 1800  # 30 minutes
+
+  # File Upload Configuration
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 50MB
+      file-size-threshold: 2KB
+      location: ${java.io.tmpdir}/gftour-uploads
+
+  # DevTools Configuration
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+# Server Configuration
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    session:
+      timeout: 30m
+      cookie:
+        name: GFTOUR_SESSION
+        http-only: true
+        secure: false
+        same-site: lax
+  error:
+    whitelabel:
+      enabled: false
+    path: /error
+
+# Logging Configuration
+logging:
+  level:
+    com.gftour: INFO
+    org.springframework.security: WARN
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/gftour.log
+    max-size: 10MB
+    max-history: 30
+
+# Management and Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+---
+# Development Profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+  
+  # Development Database Configuration
+  datasource:
+    url: jdbc:mysql://localhost:3306/gftour_db_dev?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${DB_USERNAME:dev_user}
+    password: ${DB_PASSWORD:dev_password}
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+
+  # JPA Development Settings
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+  # Thymeleaf Development Settings
+  thymeleaf:
+    cache: false
+
+  # Security Development Settings
+  security:
+    remember-me:
+      token-validity-seconds: 86400  # 1 day for development
+
+# Development Logging
+logging:
+  level:
+    com.gftour: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.web: DEBUG
+
+# Development Server Settings
+server:
+  servlet:
+    session:
+      cookie:
+        secure: false
+
+---
+# Production Profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  # Production Database Configuration
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/gftour_db?useSSL=true&requireSSL=true&serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      idle-timeout: 180000
+      max-lifetime: 900000
+
+  # JPA Production Settings
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        jdbc:
+          batch_size: 50
+
+  # Thymeleaf Production Settings
+  thymeleaf:
+    cache: true
+
+  # Security Production Settings
+  security:
+    remember-me:
+      token-validity-seconds: 1209600  # 2 weeks
+
+  # Production File Upload Settings
+  servlet:
+    multipart:
+      location: /var/gftour/uploads
+
+# Production Logging
+logging:
+  level:
+    com.gftour: WARN
+    org.springframework.security: ERROR
+    org.hibernate.SQL: ERROR
+    org.hibernate.type.descriptor.sql.BasicBinder: ERROR
+    org.springframework.web: WARN
+  file:
+    name: /var/log/gftour/gftour.log
+
+# Production Server Settings
+server:
+  servlet:
+    session:
+      cookie:
+        secure: true
+        same-site: strict
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
