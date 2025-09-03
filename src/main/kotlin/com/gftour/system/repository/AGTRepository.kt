@@ -12,11 +12,9 @@ interface AGTRepository : JpaRepository<AGT, Long> {
 
     @Query("SELECT a FROM AGT a WHERE " +
            "(:name IS NULL OR a.name LIKE %:name%) AND " +
-           "(:region IS NULL OR a.region LIKE %:region%) AND " +
-           "(:country IS NULL OR a.country LIKE %:country%)")
+           "(:region IS NULL OR a.region LIKE %:region%)")
     fun searchAGTs(
         @Param("name") name: String?,
         @Param("region") region: String?,
-        @Param("country") country: String?
     ): List<AGT>
 }

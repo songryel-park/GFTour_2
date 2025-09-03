@@ -16,13 +16,14 @@ class AGTService(
     fun createAGT(request: AGTCreateRequest): AGTDto {
         val agt = AGT(
             name = request.name,
-            contactPerson = request.contactPerson,
-            phoneNumber = request.phoneNumber,
-            email = request.email,
+            agencies = request.agencies,
+            manager = request.manager,
             address = request.address,
             region = request.region,
-            country = request.country,
-            notes = request.notes
+            tellNumber = request.tellNumber,
+            email = request.email,
+            post = request.post,
+            notes = request.notes,
         )
         
         val savedAGT = agtRepository.save(agt)
@@ -35,12 +36,13 @@ class AGTService(
         
         val updatedAGT = agt.copy(
             name = request.name,
-            contactPerson = request.contactPerson,
-            phoneNumber = request.phoneNumber,
-            email = request.email,
+            agencies = request.agencies,
+            manager = request.manager,
             address = request.address,
             region = request.region,
-            country = request.country,
+            tellNumber = request.tellNumber,
+            email = request.email,
+            post = request.post,
             notes = request.notes,
             updatedAt = LocalDateTime.now()
         )
@@ -76,12 +78,13 @@ class AGTService(
         return AGTDto(
             id = agt.id,
             name = agt.name,
-            contactPerson = agt.contactPerson,
-            phoneNumber = agt.phoneNumber,
-            email = agt.email,
+            agencies = agt.agencies,
+            manager = agt.manager,
             address = agt.address,
             region = agt.region,
-            country = agt.country,
+            tellNumber = agt.tellNumber,
+            email = agt.email,
+            post = agt.post,
             notes = agt.notes,
             createdAt = agt.createdAt,
             updatedAt = agt.updatedAt

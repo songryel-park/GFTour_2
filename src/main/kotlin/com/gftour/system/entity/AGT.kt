@@ -15,23 +15,26 @@ data class AGT(
     @Column(nullable = false, length = 100)
     val name: String = "",
     
-    @Column(name = "contact_person", length = 100)
-    val contactPerson: String? = null,
+    @Column(name = "agencies", length = 100)
+    val agencies: String? = null,
+
+    @Column(name = "agencies", length = 100)
+    val manager: String? = null,
+
+    @Column(columnDefinition = "TEXT")
+    val address: String? = null,
+
+    @Column(length = 100)
+    val region: String? = null,
     
-    @Column(name = "phone_number", length = 20)
-    val phoneNumber: String? = null,
+    @Column(name = "tellNumber", length = 20)
+    val tellNumber: String? = null,
     
     @Column(length = 100)
     val email: String? = null,
     
-    @Column(columnDefinition = "TEXT")
-    val address: String? = null,
-    
-    @Column(length = 100)
-    val region: String? = null,
-    
     @Column(length = 50)
-    val country: String? = null,
+    val post: String? = null,
     
     @Column(columnDefinition = "TEXT")
     val notes: String? = null,
