@@ -1,0 +1,77 @@
+# 데이터베이스 설정
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/gftour?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: gftour
+    password: gftour123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
+  # JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        
+  # Spring Security 설정
+  security:
+    user:
+      name: admin
+      password: admin123
+      
+  # 웹 설정
+  web:
+    resources:
+      static-locations: classpath:/static/
+      
+  # Thymeleaf 설정
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    
+# 로깅 설정
+logging:
+  level:
+    com.gftour: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    
+# 서버 설정
+server:
+  port: 8080
+  servlet:
+    context-path: /gftour
+    encoding:
+      charset: UTF-8
+      force: true
+
+# 애플리케이션 설정
+gftour:
+  app:
+    name: Good Feel Tour 업무 관리 시스템
+    version: 1.0.0
+    description: 여행사 업무 관리를 위한 통합 시스템
+    
+  # REF No 생성 설정
+  ref-no:
+    prefix: GF
+    format: GF-yyyyMMdd-xxx
+    
+  # 문서 워크플로우 설정
+  document:
+    workflow:
+      - QUOTATION
+      - ALLOCATION  
+      - INVOICE
+      - TOUR_CONFIRMATION
+      - GUIDE_INSTRUCTION
+      
+  # 재무 설정
+  financial:
+    default-commission-rate: 0.10
+    currency: KRW

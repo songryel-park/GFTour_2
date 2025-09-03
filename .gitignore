@@ -1,0 +1,32 @@
+# Gradle
+.gradle/
+build/
+out/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# IDE
+.idea/
+*.iml
+*.iws
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Runtime
+*.jar
+!gradle-wrapper.jar
+
+# Database
+*.db
+*.mv.db
+*.trace.db
+
+# Spring Boot
+target/
