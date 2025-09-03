@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      th:replace="~{layout/base :: html}">
+<head>
+    <title>AGT 관리 - Good Feel Tour</title>
+</head>
+<body>
+    <div th:block="content">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="gf-secondary mb-0">
+                            <i class="fas fa-building me-2"></i>AGT 관리
+                        </h2>
+                        <p class="text-muted mb-0">에이전트 정보를 관리합니다. (주소, 대표자, 담당자, 전화, FAX)</p>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-gf-primary" data-bs-toggle="modal" data-bs-target="#agtModal">
+                            <i class="fas fa-plus me-2"></i>신규 AGT 등록
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder="AGT명, 대표자, 담당자 검색" 
+                                           id="searchInput">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-select" id="regionFilter">
+                                    <option value="">지역 전체</option>
+                                    <option value="서울">서울</option>
+                                    <option value="부산">부산</option>
+                                    <option value="제주">제주</option>
+                                    <option value="경기">경기</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-select" id="statusFilter">
+                                    <option value="">상태 전체</option>
+                                    <option value="active">활성</option>
+                                    <option value="inactive">비활성</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="btn-group w-100" role="group">
+                                    <button type="button" class="btn btn-outline-primary" id="searchBtn">
+                                        <i class="fas fa-search me-1"></i>검색
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary" id="resetBtn">
+                                        <i class="fas fa-undo me-1"></i>초기화
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-select" id="pageSize">
+                                    <option value="10">10개씩 보기</option>
+                                    <option value="20">20개씩 보기</option>
+                                    <option value="50">50개씩 보기</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AGT Table -->
+        <div class="row">
+            <div class="col">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">
+                                <i class="fas fa-list me-2"></i>AGT 목록 
+                                <span class="badge bg-primary ms-2">0건</span>
+                            </h6>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button type="button" class="btn btn-outline-success" id="exportExcel">
+                                    <i class="fas fa-file-excel me-1"></i>Excel 내보내기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th scope="col" width="5%">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="selectAll">
+                                            </div>
+                                        </th>
+                                        <th scope="col">AGT명</th>
+                                        <th scope="col">대표자</th>
+                                        <th scope="col">담당자</th>
+                                        <th scope="col">전화번호</th>
+                                        <th scope="col">지역</th>
+                                        <th scope="col">국가</th>
+                                        <th scope="col">상태</th>
+                                        <th scope="col">등록일</th>
+                                        <th scope="col" width="15%">관리</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="agtTableBody">
+                                    <!-- Sample Data Rows -->
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="1">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <strong>제주도여행사</strong>
+                                            <br><small class="text-muted">사업자번호: 123-45-67890</small>
+                                        </td>
+                                        <td>김대표</td>
+                                        <td>이담당</td>
+                                        <td>
+                                            <i class="fas fa-phone text-muted me-1"></i>064-123-4567
+                                            <br><small class="text-muted">
+                                                <i class="fas fa-fax me-1"></i>064-123-4568
+                                            </small>
+                                        </td>
+                                        <td><span class="badge bg-info">제주</span></td>
+                                        <td>대한민국</td>
+                                        <td><span class="badge bg-success">활성</span></td>
+                                        <td>2024.01.01</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="button" class="btn btn-outline-primary" title="상세보기" 
+                                                        onclick="viewAGT(1)">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-warning" title="수정" 
+                                                        onclick="editAGT(1)">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger" title="삭제" 
+                                                        onclick="deleteAGT(1)">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="2">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <strong>부산관광</strong>
+                                            <br><small class="text-muted">사업자번호: 987-65-43210</small>
+                                        </td>
+                                        <td>박사장</td>
+                                        <td>최매니저</td>
+                                        <td>
+                                            <i class="fas fa-phone text-muted me-1"></i>051-987-6543
+                                            <br><small class="text-muted">
+                                                <i class="fas fa-fax me-1"></i>051-987-6544
+                                            </small>
+                                        </td>
+                                        <td><span class="badge bg-warning">부산</span></td>
+                                        <td>대한민국</td>
+                                        <td><span class="badge bg-success">활성</span></td>
+                                        <td>2024.01.15</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="button" class="btn btn-outline-primary" title="상세보기" 
+                                                        onclick="viewAGT(2)">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-warning" title="수정" 
+                                                        onclick="editAGT(2)">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger" title="삭제" 
+                                                        onclick="deleteAGT(2)">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Empty State (when no data) -->
+                        <div id="emptyState" class="text-center p-5" style="display: none;">
+                            <div class="mb-4">
+                                <i class="fas fa-building fa-4x text-muted opacity-50"></i>
+                            </div>
+                            <h5 class="text-muted">등록된 AGT가 없습니다</h5>
+                            <p class="text-muted mb-4">
+                                새로운 AGT를 등록하여 관리를 시작하세요.
+                            </p>
+                            <button type="button" class="btn btn-gf-primary" data-bs-toggle="modal" data-bs-target="#agtModal">
+                                <i class="fas fa-plus me-2"></i>첫 AGT 등록하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="row mt-4">
+            <div class="col">
+                <nav aria-label="페이지 네비게이션">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="이전">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="다음">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Bulk Actions -->
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card border-0 shadow-sm" id="bulkActions" style="display: none;">
+                    <div class="card-body py-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-muted">선택된 항목: <span id="selectedCount">0</span>개</span>
+                            </div>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button type="button" class="btn btn-outline-success" id="bulkActivate">
+                                    <i class="fas fa-check me-1"></i>활성화
+                                </button>
+                                <button type="button" class="btn btn-outline-warning" id="bulkDeactivate">
+                                    <i class="fas fa-pause me-1"></i>비활성화
+                                </button>
+                                <button type="button" class="btn btn-outline-danger" id="bulkDelete">
+                                    <i class="fas fa-trash me-1"></i>삭제
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AGT Modal -->
+    <div class="modal fade" id="agtModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">AGT 정보</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="agtForm" class="needs-validation" novalidate>
+                        <input type="hidden" id="agtId" name="id">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="agtName" class="form-label">AGT명 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="agtName" name="name" required>
+                                <div class="invalid-feedback">AGT명을 입력해주세요.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="businessLicense" class="form-label">사업자번호</label>
+                                <input type="text" class="form-control" id="businessLicense" name="businessLicense" 
+                                       placeholder="123-45-67890">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="contactPerson" class="form-label">대표자</label>
+                                <input type="text" class="form-control" id="contactPerson" name="contactPerson">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="managerName" class="form-label">담당자</label>
+                                <input type="text" class="form-control" id="managerName" name="managerName">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phoneNumber" class="form-label">전화번호</label>
+                                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" 
+                                       placeholder="02-1234-5678">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="faxNumber" class="form-label">FAX 번호</label>
+                                <input type="tel" class="form-control" id="faxNumber" name="faxNumber" 
+                                       placeholder="02-1234-5679">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="region" class="form-label">지역</label>
+                                <select class="form-select" id="region" name="region">
+                                    <option value="">선택하세요</option>
+                                    <option value="서울">서울</option>
+                                    <option value="부산">부산</option>
+                                    <option value="대구">대구</option>
+                                    <option value="인천">인천</option>
+                                    <option value="광주">광주</option>
+                                    <option value="대전">대전</option>
+                                    <option value="울산">울산</option>
+                                    <option value="세종">세종</option>
+                                    <option value="제주">제주</option>
+                                    <option value="경기">경기</option>
+                                    <option value="강원">강원</option>
+                                    <option value="충북">충북</option>
+                                    <option value="충남">충남</option>
+                                    <option value="전북">전북</option>
+                                    <option value="전남">전남</option>
+                                    <option value="경북">경북</option>
+                                    <option value="경남">경남</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="country" class="form-label">국가</label>
+                                <input type="text" class="form-control" id="country" name="country" 
+                                       value="대한민국">
+                            </div>
+                            <div class="col-12">
+                                <label for="address" class="form-label">주소</label>
+                                <textarea class="form-control" id="address" name="address" rows="2" 
+                                          placeholder="상세 주소를 입력하세요..."></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label for="notes" class="form-label">비고</label>
+                                <textarea class="form-control" id="agtNotes" name="notes" rows="2" 
+                                          placeholder="추가 정보나 특이사항을 입력하세요..."></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="active" name="active" checked>
+                                    <label class="form-check-label" for="active">
+                                        활성 상태
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="saveAGT">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // AGT management functions
+            window.viewAGT = function(id) {
+                // Implementation for viewing AGT details
+                console.log('View AGT:', id);
+            };
+
+            window.editAGT = function(id) {
+                // Implementation for editing AGT
+                console.log('Edit AGT:', id);
+                // Show modal with AGT data
+                const modal = new bootstrap.Modal(document.getElementById('agtModal'));
+                modal.show();
+            };
+
+            window.deleteAGT = function(id) {
+                if (confirm('이 AGT를 삭제하시겠습니까?')) {
+                    console.log('Delete AGT:', id);
+                    // Implementation for deleting AGT
+                }
+            };
+
+            // Checkbox selection
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+            const bulkActions = document.getElementById('bulkActions');
+            const selectedCount = document.getElementById('selectedCount');
+
+            selectAll.addEventListener('change', function() {
+                checkboxes.forEach(cb => cb.checked = this.checked);
+                updateBulkActions();
+            });
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', updateBulkActions);
+            });
+
+            function updateBulkActions() {
+                const selected = Array.from(checkboxes).filter(cb => cb.checked);
+                selectedCount.textContent = selected.length;
+                bulkActions.style.display = selected.length > 0 ? 'block' : 'none';
+            }
+
+            // Search and filter
+            document.getElementById('searchBtn').addEventListener('click', function() {
+                const searchTerm = document.getElementById('searchInput').value;
+                const region = document.getElementById('regionFilter').value;
+                const status = document.getElementById('statusFilter').value;
+                
+                console.log('Search:', { searchTerm, region, status });
+                // Implement search functionality
+            });
+
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                document.getElementById('searchInput').value = '';
+                document.getElementById('regionFilter').value = '';
+                document.getElementById('statusFilter').value = '';
+            });
+
+            // AGT form handling
+            document.getElementById('saveAGT').addEventListener('click', function() {
+                const form = document.getElementById('agtForm');
+                if (form.checkValidity()) {
+                    // Save AGT data
+                    console.log('Save AGT');
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('agtModal'));
+                    modal.hide();
+                } else {
+                    form.classList.add('was-validated');
+                }
+            });
+
+            // Export functionality
+            document.getElementById('exportExcel').addEventListener('click', function() {
+                console.log('Export to Excel');
+                // Implement Excel export
+            });
+        });
+    </script>
+</body>
+</html>

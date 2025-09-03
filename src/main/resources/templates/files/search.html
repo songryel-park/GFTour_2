@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      th:replace="~{layout/base :: html}">
+<head>
+    <title>파일 검색 - Good Feel Tour</title>
+</head>
+<body>
+    <div th:block="content">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="gf-secondary mb-0">
+                            <i class="fas fa-search me-2"></i>파일 검색
+                        </h2>
+                        <p class="text-muted mb-0">기존 파일 및 문서를 검색하고 관리할 수 있습니다.</p>
+                    </div>
+                    <div>
+                        <a th:href="@{/files/new}" class="btn btn-gf-primary">
+                            <i class="fas fa-plus me-2"></i>신규 등록
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Form -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h6 class="card-title mb-3">
+                            <i class="fas fa-filter me-2"></i>검색 조건
+                        </h6>
+                        <form method="get" th:action="@{/files}" class="row g-3">
+                            <div class="col-md-3">
+                                <label for="refNo" class="form-label">REF No</label>
+                                <input type="text" class="form-control" id="refNo" name="refNo" 
+                                       placeholder="GF20240101001" th:value="${param.refNo}">
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <label for="destination" class="form-label">여행지</label>
+                                <input type="text" class="form-control" id="destination" name="destination" 
+                                       placeholder="서울, 부산, 제주도 등" th:value="${param.destination}">
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <label for="manager" class="form-label">담당자</label>
+                                <input type="text" class="form-control" id="manager" name="manager" 
+                                       placeholder="담당자명" th:value="${param.manager}">
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <label for="status" class="form-label">상태</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="">전체</option>
+                                    <option value="DRAFT" th:selected="${param.status == 'DRAFT'}">신규</option>
+                                    <option value="IN_PROGRESS" th:selected="${param.status == 'IN_PROGRESS'}">진행중</option>
+                                    <option value="COMPLETED" th:selected="${param.status == 'COMPLETED'}">완료</option>
+                                    <option value="CANCELLED" th:selected="${param.status == 'CANCELLED'}">취소</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-search me-2"></i>검색
+                                    </button>
+                                    <a th:href="@{/files}" class="btn btn-outline-secondary">
+                                        <i class="fas fa-undo me-2"></i>초기화
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Results -->
+        <div class="row">
+            <div class="col">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">
+                                <i class="fas fa-list me-2"></i>검색 결과 
+                                <span class="badge bg-primary ms-2">0건</span>
+                            </h6>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <input type="radio" class="btn-check" name="viewType" id="listView" checked>
+                                <label class="btn btn-outline-secondary" for="listView">
+                                    <i class="fas fa-list"></i>
+                                </label>
+                                <input type="radio" class="btn-check" name="viewType" id="cardView">
+                                <label class="btn btn-outline-secondary" for="cardView">
+                                    <i class="fas fa-th"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <!-- Empty State -->
+                        <div class="text-center p-5">
+                            <div class="mb-4">
+                                <i class="fas fa-search fa-4x text-muted opacity-50"></i>
+                            </div>
+                            <h5 class="text-muted">검색 결과가 없습니다</h5>
+                            <p class="text-muted mb-4">
+                                검색 조건을 변경하거나 새로운 파일을 등록해보세요.
+                            </p>
+                            <a th:href="@{/files/new}" class="btn btn-gf-primary">
+                                <i class="fas fa-plus me-2"></i>신규 파일 등록
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example Table Structure (when results exist) -->
+        <div class="row mt-4" style="display: none;" id="resultsTable">
+            <div class="col">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th scope="col">REF No</th>
+                                        <th scope="col">여행지</th>
+                                        <th scope="col">담당자</th>
+                                        <th scope="col">고객수</th>
+                                        <th scope="col">여행일정</th>
+                                        <th scope="col">상태</th>
+                                        <th scope="col">등록일</th>
+                                        <th scope="col">관리</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Sample row structure -->
+                                    <tr>
+                                        <td><strong>GF20240101001</strong></td>
+                                        <td>제주도 3박 4일</td>
+                                        <td>김담당</td>
+                                        <td><span class="badge bg-info">15명</span></td>
+                                        <td>2024.01.15 ~ 2024.01.18</td>
+                                        <td><span class="badge bg-success">완료</span></td>
+                                        <td>2024.01.01</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="button" class="btn btn-outline-primary" title="상세보기">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-warning" title="수정">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger" title="삭제">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="row mt-4" style="display: none;" id="pagination">
+            <div class="col">
+                <nav aria-label="페이지 네비게이션">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="이전">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="다음">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // View toggle functionality
+            const listView = document.getElementById('listView');
+            const cardView = document.getElementById('cardView');
+            
+            listView.addEventListener('change', function() {
+                if (this.checked) {
+                    // Show list view
+                    console.log('List view selected');
+                }
+            });
+            
+            cardView.addEventListener('change', function() {
+                if (this.checked) {
+                    // Show card view
+                    console.log('Card view selected');
+                }
+            });
+
+            // Auto-submit search form when status changes
+            document.getElementById('status').addEventListener('change', function() {
+                this.form.submit();
+            });
+        });
+    </script>
+</body>
+</html>
