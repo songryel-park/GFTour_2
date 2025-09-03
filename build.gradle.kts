@@ -30,12 +30,21 @@ dependencies {
     // Thymeleaf extras for Spring Security
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     
+    // JWT Authentication
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+    
+    // Swagger/OpenAPI Documentation
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
+    
     // Kotlin support
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     
     // Database
     runtimeOnly("com.mysql:mysql-connector-j")
+    testRuntimeOnly("com.h2database:h2")
     
     // Development tools
     developmentOnly("org.springframework.boot:spring-boot-devtools")
