@@ -80,24 +80,6 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-/* Main Content */
-.main-content {
-    text-align: center;
-    padding: 40px 0;
-    margin-bottom: 40px;
-}
-
-.welcome-section h3 {
-    font-size: 1.8em;
-    color: #2d5a27;
-    margin-bottom: 15px;
-}
-
-.welcome-section p {
-    font-size: 1.2em;
-    color: #666;
-}
-
 /* Service Menu */
 .service-menu {
     background-color: #f1f8e9;
