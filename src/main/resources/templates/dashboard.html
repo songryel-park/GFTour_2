@@ -161,7 +161,7 @@
                             </div>
                             <div>
                                 <h6 class="mb-0">총 파일 수</h6>
-                                <h4 class="mb-0 text-primary">0</h4>
+                                <h4 class="mb-0 text-primary" th:text="${totalFiles}">0</h4>
                             </div>
                         </div>
                     </div>
@@ -178,7 +178,7 @@
                             </div>
                             <div>
                                 <h6 class="mb-0">고객 수</h6>
-                                <h4 class="mb-0 text-success">0</h4>
+                                <h4 class="mb-0 text-success" th:text="${totalCustomers}">0</h4>
                             </div>
                         </div>
                     </div>
@@ -195,7 +195,7 @@
                             </div>
                             <div>
                                 <h6 class="mb-0">AGT 수</h6>
-                                <h4 class="mb-0 text-warning">0</h4>
+                                <h4 class="mb-0 text-warning" th:text="${totalAgts}">0</h4>
                             </div>
                         </div>
                     </div>
@@ -212,7 +212,7 @@
                             </div>
                             <div>
                                 <h6 class="mb-0">이번 달 정산</h6>
-                                <h4 class="mb-0 text-info">₩0</h4>
+                                <h4 class="mb-0 text-info" th:text="${monthlySettlement}">₩0</h4>
                             </div>
                         </div>
                     </div>
@@ -230,7 +230,34 @@
                         </h6>
                     </div>
                     <div class="card-body">
-                        <div class="text-center text-muted py-4">
+                        <div th:if="${recentFiles != null and !#lists.isEmpty(recentFiles)}">
+                            <div class="list-group list-group-flush">
+                                <div th:each="file : ${recentFiles}" class="list-group-item list-group-item-action border-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
+                                             style="width: 40px; height: 40px;">
+                                            <i class="fas fa-file-alt text-primary"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h6 class="mb-0" th:text="${file.refNo}">REF No</h6>
+                                                    <p class="mb-0 text-muted small" th:text="${file.destination}">Destination</p>
+                                                </div>
+                                                <div class="text-end">
+                                                    <small class="text-muted" th:text="${#temporals.format(file.createdAt, 'MM.dd HH:mm')}">Date</small>
+                                                    <br>
+                                                    <span class="badge badge-sm" 
+                                                          th:classappend="${file.status.name() == 'COMPLETED' ? 'bg-success' : (file.status.name() == 'IN_PROGRESS' ? 'bg-warning' : 'bg-secondary')}"
+                                                          th:text="${file.status.name() == 'COMPLETED' ? '완료' : (file.status.name() == 'IN_PROGRESS' ? '진행중' : '신규')}">Status</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:unless="${recentFiles != null and !#lists.isEmpty(recentFiles)}" class="text-center text-muted py-4">
                             <i class="fas fa-inbox fa-3x mb-3"></i>
                             <p class="mb-0">아직 활동 내역이 없습니다.</p>
                             <p class="small">새로운 파일을 등록하거나 기존 파일을 검색해보세요.</p>

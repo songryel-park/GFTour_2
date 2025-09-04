@@ -99,6 +99,10 @@ class CustomerService(
         return if (travelHistory != null) listOf(toDto(travelHistory)) else emptyList()
     }
     
+    fun getTotalCustomerCount(): Long {
+        return customerRepository.count()
+    }
+    
     private fun toDto(customer: Customer): CustomerDto {
         return CustomerDto(
             id = customer.id,
