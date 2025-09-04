@@ -1,11 +1,20 @@
 package com.gftour.system.controller
 
+import com.gftour.system.service.FileRecordService
+import com.gftour.system.service.CustomerService
+import com.gftour.system.service.AGTService
+import com.gftour.system.service.FinancialService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 
 @Controller
-class MainController {
+class MainController(
+    private val fileRecordService: FileRecordService,
+    private val customerService: CustomerService,
+    private val agtService: AGTService,
+    private val financialService: FinancialService
+) {
 
     @GetMapping("/")
     fun home(): String {
@@ -25,6 +34,29 @@ class MainController {
     @GetMapping("/dashboard")
     fun dashboard(model: Model): String {
         model.addAttribute("pageTitle", "대시보드")
+        
+        // Add dashboard statistics
+        try {
+            val totalFiles = fileRecordService.getTotalFileCount()
+            val totalCustomers = customerService.getTotalCustomerCount()
+            val totalAgts = agtService.getTotalAgtCount()
+            val monthlySettlement = financialService.getMonthlySettlement()
+            val recentFiles = fileRecordService.getRecentFiles(5)
+            
+            model.addAttribute("totalFiles", totalFiles)
+            model.addAttribute("totalCustomers", totalCustomers)
+            model.addAttribute("totalAgts", totalAgts)
+            model.addAttribute("monthlySettlement", monthlySettlement)
+            model.addAttribute("recentFiles", recentFiles)
+        } catch (e: Exception) {
+            // Fallback to default values if services fail
+            model.addAttribute("totalFiles", 0)
+            model.addAttribute("totalCustomers", 0)
+            model.addAttribute("totalAgts", 0)
+            model.addAttribute("monthlySettlement", "₩0")
+            model.addAttribute("recentFiles", emptyList<Any>())
+        }
+        
         return "dashboard"
     }
 
@@ -68,5 +100,11 @@ class MainController {
     fun documentManagement(model: Model): String {
         model.addAttribute("pageTitle", "문서 관리")
         return "documents/list"
+    }
+
+    @GetMapping("/documents/generator")
+    fun documentGenerator(model: Model): String {
+        model.addAttribute("pageTitle", "문서 생성기")
+        return "documents/generator"
     }
 }

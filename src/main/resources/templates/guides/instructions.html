@@ -13,11 +13,31 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts - Noto Sans KR -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .guide-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        .guide-card {
+            border-left: 4px solid #2E86AB;
+        }
+        .print-area {
+            background: white;
+            padding: 2rem;
+            margin: 1rem 0;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .print-area { margin: 0; padding: 1rem; border: none; }
+        }
+    </style>
 </head>
 <body>
     <div th:block="content">
         <!-- Page Header -->
-        <div class="row mb-4">
+        <div class="row mb-4 no-print">
             <div class="col">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -26,641 +46,428 @@
                         </h2>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-gf-primary" data-bs-toggle="modal" data-bs-target="#guideModal">
-                            <i class="fas fa-plus me-2"></i>지침서 작성
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Statistics Cards -->
-        <div class="row mb-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
-                                 style="width: 50px; height: 50px;">
-                                <i class="fas fa-clipboard-list text-primary fa-lg"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-0">총 지침서</h6>
-                                <h4 class="mb-0 text-primary">15</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-6">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
-                                 style="width: 50px; height: 50px;">
-                                <i class="fas fa-user-tie text-success fa-lg"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-0">활성 가이드</h6>
-                                <h4 class="mb-0 text-success">8</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-6">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="rounded-circle bg-warning bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
-                                 style="width: 50px; height: 50px;">
-                                <i class="fas fa-calendar-check text-warning fa-lg"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-0">진행 중</h6>
-                                <h4 class="mb-0 text-warning">3</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-6">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="rounded-circle bg-info bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
-                                 style="width: 50px; height: 50px;">
-                                <i class="fas fa-check-circle text-info fa-lg"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-0">완료</h6>
-                                <h4 class="mb-0 text-info">12</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Guide Instructions List -->
-        <div class="row mb-4">
-            <div class="col">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-transparent">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="mb-0">
-                                <i class="fas fa-list me-2"></i>가이드 지침서 목록
-                            </h6>
-                            <div class="btn-group btn-group-sm" role="group">
-                                <button type="button" class="btn btn-outline-primary active" id="listView">
-                                    <i class="fas fa-list"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-primary" id="cardView">
-                                    <i class="fas fa-th"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-hover mb-0">
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th scope="col">REF No</th>
-                                        <th scope="col">여행지</th>
-                                        <th scope="col">가이드명</th>
-                                        <th scope="col">여행일정</th>
-                                        <th scope="col">참가자 수</th>
-                                        <th scope="col">상태</th>
-                                        <th scope="col">작성일</th>
-                                        <th scope="col">관리</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Sample Guide Data -->
-                                    <tr>
-                                        <td><strong>GF20240115001</strong></td>
-                                        <td>제주도 3박 4일</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar-sm bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2" 
-                                                     style="width: 30px; height: 30px; font-size: 12px;">
-                                                    김
-                                                </div>
-                                                <div>
-                                                    <strong>김가이드</strong>
-                                                    <br><small class="text-muted">010-1234-5678</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>2024.01.15 ~ 01.18</td>
-                                        <td><span class="badge bg-info">15명</span></td>
-                                        <td><span class="badge bg-success">완료</span></td>
-                                        <td>2024.01.10</td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-primary" title="상세보기" 
-                                                        onclick="viewGuideInstructions(1)">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-success" title="인쇄" 
-                                                        onclick="printGuideInstructions(1)">
-                                                    <i class="fas fa-print"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-warning" title="수정" 
-                                                        onclick="editGuideInstructions(1)">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td><strong>GF20240201002</strong></td>
-                                        <td>부산 2박 3일</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" 
-                                                     style="width: 30px; height: 30px; font-size: 12px;">
-                                                    이
-                                                </div>
-                                                <div>
-                                                    <strong>이투어</strong>
-                                                    <br><small class="text-muted">010-9876-5432</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>2024.02.01 ~ 02.03</td>
-                                        <td><span class="badge bg-info">22명</span></td>
-                                        <td><span class="badge bg-warning">진행중</span></td>
-                                        <td>2024.01.25</td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-primary" title="상세보기" 
-                                                        onclick="viewGuideInstructions(2)">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-success" title="인쇄" 
-                                                        onclick="printGuideInstructions(2)">
-                                                    <i class="fas fa-print"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-warning" title="수정" 
-                                                        onclick="editGuideInstructions(2)">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td><strong>GF20240220003</strong></td>
-                                        <td>서울 당일투어</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar-sm bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-2" 
-                                                     style="width: 30px; height: 30px; font-size: 12px;">
-                                                    박
-                                                </div>
-                                                <div>
-                                                    <strong>박서울</strong>
-                                                    <br><small class="text-muted">010-1111-2222</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>2024.02.20</td>
-                                        <td><span class="badge bg-info">8명</span></td>
-                                        <td><span class="badge bg-secondary">초안</span></td>
-                                        <td>2024.02.15</td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-primary" title="상세보기" 
-                                                        onclick="viewGuideInstructions(3)">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-success" title="인쇄" 
-                                                        onclick="printGuideInstructions(3)">
-                                                    <i class="fas fa-print"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-warning" title="수정" 
-                                                        onclick="editGuideInstructions(3)">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-transparent">
-                        <h6 class="mb-0">
-                            <i class="fas fa-clipboard-check me-2"></i>표준 체크리스트
-                        </h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="check1" checked>
-                            <label class="form-check-label" for="check1">
-                                여행 일정 및 집합 장소 안내
-                            </label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="check2" checked>
-                            <label class="form-check-label" for="check2">
-                                안전 수칙 및 주의사항 전달
-                            </label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="check3">
-                            <label class="form-check-label" for="check3">
-                                응급상황 연락처 및 대응방법
-                            </label>
-                        </div>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="check4">
-                            <label class="form-check-label" for="check4">
-                                단체행동계획서 작성 완료
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="check5">
-                            <label class="form-check-label" for="check5">
-                                고객 만족도 조사 준비
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-transparent">
-                        <h6 class="mb-0">
-                            <i class="fas fa-phone me-2"></i>응급 연락처
-                        </h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row g-2 text-sm">
-                            <div class="col-4 text-muted">경찰서:</div>
-                            <div class="col-8"><strong>112</strong></div>
-                            <div class="col-4 text-muted">소방서:</div>
-                            <div class="col-8"><strong>119</strong></div>
-                            <div class="col-4 text-muted">관광안내:</div>
-                            <div class="col-8"><strong>1330</strong></div>
-                            <div class="col-4 text-muted">본사:</div>
-                            <div class="col-8"><strong>02-1234-5678</strong></div>
-                            <div class="col-4 text-muted">영업팀:</div>
-                            <div class="col-8"><strong>02-1234-5679</strong></div>
-                        </div>
-                        <hr class="my-3">
-                        <div class="d-grid">
-                            <button type="button" class="btn btn-outline-danger btn-sm">
-                                <i class="fas fa-exclamation-triangle me-2"></i>긴급상황 신고
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-primary me-2" onclick="printGuide()">
+                                <i class="fas fa-print me-2"></i>인쇄
+                            </button>
+                            <button type="button" class="btn btn-outline-success me-2" onclick="exportToPDF()">
+                                <i class="fas fa-file-pdf me-2"></i>PDF 내보내기
+                            </button>
+                            <button type="button" class="btn btn-gf-primary" data-bs-toggle="modal" data-bs-target="#customizeModal">
+                                <i class="fas fa-edit me-2"></i>맞춤 설정
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Guide Instructions Modal -->
-    <div class="modal fade" id="guideModal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">가이드 지침서 작성</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="guideForm" class="needs-validation" novalidate>
-                        <div class="row g-3 mb-4">
+        <!-- Guide Selection -->
+        <div class="row mb-4 no-print">
+            <div class="col">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="row g-3">
                             <div class="col-md-4">
-                                <label for="refNoSelect" class="form-label">REF No <span class="text-danger">*</span></label>
-                                <select class="form-select" id="refNoSelect" name="refNo" required>
+                                <label for="refNoSelect" class="form-label">REF No 선택</label>
+                                <select class="form-select" id="refNoSelect" onchange="loadGuideData()">
                                     <option value="">선택하세요</option>
                                     <option value="GF20240115001">GF20240115001 - 제주도 3박 4일</option>
                                     <option value="GF20240201002">GF20240201002 - 부산 2박 3일</option>
                                     <option value="GF20240220003">GF20240220003 - 서울 당일투어</option>
                                 </select>
-                                <div class="invalid-feedback">REF No를 선택해주세요.</div>
                             </div>
                             <div class="col-md-4">
-                                <label for="guideName" class="form-label">가이드명 <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="guideName" name="guideName" required>
-                                <div class="invalid-feedback">가이드명을 입력해주세요.</div>
+                                <label for="guideTemplate" class="form-label">템플릿</label>
+                                <select class="form-select" id="guideTemplate" onchange="applyTemplate()">
+                                    <option value="standard">표준 지침서</option>
+                                    <option value="jeju">제주도 전용</option>
+                                    <option value="overseas">해외여행용</option>
+                                    <option value="daytrip">당일투어용</option>
+                                </select>
                             </div>
                             <div class="col-md-4">
-                                <label for="guidePhone" class="form-label">연락처</label>
-                                <input type="tel" class="form-control" id="guidePhone" name="guidePhone" 
-                                       placeholder="010-1234-5678">
+                                <label for="language" class="form-label">언어</label>
+                                <select class="form-select" id="language">
+                                    <option value="ko">한국어</option>
+                                    <option value="en">English</option>
+                                    <option value="ja">日本語</option>
+                                    <option value="zh">中文</option>
+                                </select>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="schedule" class="form-label">여행 일정</label>
-                                <textarea class="form-control" id="schedule" name="schedule" rows="6" 
-                                          placeholder="상세한 일정을 입력하세요...
-예:
-07:00 - 호텔 출발
-08:00 - 성산일출봉 도착
-10:00 - 우도 이동
-..."></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="safetyRules" class="form-label">안전 수칙</label>
-                                <textarea class="form-control" id="safetyRules" name="safetyRules" rows="6" 
-                                          placeholder="안전 수칙을 입력하세요...
-예:
-1. 가이드의 지시사항을 반드시 준수
-2. 단체행동 시 이탈 금지
-3. 귀중품 보관 주의
-..."></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="precautions" class="form-label">주의사항</label>
-                                <textarea class="form-control" id="precautions" name="precautions" rows="6" 
-                                          placeholder="주의사항을 입력하세요...
-예:
-1. 날씨에 따른 복장 준비
-2. 개인 약품 준비
-3. 지역 문화 존중
-..."></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="groupActionPlan" class="form-label">단체행동계획서</label>
-                                <textarea class="form-control" id="groupActionPlan" name="groupActionPlan" rows="6" 
-                                          placeholder="단체행동계획서를 입력하세요...
-예:
-1. 집합 시간 및 장소 엄수
-2. 버스 좌석 배치도
-3. 식사 및 휴식 시간 안내
-..."></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="meetingPoint" class="form-label">집합 장소</label>
-                                <input type="text" class="form-control" id="meetingPoint" name="meetingPoint" 
-                                       placeholder="서울역 KTX 대합실 스타벅스 앞">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="emergencyContact" class="form-label">응급 연락처</label>
-                                <input type="tel" class="form-control" id="emergencyContact" name="emergencyContact" 
-                                       placeholder="010-9999-1234">
+        <!-- Print Area -->
+        <div class="print-area">
+            <!-- Header -->
+            <div class="text-center mb-4">
+                <div class="row">
+                    <div class="col-2">
+                        <i class="fas fa-plane fa-3x text-primary"></i>
+                    </div>
+                    <div class="col-8">
+                        <h2 class="gf-secondary mb-1">Good Feel Tour</h2>
+                        <h3 class="mb-1">단체행동지침서</h3>
+                        <p class="text-muted mb-0">Group Travel Guidelines</p>
+                    </div>
+                    <div class="col-2">
+                        <div class="text-end">
+                            <small class="text-muted">발행일: <span id="issueDate" th:text="${#temporals.format(#temporals.createNow(), 'yyyy.MM.dd')}">2024.01.15</span></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trip Information -->
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="card border-primary">
+                        <div class="card-header bg-primary text-white">
+                            <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>여행 정보</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <strong>REF No:</strong> <span id="displayRefNo">GF20240115001</span><br>
+                                    <strong>여행지:</strong> <span id="displayDestination">제주도 3박 4일</span><br>
+                                    <strong>여행 기간:</strong> <span id="displayPeriod">2024.01.15 ~ 01.18</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>참가자 수:</strong> <span id="displayParticipants">15명</span><br>
+                                    <strong>가이드:</strong> <span id="displayGuide">김가이드</span><br>
+                                    <strong>연락처:</strong> <span id="displayGuidePhone">010-1234-5678</span>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-outline-primary" id="previewGuide">미리보기</button>
-                    <button type="button" class="btn btn-primary" id="saveGuide">저장</button>
+            </div>
+
+            <!-- Emergency Contacts -->
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="card border-danger">
+                        <div class="card-header bg-danger text-white">
+                            <h6 class="mb-0"><i class="fas fa-phone me-2"></i>긴급 연락처</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>가이드:</strong><br>
+                                    <i class="fas fa-phone text-primary me-1"></i>010-1234-5678<br>
+                                    <i class="fas fa-envelope text-primary me-1"></i>guide@gftour.com
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>여행사:</strong><br>
+                                    <i class="fas fa-phone text-success me-1"></i>02-123-4567<br>
+                                    <i class="fas fa-envelope text-success me-1"></i>info@gftour.com
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>응급실:</strong><br>
+                                    <i class="fas fa-ambulance text-danger me-1"></i>119 (응급실)<br>
+                                    <i class="fas fa-shield-alt text-danger me-1"></i>112 (경찰)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Guidelines Sections -->
+            <div class="row">
+                <div class="col">
+                    <!-- 1. Safety Guidelines -->
+                    <div class="card guide-card mb-3">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0 text-primary"><i class="fas fa-shield-alt me-2"></i>1. 안전 수칙</h6>
+                        </div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li><strong>가이드의 지시를 철저히 따르세요.</strong> 안전을 위한 가이드의 모든 안내사항은 반드시 준수해주세요.</li>
+                                <li><strong>단체 행동을 유지하세요.</strong> 개인적인 이동이나 이탈은 금지됩니다.</li>
+                                <li><strong>응급상황 시 즉시 신고하세요.</strong> 부상, 질병, 분실 등 모든 응급상황은 가이드에게 알려주세요.</li>
+                                <li><strong>개인 소지품에 주의하세요.</strong> 여권, 지갑, 휴대폰 등 귀중품은 항상 소지하고 분실에 주의하세요.</li>
+                                <li><strong>안전벨트를 착용하세요.</strong> 버스 이동 시 반드시 안전벨트를 착용해주세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 2. Time Management -->
+                    <div class="card guide-card mb-3">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0 text-success"><i class="fas fa-clock me-2"></i>2. 시간 준수</h6>
+                        </div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li><strong>정시 집합을 지켜주세요.</strong> 모든 일정은 정해진 시간에 시작됩니다.</li>
+                                <li><strong>개인 시간 관리를 철저히 하세요.</strong> 자유시간 후 집합시간을 반드시 지켜주세요.</li>
+                                <li><strong>지각 시 연락하세요.</strong> 불가피한 지각 시에는 가이드에게 미리 연락해주세요.</li>
+                                <li><strong>여유시간을 고려하세요.</strong> 화장실 이용, 쇼핑 등은 충분한 여유시간을 두고 하세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 3. Behavior Guidelines -->
+                    <div class="card guide-card mb-3">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0 text-warning"><i class="fas fa-users me-2"></i>3. 행동 수칙</h6>
+                        </div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li><strong>정중한 태도를 유지하세요.</strong> 현지인과 다른 관광객에게 예의를 지켜주세요.</li>
+                                <li><strong>소음을 자제하세요.</strong> 버스 내, 호텔, 관광지에서 큰 소리를 내지 말아주세요.</li>
+                                <li><strong>환경을 보호하세요.</strong> 쓰레기는 지정된 곳에 버리고 자연을 훼손하지 마세요.</li>
+                                <li><strong>사진 촬영 시 주의하세요.</strong> 사진 촬영 금지 구역이나 개인 사생활을 존중해주세요.</li>
+                                <li><strong>음주는 적당히 하세요.</strong> 과도한 음주로 다른 참가자에게 피해를 주지 마세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 4. Health & Medical -->
+                    <div class="card guide-card mb-3">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0 text-info"><i class="fas fa-medkit me-2"></i>4. 건강 관리</h6>
+                        </div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li><strong>지병이 있다면 미리 알려주세요.</strong> 복용 중인 약물이나 알레르기 등을 가이드에게 알려주세요.</li>
+                                <li><strong>충분한 수분을 섭취하세요.</strong> 특히 더운 날씨나 많이 걷는 일정에서는 수분 보충을 하세요.</li>
+                                <li><strong>편한 신발을 착용하세요.</strong> 오랜 시간 걷기에 적합한 편한 신발을 준비하세요.</li>
+                                <li><strong>기상 변화에 대비하세요.</strong> 날씨 변화에 따른 적절한 의복을 준비하세요.</li>
+                                <li><strong>응급약품을 준비하세요.</strong> 개인적으로 필요한 상비약을 미리 준비하세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 5. Financial Guidelines -->
+                    <div class="card guide-card mb-3">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0 text-secondary"><i class="fas fa-coins me-2"></i>5. 금전 관리</h6>
+                        </div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li><strong>현금은 분산해서 보관하세요.</strong> 큰 금액의 현금은 여러 곳에 나누어 보관하세요.</li>
+                                <li><strong>카드 사용을 권장합니다.</strong> 가능한 한 현금보다는 카드를 사용하세요.</li>
+                                <li><strong>환율을 미리 확인하세요.</strong> 현지 화폐 환율을 미리 알아두고 계산하세요.</li>
+                                <li><strong>영수증을 보관하세요.</strong> 중요한 구매의 영수증은 잘 보관해주세요.</li>
+                                <li><strong>팁 문화를 이해하세요.</strong> 현지의 팁 문화와 적절한 금액을 미리 알아두세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 6. Communication -->
+                    <div class="card guide-card mb-3">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0 text-dark"><i class="fas fa-comments me-2"></i>6. 의사소통</h6>
+                        </div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li><strong>가이드와 소통하세요.</strong> 궁금한 점이나 요청사항은 언제든 가이드에게 문의하세요.</li>
+                                <li><strong>단체 채팅방을 활용하세요.</strong> 중요한 공지사항은 단체 채팅방을 통해 전달됩니다.</li>
+                                <li><strong>개인 연락처를 공유하세요.</strong> 응급상황에 대비해 연락 가능한 번호를 알려주세요.</li>
+                                <li><strong>언어 장벽을 극복하세요.</strong> 간단한 현지어나 영어를 미리 학습해보세요.</li>
+                                <li><strong>문제상황을 즉시 알리세요.</strong> 불편사항이나 문제가 있으면 즉시 가이드에게 알려주세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Schedule -->
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-transparent">
+                            <h6 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>일정표</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-sm">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th width="15%">날짜</th>
+                                            <th width="15%">시간</th>
+                                            <th>일정</th>
+                                            <th width="15%">집합장소</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="scheduleTable">
+                                        <tr>
+                                            <td rowspan="4">1일차<br>(01.15)</td>
+                                            <td>07:00</td>
+                                            <td>김포공항 집합 및 출발수속</td>
+                                            <td>김포공항 3층 A카운터</td>
+                                        </tr>
+                                        <tr>
+                                            <td>09:30</td>
+                                            <td>제주공항 도착, 성산일출봉 관광</td>
+                                            <td>제주공항 도착게이트</td>
+                                        </tr>
+                                        <tr>
+                                            <td>12:00</td>
+                                            <td>점심식사 (해산물 정식)</td>
+                                            <td>해녀의집</td>
+                                        </tr>
+                                        <tr>
+                                            <td>18:00</td>
+                                            <td>호텔 체크인 및 자유시간</td>
+                                            <td>롯데호텔제주 로비</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-4 pt-3 border-top">
+                <p class="mb-0"><strong>Good Feel Tour</strong> | 서울시 강남구 테헤란로 123 | 대표전화: 02-123-4567</p>
+                <p class="text-muted small mb-0">본 지침서는 안전하고 즐거운 여행을 위해 작성되었습니다. 모든 참가자는 지침을 준수해야 합니다.</p>
             </div>
         </div>
     </div>
 
-    <!-- Guide Instructions Detail Modal -->
-    <div class="modal fade" id="guideDetailModal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
+    <!-- Customize Modal -->
+    <div class="modal fade" id="customizeModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">가이드 지침서 상세보기</h5>
+                    <h5 class="modal-title">지침서 맞춤 설정</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="guideDetailContent">
-                        <!-- Content will be loaded here -->
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <h6>표시할 섹션 선택</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="showSafety" checked>
+                                <label class="form-check-label" for="showSafety">안전 수칙</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="showTime" checked>
+                                <label class="form-check-label" for="showTime">시간 준수</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="showBehavior" checked>
+                                <label class="form-check-label" for="showBehavior">행동 수칙</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="showHealth" checked>
+                                <label class="form-check-label" for="showHealth">건강 관리</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="showFinance" checked>
+                                <label class="form-check-label" for="showFinance">금전 관리</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="showCommunication" checked>
+                                <label class="form-check-label" for="showCommunication">의사소통</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <hr>
+                            <h6>추가 설정</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="companyLogo" class="form-label">회사 로고</label>
+                            <input type="file" class="form-control" id="companyLogo" accept="image/*">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="primaryColor" class="form-label">메인 컬러</label>
+                            <input type="color" class="form-control form-control-color" id="primaryColor" value="#2E86AB">
+                        </div>
+                        <div class="col-12">
+                            <label for="additionalNotes" class="form-label">추가 안내사항</label>
+                            <textarea class="form-control" id="additionalNotes" rows="3" 
+                                      placeholder="특별히 추가하고 싶은 안내사항을 입력하세요..."></textarea>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                    <button type="button" class="btn btn-outline-primary" id="printDetail">인쇄</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" onclick="applyCustomization()">적용</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Additional JavaScript -->
+    <!-- JavaScript -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Guide management functions
-            window.viewGuideInstructions = function(id) {
-                console.log('View guide instructions:', id);
-                
-                // Sample guide data
-                const guideData = {
-                    refNo: 'GF20240115001',
+        function loadGuideData() {
+            const refNo = document.getElementById('refNoSelect').value;
+            
+            // Sample data based on REF No
+            const guideData = {
+                'GF20240115001': {
                     destination: '제주도 3박 4일',
-                    guideName: '김가이드',
-                    guidePhone: '010-1234-5678',
-                    schedule: `07:00 - 호텔 출발
-08:00 - 성산일출봉 도착 및 관람
-10:00 - 우도 이동 (페리 탑승)
-12:00 - 우도 점심식사 (해산물 정식)
-14:00 - 성산포항으로 복귀
-16:00 - 호텔 체크인 및 휴식`,
-                    safetyRules: `1. 가이드의 지시사항을 반드시 준수해주세요
-2. 단체행동 시 이탈을 금지합니다
-3. 귀중품은 개인이 보관해주세요
-4. 음주 후 개별행동 금지
-5. 응급상황 시 즉시 가이드에게 연락`,
-                    precautions: `1. 제주도 날씨 변화에 대비한 복장 준비
-2. 개인 상비약 지참
-3. 지역 문화 및 환경 보호 협조
-4. 사진 촬영 시 타인 초상권 주의
-5. 현지 음식 알레르기 사전 고지`
-                };
-                
-                const content = `
-                    <div class="card border-0">
-                        <div class="card-header text-center gf-primary text-white">
-                            <h4><i class="fas fa-plane me-2"></i>Good Feel Tour 가이드 지침서</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row mb-4">
-                                <div class="col-md-6">
-                                    <h6>기본 정보</h6>
-                                    <table class="table table-sm table-borderless">
-                                        <tr><td width="30%">REF No:</td><td><strong>${guideData.refNo}</strong></td></tr>
-                                        <tr><td>여행지:</td><td>${guideData.destination}</td></tr>
-                                        <tr><td>가이드:</td><td>${guideData.guideName}</td></tr>
-                                        <tr><td>연락처:</td><td>${guideData.guidePhone}</td></tr>
-                                    </table>
-                                </div>
-                                <div class="col-md-6">
-                                    <h6>응급 연락처</h6>
-                                    <table class="table table-sm table-borderless">
-                                        <tr><td width="30%">경찰:</td><td><strong>112</strong></td></tr>
-                                        <tr><td>소방서:</td><td><strong>119</strong></td></tr>
-                                        <tr><td>관광안내:</td><td><strong>1330</strong></td></tr>
-                                        <tr><td>본사:</td><td><strong>02-1234-5678</strong></td></tr>
-                                    </table>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <h6><i class="fas fa-calendar me-2"></i>여행 일정</h6>
-                                <div class="border rounded p-3 bg-light">
-                                    <pre class="mb-0">${guideData.schedule}</pre>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <h6><i class="fas fa-shield-alt me-2"></i>안전 수칙</h6>
-                                <div class="border rounded p-3 bg-light">
-                                    <pre class="mb-0">${guideData.safetyRules}</pre>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <h6><i class="fas fa-exclamation-triangle me-2"></i>주의사항</h6>
-                                <div class="border rounded p-3 bg-light">
-                                    <pre class="mb-0">${guideData.precautions}</pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('guideDetailContent').innerHTML = content;
-                const modal = new bootstrap.Modal(document.getElementById('guideDetailModal'));
-                modal.show();
-            };
-
-            window.editGuideInstructions = function(id) {
-                console.log('Edit guide instructions:', id);
-                const modal = new bootstrap.Modal(document.getElementById('guideModal'));
-                modal.show();
-            };
-
-            window.printGuideInstructions = function(id) {
-                console.log('Print guide instructions:', id);
-                viewGuideInstructions(id);
-                setTimeout(() => {
-                    document.getElementById('printDetail').click();
-                }, 500);
-            };
-
-            // Form handling
-            document.getElementById('saveGuide').addEventListener('click', function() {
-                const form = document.getElementById('guideForm');
-                if (form.checkValidity()) {
-                    console.log('Save guide instructions');
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('guideModal'));
-                    modal.hide();
-                } else {
-                    form.classList.add('was-validated');
+                    period: '2024.01.15 ~ 01.18',
+                    participants: '15명',
+                    guide: '김가이드',
+                    phone: '010-1234-5678'
+                },
+                'GF20240201002': {
+                    destination: '부산 2박 3일',
+                    period: '2024.02.01 ~ 02.03',
+                    participants: '12명',
+                    guide: '이가이드',
+                    phone: '010-2345-6789'
+                },
+                'GF20240220003': {
+                    destination: '서울 당일투어',
+                    period: '2024.02.20',
+                    participants: '8명',
+                    guide: '박가이드',
+                    phone: '010-3456-7890'
                 }
-            });
+            };
+            
+            if (refNo && guideData[refNo]) {
+                const data = guideData[refNo];
+                document.getElementById('displayRefNo').textContent = refNo;
+                document.getElementById('displayDestination').textContent = data.destination;
+                document.getElementById('displayPeriod').textContent = data.period;
+                document.getElementById('displayParticipants').textContent = data.participants;
+                document.getElementById('displayGuide').textContent = data.guide;
+                document.getElementById('displayGuidePhone').textContent = data.phone;
+            }
+        }
 
-            // Print functionality
-            document.getElementById('printDetail').addEventListener('click', function() {
-                const content = document.getElementById('guideDetailContent').innerHTML;
-                const printWindow = window.open('', '_blank');
-                printWindow.document.write(`
-                    <html>
-                        <head>
-                            <title>가이드 지침서</title>
-                            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-                            <style>
-                                @media print {
-                                    body { margin: 0; }
-                                    .btn { display: none; }
-                                }
-                            </style>
-                        </head>
-                        <body class="p-3">
-                            ${content}
-                        </body>
-                    </html>
-                `);
-                printWindow.document.close();
-                printWindow.print();
-            });
+        function applyTemplate() {
+            const template = document.getElementById('guideTemplate').value;
+            // Apply different templates based on selection
+            console.log('Applying template:', template);
+        }
 
-            // Preview functionality
-            document.getElementById('previewGuide').addEventListener('click', function() {
-                const form = document.getElementById('guideForm');
-                const formData = new FormData(form);
-                
-                // Create preview content
-                const previewContent = `
-                    <div class="card border-0">
-                        <div class="card-header text-center gf-primary text-white">
-                            <h4><i class="fas fa-plane me-2"></i>Good Feel Tour 가이드 지침서</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row mb-4">
-                                <div class="col-md-6">
-                                    <h6>기본 정보</h6>
-                                    <table class="table table-sm table-borderless">
-                                        <tr><td width="30%">REF No:</td><td><strong>${formData.get('refNo') || 'N/A'}</strong></td></tr>
-                                        <tr><td>가이드:</td><td>${formData.get('guideName') || 'N/A'}</td></tr>
-                                        <tr><td>연락처:</td><td>${formData.get('guidePhone') || 'N/A'}</td></tr>
-                                        <tr><td>집합장소:</td><td>${formData.get('meetingPoint') || 'N/A'}</td></tr>
-                                    </table>
-                                </div>
-                                <div class="col-md-6">
-                                    <h6>응급 연락처</h6>
-                                    <table class="table table-sm table-borderless">
-                                        <tr><td width="30%">경찰:</td><td><strong>112</strong></td></tr>
-                                        <tr><td>소방서:</td><td><strong>119</strong></td></tr>
-                                        <tr><td>가이드:</td><td><strong>${formData.get('emergencyContact') || 'N/A'}</strong></td></tr>
-                                    </table>
-                                </div>
-                            </div>
-                            
-                            ${formData.get('schedule') ? `
-                            <div class="mb-4">
-                                <h6><i class="fas fa-calendar me-2"></i>여행 일정</h6>
-                                <div class="border rounded p-3 bg-light">
-                                    <pre class="mb-0">${formData.get('schedule')}</pre>
-                                </div>
-                            </div>` : ''}
-                            
-                            ${formData.get('safetyRules') ? `
-                            <div class="mb-4">
-                                <h6><i class="fas fa-shield-alt me-2"></i>안전 수칙</h6>
-                                <div class="border rounded p-3 bg-light">
-                                    <pre class="mb-0">${formData.get('safetyRules')}</pre>
-                                </div>
-                            </div>` : ''}
-                            
-                            ${formData.get('precautions') ? `
-                            <div class="mb-4">
-                                <h6><i class="fas fa-exclamation-triangle me-2"></i>주의사항</h6>
-                                <div class="border rounded p-3 bg-light">
-                                    <pre class="mb-0">${formData.get('precautions')}</pre>
-                                </div>
-                            </div>` : ''}
-                            
-                            ${formData.get('groupActionPlan') ? `
-                            <div class="mb-4">
-                                <h6><i class="fas fa-users me-2"></i>단체행동계획서</h6>
-                                <div class="border rounded p-3 bg-light">
-                                    <pre class="mb-0">${formData.get('groupActionPlan')}</pre>
-                                </div>
-                            </div>` : ''}
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('guideDetailContent').innerHTML = previewContent;
-                const detailModal = new bootstrap.Modal(document.getElementById('guideDetailModal'));
-                detailModal.show();
-            });
+        function printGuide() {
+            window.print();
+        }
+
+        function exportToPDF() {
+            console.log('Exporting to PDF...');
+            alert('PDF 내보내기 기능이 실행됩니다.');
+        }
+
+        function applyCustomization() {
+            console.log('Applying customization...');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('customizeModal'));
+            modal.hide();
+            alert('맞춤 설정이 적용되었습니다.');
+        }
+
+        // Initialize with default data
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('refNoSelect').value = 'GF20240115001';
+            loadGuideData();
         });
     </script>
 </body>
