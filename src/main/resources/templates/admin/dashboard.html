@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - GFTour</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        .dashboard-card {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .stat-card.success { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); }
+        .stat-card.warning { background: linear-gradient(135deg, #FF9800 0%, #f57c00 100%); }
+        .stat-card.danger { background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); }
+        .stat-card.info { background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); }
+        .sidebar {
+            background-color: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+        }
+        .sidebar .nav-link {
+            color: #495057;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 2px 0;
+        }
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" th:href="@{/}">
+                <i class="fas fa-plane me-2"></i>GFTour
+            </a>
+            
+            <div class="navbar-nav ms-auto">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle me-1"></i>
+                        <span th:text="${user != null ? user.fullName : 'Admin'}">Admin</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{/profile}">
+                            <i class="fas fa-user me-1"></i>Profile
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar position-fixed vh-100 pt-3" style="top: 56px; overflow-y: auto;">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/admin/dashboard}">
+                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/users}">
+                                <i class="fas fa-users me-2"></i>User Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/documents}">
+                                <i class="fas fa-folder me-2"></i>Documents
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/templates}">
+                                <i class="fas fa-file-alt me-2"></i>Templates
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#reportSubmenu" data-bs-toggle="collapse">
+                                <i class="fas fa-chart-bar me-2"></i>Reports
+                                <i class="fas fa-chevron-down float-end"></i>
+                            </a>
+                            <div class="collapse" id="reportSubmenu">
+                                <ul class="nav flex-column ms-3">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"><i class="fas fa-chart-line me-2"></i>Financial</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"><i class="fas fa-chart-pie me-2"></i>Agent Performance</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-cog me-2"></i>Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-10 ms-sm-auto px-md-4" style="margin-left: 16.666667%; padding-top: 20px;">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"><i class="fas fa-tachometer-alt me-2"></i>Admin Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-download me-1"></i>Export
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card text-center py-4">
+                            <div class="card-body">
+                                <i class="fas fa-file-text fa-2x mb-3"></i>
+                                <h3 class="mb-1" th:text="${totalDocuments ?: '0'}">0</h3>
+                                <p class="mb-0">Total Documents</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card warning text-center py-4">
+                            <div class="card-body">
+                                <i class="fas fa-clock fa-2x mb-3"></i>
+                                <h3 class="mb-1" th:text="${pendingApprovals ?: '0'}">0</h3>
+                                <p class="mb-0">Pending Approvals</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card success text-center py-4">
+                            <div class="card-body">
+                                <i class="fas fa-users fa-2x mb-3"></i>
+                                <h3 class="mb-1" th:text="${totalUsers ?: '0'}">0</h3>
+                                <p class="mb-0">Total Users</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card info text-center py-4">
+                            <div class="card-body">
+                                <i class="fas fa-suitcase fa-2x mb-3"></i>
+                                <h3 class="mb-1" th:text="${activeAgents ?: '0'}">0</h3>
+                                <p class="mb-0">Active Agents</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Documents -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card dashboard-card">
+                            <div class="card-header bg-transparent">
+                                <h5 class="mb-0"><i class="fas fa-file-text me-2"></i>Recent Documents</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Type</th>
+                                                <th>Created By</th>
+                                                <th>Status</th>
+                                                <th>Created</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:if="${recentDocuments == null or #lists.isEmpty(recentDocuments)}">
+                                                <td colspan="5" class="text-center text-muted py-4">
+                                                    <i class="fas fa-inbox fa-2x mb-2"></i><br>
+                                                    No recent documents found
+                                                </td>
+                                            </tr>
+                                            <tr th:each="doc : ${recentDocuments}">
+                                                <td th:text="${doc.title}">Document Title</td>
+                                                <td>
+                                                    <span class="badge bg-primary" th:text="${doc.type}">TYPE</span>
+                                                </td>
+                                                <td th:text="${doc.createdBy.fullName}">User Name</td>
+                                                <td>
+                                                    <span class="badge bg-secondary" th:text="${doc.status}">STATUS</span>
+                                                </td>
+                                                <td th:text="${#temporals.format(doc.createdAt, 'yyyy-MM-dd HH:mm')}">2024-01-01 12:00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Welcome Message -->
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="alert alert-info">
+                            <h4 class="alert-heading">Welcome to GFTour Admin Dashboard!</h4>
+                            <p>This comprehensive travel agency management system provides:</p>
+                            <ul>
+                                <li><strong>Role-based Access Control:</strong> Admin, Manager, Agent, and Viewer roles</li>
+                                <li><strong>Document Management:</strong> Create, manage, and approve travel documents</li>
+                                <li><strong>Template System:</strong> Pre-built templates for common document types</li>
+                                <li><strong>Agent Management:</strong> Track agent performance and commissions</li>
+                                <li><strong>Financial Tracking:</strong> Monitor bookings, payments, and expenses</li>
+                                <li><strong>Workflow System:</strong> Document approval and assignment workflows</li>
+                            </ul>
+                            <hr>
+                            <p class="mb-0">You are logged in as an Administrator with full system access.</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

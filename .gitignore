@@ -1,0 +1,42 @@
+# Gradle
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+.gradletasknamecache
+
+# IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+.vscode/
+
+# Spring Boot
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Application logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Database
+*.db
+*.sqlite
+
+# Environment
+.env
+.env.local
