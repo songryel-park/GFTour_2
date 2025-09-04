@@ -30,9 +30,10 @@ class AuthService(
             email = request.email,
             password = passwordEncoder.encode(request.password),
             name = request.name,
+            phone = request.phone,
             role = UserRole.USER
         )
-        
+
         val savedUser = userRepository.save(user)
         
         val token = jwtUtil.generateToken(savedUser)

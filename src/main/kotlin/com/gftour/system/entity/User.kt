@@ -21,6 +21,9 @@ data class User(
     
     @Column(nullable = false, length = 50)
     val name: String = "",
+
+    @Column(nullable = false, length = 50)
+    val phone: String= "",
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
