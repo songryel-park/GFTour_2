@@ -91,23 +91,233 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h6 class="mb-0">
                                 <i class="fas fa-list me-2"></i>검색 결과 
-                                <span class="badge bg-primary ms-2">0건</span>
+                                <span class="badge bg-primary ms-2">3건</span>
                             </h6>
-                            <div class="btn-group btn-group-sm" role="group">
-                                <input type="radio" class="btn-check" name="viewType" id="listView" checked>
-                                <label class="btn btn-outline-secondary" for="listView">
-                                    <i class="fas fa-list"></i>
-                                </label>
-                                <input type="radio" class="btn-check" name="viewType" id="cardView">
-                                <label class="btn btn-outline-secondary" for="cardView">
-                                    <i class="fas fa-th"></i>
-                                </label>
+                            <div class="d-flex gap-2">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <input type="radio" class="btn-check" name="viewType" id="listView" checked>
+                                    <label class="btn btn-outline-secondary" for="listView">
+                                        <i class="fas fa-list"></i>
+                                    </label>
+                                    <input type="radio" class="btn-check" name="viewType" id="cardView">
+                                    <label class="btn btn-outline-secondary" for="cardView">
+                                        <i class="fas fa-th"></i>
+                                    </label>
+                                </div>
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#advancedSearchModal">
+                                    <i class="fas fa-search-plus me-1"></i>고급 검색
+                                </button>
+                                <button type="button" class="btn btn-outline-success btn-sm" id="exportBtn">
+                                    <i class="fas fa-file-excel me-1"></i>Excel 내보내기
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="card-body p-0">
-                        <!-- Empty State -->
-                        <div class="text-center p-5">
+                        <!-- Sample Data Table -->
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" id="searchResultsTable">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th scope="col" width="5%">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="selectAllResults">
+                                            </div>
+                                        </th>
+                                        <th scope="col">REF No</th>
+                                        <th scope="col">여행지</th>
+                                        <th scope="col">담당자</th>
+                                        <th scope="col">고객수</th>
+                                        <th scope="col">여행일정</th>
+                                        <th scope="col">상태</th>
+                                        <th scope="col">등록일</th>
+                                        <th scope="col" width="15%">관리</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="searchResults">
+                                    <!-- Sample results will be loaded here -->
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="1">
+                                            </div>
+                                        </td>
+                                        <td><strong>GF20240115001</strong></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-2">
+                                                    <i class="fas fa-map-marker-alt text-success"></i>
+                                                </div>
+                                                <div>
+                                                    <strong>제주도 3박 4일</strong>
+                                                    <br><small class="text-muted">성산일출봉, 우도, 한라산</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" 
+                                                     style="width: 30px; height: 30px; font-size: 12px;">
+                                                    김
+                                                </div>
+                                                <div>
+                                                    <strong>김담당</strong>
+                                                    <br><small class="text-muted">010-1234-5678</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge bg-info">15명</span></td>
+                                        <td>
+                                            <strong>2024.01.15 ~ 01.18</strong>
+                                            <br><small class="text-muted">4일간</small>
+                                        </td>
+                                        <td><span class="badge bg-success">완료</span></td>
+                                        <td>2024.01.01</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="button" class="btn btn-outline-primary" title="상세보기" 
+                                                        onclick="viewFile(1)">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-warning" title="수정" 
+                                                        onclick="editFile(1)">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-info" title="복사" 
+                                                        onclick="copyFile(1)">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger" title="삭제" 
+                                                        onclick="deleteFile(1)">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="2">
+                                            </div>
+                                        </td>
+                                        <td><strong>GF20240201002</strong></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-2">
+                                                    <i class="fas fa-map-marker-alt text-warning"></i>
+                                                </div>
+                                                <div>
+                                                    <strong>부산 2박 3일</strong>
+                                                    <br><small class="text-muted">해운대, 감천문화마을, 태종대</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-sm bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2" 
+                                                     style="width: 30px; height: 30px; font-size: 12px;">
+                                                    이
+                                                </div>
+                                                <div>
+                                                    <strong>이담당</strong>
+                                                    <br><small class="text-muted">010-9876-5432</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge bg-info">22명</span></td>
+                                        <td>
+                                            <strong>2024.02.01 ~ 02.03</strong>
+                                            <br><small class="text-muted">3일간</small>
+                                        </td>
+                                        <td><span class="badge bg-warning">진행중</span></td>
+                                        <td>2024.01.25</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="button" class="btn btn-outline-primary" title="상세보기" 
+                                                        onclick="viewFile(2)">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-warning" title="수정" 
+                                                        onclick="editFile(2)">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-info" title="복사" 
+                                                        onclick="copyFile(2)">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger" title="삭제" 
+                                                        onclick="deleteFile(2)">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="3">
+                                            </div>
+                                        </td>
+                                        <td><strong>GF20240220003</strong></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-2">
+                                                    <i class="fas fa-map-marker-alt text-info"></i>
+                                                </div>
+                                                <div>
+                                                    <strong>서울 당일투어</strong>
+                                                    <br><small class="text-muted">경복궁, 북촌한옥마을, 명동</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-sm bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-2" 
+                                                     style="width: 30px; height: 30px; font-size: 12px;">
+                                                    박
+                                                </div>
+                                                <div>
+                                                    <strong>박담당</strong>
+                                                    <br><small class="text-muted">010-1111-2222</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="badge bg-info">8명</span></td>
+                                        <td>
+                                            <strong>2024.02.20</strong>
+                                            <br><small class="text-muted">1일간</small>
+                                        </td>
+                                        <td><span class="badge bg-secondary">초안</span></td>
+                                        <td>2024.02.15</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="button" class="btn btn-outline-primary" title="상세보기" 
+                                                        onclick="viewFile(3)">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-warning" title="수정" 
+                                                        onclick="editFile(3)">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-info" title="복사" 
+                                                        onclick="copyFile(3)">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger" title="삭제" 
+                                                        onclick="deleteFile(3)">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Empty State (hidden by default) -->
+                        <div class="text-center p-5" id="emptyState" style="display: none;">
                             <div class="mb-4">
                                 <i class="fas fa-search fa-4x text-muted opacity-50"></i>
                             </div>
@@ -197,32 +407,293 @@
                 </nav>
             </div>
         </div>
+
+        <!-- Bulk Actions -->
+        <div class="row mt-3" id="bulkActionsRow" style="display: none;">
+            <div class="col">
+                <div class="card border-0 shadow-sm bg-light">
+                    <div class="card-body py-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-muted">선택된 항목: <span id="selectedCount">0</span>개</span>
+                            </div>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button type="button" class="btn btn-outline-success" onclick="bulkUpdateStatus('COMPLETED')">
+                                    <i class="fas fa-check me-1"></i>완료 처리
+                                </button>
+                                <button type="button" class="btn btn-outline-warning" onclick="bulkUpdateStatus('IN_PROGRESS')">
+                                    <i class="fas fa-play me-1"></i>진행중 처리
+                                </button>
+                                <button type="button" class="btn btn-outline-info" onclick="bulkExport()">
+                                    <i class="fas fa-file-export me-1"></i>일괄 내보내기
+                                </button>
+                                <button type="button" class="btn btn-outline-danger" onclick="bulkDelete()">
+                                    <i class="fas fa-trash me-1"></i>일괄 삭제
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Search Modal -->
+        <div class="modal fade" id="advancedSearchModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">고급 검색</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="advancedSearchForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="advRefNo" class="form-label">REF No</label>
+                                    <input type="text" class="form-control" id="advRefNo" placeholder="GF20240101001">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="advDestination" class="form-label">여행지</label>
+                                    <input type="text" class="form-control" id="advDestination" placeholder="제주도, 부산 등">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="advManager" class="form-label">담당자</label>
+                                    <input type="text" class="form-control" id="advManager" placeholder="담당자명">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="advStatus" class="form-label">상태</label>
+                                    <select class="form-select" id="advStatus">
+                                        <option value="">전체</option>
+                                        <option value="DRAFT">신규</option>
+                                        <option value="IN_PROGRESS">진행중</option>
+                                        <option value="COMPLETED">완료</option>
+                                        <option value="CANCELLED">취소</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="advDateFrom" class="form-label">등록일 (시작)</label>
+                                    <input type="date" class="form-control" id="advDateFrom">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="advDateTo" class="form-label">등록일 (종료)</label>
+                                    <input type="date" class="form-control" id="advDateTo">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="advCustomerCountMin" class="form-label">최소 고객 수</label>
+                                    <input type="number" class="form-control" id="advCustomerCountMin" min="0">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="advCustomerCountMax" class="form-label">최대 고객 수</label>
+                                    <input type="number" class="form-control" id="advCustomerCountMax" min="0">
+                                </div>
+                                <div class="col-12">
+                                    <label for="advNotes" class="form-label">비고 검색</label>
+                                    <input type="text" class="form-control" id="advNotes" placeholder="비고 내용 검색">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="resetAdvancedSearch()">초기화</button>
+                        <button type="button" class="btn btn-primary" onclick="executeAdvancedSearch()">검색</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Additional JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // File management functions
+            window.viewFile = function(id) {
+                console.log('View file:', id);
+                // Redirect to file detail view
+                window.location.href = `/files/${id}`;
+            };
+
+            window.editFile = function(id) {
+                console.log('Edit file:', id);
+                // Redirect to file edit form
+                window.location.href = `/files/${id}/edit`;
+            };
+
+            window.copyFile = function(id) {
+                console.log('Copy file:', id);
+                if (confirm('이 파일을 복사하시겠습니까?')) {
+                    // Implement file copy logic
+                    alert('파일이 복사되었습니다.');
+                }
+            };
+
+            window.deleteFile = function(id) {
+                console.log('Delete file:', id);
+                if (confirm('이 파일을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+                    // Implement file delete logic
+                    alert('파일이 삭제되었습니다.');
+                }
+            };
+
+            // Bulk actions
+            window.bulkUpdateStatus = function(status) {
+                const selected = getSelectedFiles();
+                if (selected.length === 0) {
+                    alert('선택된 파일이 없습니다.');
+                    return;
+                }
+                
+                const statusText = {
+                    'COMPLETED': '완료',
+                    'IN_PROGRESS': '진행중',
+                    'DRAFT': '신규',
+                    'CANCELLED': '취소'
+                };
+                
+                if (confirm(`선택된 ${selected.length}개 파일을 ${statusText[status]} 상태로 변경하시겠습니까?`)) {
+                    console.log('Bulk update status:', status, selected);
+                    alert(`${selected.length}개 파일이 ${statusText[status]} 상태로 변경되었습니다.`);
+                    updateBulkActionsDisplay();
+                }
+            };
+
+            window.bulkExport = function() {
+                const selected = getSelectedFiles();
+                if (selected.length === 0) {
+                    alert('선택된 파일이 없습니다.');
+                    return;
+                }
+                
+                console.log('Bulk export:', selected);
+                alert(`${selected.length}개 파일을 Excel로 내보냅니다.`);
+            };
+
+            window.bulkDelete = function() {
+                const selected = getSelectedFiles();
+                if (selected.length === 0) {
+                    alert('선택된 파일이 없습니다.');
+                    return;
+                }
+                
+                if (confirm(`선택된 ${selected.length}개 파일을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.`)) {
+                    console.log('Bulk delete:', selected);
+                    alert(`${selected.length}개 파일이 삭제되었습니다.`);
+                    updateBulkActionsDisplay();
+                }
+            };
+
+            // Checkbox management
+            const selectAllCheckbox = document.getElementById('selectAllResults');
+            const fileCheckboxes = document.querySelectorAll('#searchResults input[type="checkbox"]');
+            
+            selectAllCheckbox?.addEventListener('change', function() {
+                fileCheckboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+                updateBulkActionsDisplay();
+            });
+
+            fileCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateBulkActionsDisplay);
+            });
+
+            function getSelectedFiles() {
+                return Array.from(fileCheckboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+            }
+
+            function updateBulkActionsDisplay() {
+                const selected = getSelectedFiles();
+                const bulkActionsRow = document.getElementById('bulkActionsRow');
+                const selectedCount = document.getElementById('selectedCount');
+                
+                if (selected.length > 0) {
+                    bulkActionsRow.style.display = 'block';
+                    selectedCount.textContent = selected.length;
+                } else {
+                    bulkActionsRow.style.display = 'none';
+                }
+
+                // Update select all checkbox state
+                if (selectAllCheckbox) {
+                    if (selected.length === 0) {
+                        selectAllCheckbox.indeterminate = false;
+                        selectAllCheckbox.checked = false;
+                    } else if (selected.length === fileCheckboxes.length) {
+                        selectAllCheckbox.indeterminate = false;
+                        selectAllCheckbox.checked = true;
+                    } else {
+                        selectAllCheckbox.indeterminate = true;
+                        selectAllCheckbox.checked = false;
+                    }
+                }
+            }
+
+            // Advanced search functions
+            window.resetAdvancedSearch = function() {
+                document.getElementById('advancedSearchForm').reset();
+            };
+
+            window.executeAdvancedSearch = function() {
+                const formData = new FormData(document.getElementById('advancedSearchForm'));
+                const searchParams = {};
+                
+                // Collect form data
+                for (let [key, value] of formData.entries()) {
+                    if (value) searchParams[key] = value;
+                }
+                
+                console.log('Advanced search:', searchParams);
+                
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('advancedSearchModal'));
+                modal.hide();
+                
+                // Perform search (implement actual search logic here)
+                alert('고급 검색을 실행합니다.');
+            };
+
             // View toggle functionality
             const listView = document.getElementById('listView');
             const cardView = document.getElementById('cardView');
             
-            listView.addEventListener('change', function() {
+            listView?.addEventListener('change', function() {
                 if (this.checked) {
-                    // Show list view
                     console.log('List view selected');
+                    // Show list view
                 }
             });
             
-            cardView.addEventListener('change', function() {
+            cardView?.addEventListener('change', function() {
                 if (this.checked) {
-                    // Show card view
                     console.log('Card view selected');
+                    // Show card view
                 }
             });
 
             // Auto-submit search form when status changes
-            document.getElementById('status').addEventListener('change', function() {
+            document.getElementById('status')?.addEventListener('change', function() {
                 this.form.submit();
+            });
+
+            // Export functionality
+            document.getElementById('exportBtn')?.addEventListener('click', function() {
+                console.log('Export search results');
+                alert('검색 결과를 Excel로 내보냅니다.');
+            });
+
+            // Quick search functionality
+            let searchTimeout;
+            document.getElementById('quickSearch')?.addEventListener('input', function(e) {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    const searchTerm = e.target.value.trim();
+                    if (searchTerm.length > 0) {
+                        console.log('Quick search:', searchTerm);
+                        // Implement quick search logic
+                    }
+                }, 300);
             });
         });
     </script>
