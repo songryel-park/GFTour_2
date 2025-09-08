@@ -62,49 +62,49 @@ class MainController(
 
     @GetMapping("/files")
     fun fileSearch(model: Model): String {
-        model.addAttribute("pageTitle", "파일 검색")
+        model.addAttribute("pageTitle", "File検索")
         return "files/search"
     }
 
     @GetMapping("/files/new")
     fun newRegistration(model: Model): String {
-        model.addAttribute("pageTitle", "신규 등록")
+        model.addAttribute("pageTitle", "新規登録")
         return "files/form"
     }
 
     @GetMapping("/agts")
     fun agtManagement(model: Model): String {
-        model.addAttribute("pageTitle", "AGT 관리")
+        model.addAttribute("pageTitle", "AGT管理")
         return "agts/list"
     }
 
     @GetMapping("/customers")
     fun customerList(model: Model): String {
-        model.addAttribute("pageTitle", "고객 명단")
+        model.addAttribute("pageTitle", "顧客名簿")
         return "customers/list"
     }
 
     @GetMapping("/guides")
     fun guideInstructions(model: Model): String {
-        model.addAttribute("pageTitle", "단체행동지침서")
+        model.addAttribute("pageTitle", "団体行事指針書")
         return "guides/instructions"
     }
 
     @GetMapping("/financial")
     fun settlementReports(model: Model): String {
-        model.addAttribute("pageTitle", "정산보고서")
+        model.addAttribute("pageTitle", "精算報吿書")
         return "financial/reports"
     }
 
     @GetMapping("/documents")
     fun documentManagement(model: Model): String {
-        model.addAttribute("pageTitle", "문서 관리")
+        model.addAttribute("pageTitle", "문서관리")
         return "documents/list"
     }
 
     @GetMapping("/documents/generator")
     fun documentGenerator(model: Model): String {
-        model.addAttribute("pageTitle", "문서 생성기")
+        model.addAttribute("pageTitle", "문서생성기")
         return "documents/generator"
     }
 }

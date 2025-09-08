@@ -15,7 +15,7 @@
     <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #2E86AB 0%, #A23B72 100%);
+            background: linear-gradient(135deg, #F4D03F 0%, #58D68D 100%);
             min-height: 100vh;
         }
         .login-container {
@@ -31,12 +31,12 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         .btn-gf-primary {
-            background: linear-gradient(135deg, #2E86AB 0%, #A23B72 100%);
+            background: linear-gradient(135deg, #8E44AD 0%, #A23B72 100%);
             border: none;
             color: white;
         }
         .btn-gf-primary:hover {
-            background: linear-gradient(135deg, #246b8a 0%, #8b2d5f 100%);
+            background: linear-gradient(135deg, #6d3485 0%, #8b2d5f 100%);
             color: white;
         }
         .form-floating .form-control:focus {
@@ -57,19 +57,12 @@
                                 <i class="fas fa-plane fa-3x text-primary"></i>
                             </div>
                             <h3 class="fw-bold text-primary">Good Feel Tour</h3>
-                            <p class="text-muted mb-0">여행사 관리 시스템</p>
                         </div>
 
                         <!-- Alert Messages -->
                         <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
                             <i class="fas fa-exclamation-circle me-2"></i>
                             이메일 또는 비밀번호가 올바르지 않습니다.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                        
-                        <div th:if="${param.logout}" class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="fas fa-check-circle me-2"></i>
-                            성공적으로 로그아웃되었습니다.
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
 
@@ -79,7 +72,7 @@
                                 <input type="email" class="form-control" id="username" name="username" 
                                        placeholder="이메일" required>
                                 <label for="username">
-                                    <i class="fas fa-envelope me-2"></i>이메일
+                                    <i class="fas fa-envelope me-2"></i>E-mail
                                 </label>
                             </div>
                             
@@ -87,7 +80,7 @@
                                 <input type="password" class="form-control" id="password" name="password" 
                                        placeholder="비밀번호" required>
                                 <label for="password">
-                                    <i class="fas fa-lock me-2"></i>비밀번호
+                                    <i class="fas fa-lock me-2"></i>Password
                                 </label>
                             </div>
                             
@@ -100,7 +93,7 @@
                             
                             <div class="d-grid mb-3">
                                 <button type="submit" class="btn btn-gf-primary btn-lg">
-                                    <i class="fas fa-sign-in-alt me-2"></i>로그인
+                                    <i class="fas fa-sign-in-alt me-2"></i>Log-in
                                 </button>
                             </div>
                         </form>
@@ -108,9 +101,9 @@
                         <!-- Register Link -->
                         <div class="text-center">
                             <p class="text-muted">
-                                계정이 없으신가요? 
+                                Don't you have an account?
                                 <a th:href="@{/register}" class="text-decoration-none">
-                                    <i class="fas fa-user-plus me-1"></i>회원가입
+                                    <i class="fas fa-user-plus me-1"></i>SignUp
                                 </a>
                             </p>
                         </div>

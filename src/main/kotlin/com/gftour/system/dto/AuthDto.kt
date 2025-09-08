@@ -35,5 +35,6 @@ data class UserDto(
     val id: Long,
     val email: String,
     val name: String,
+    val phone: String,
     val role: String
 )

@@ -22,8 +22,13 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <h2 class="gf-secondary mb-0">
-                            <i class="fas fa-search me-2"></i>파일 검색
+                            <i class="fas fa-search me-3"></i>File 検索
                         </h2>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-gf-primary" data-bs-toggle="modal" data-bs-target="#agtModal">
+                            <i class="fas fa-home me-2"></i>Main Menu
+                        </button>
                     </div>
                 </div>
             </div>
@@ -35,29 +40,29 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
                         <h6 class="card-title mb-3">
-                            <i class="fas fa-filter me-2"></i>검색 조건
+                            <i class="fas fa-filter me-2"></i>検索条件
                         </h6>
                         <form method="get" th:action="@{/files}" class="row g-3">
-                            <div class="col-md-3">
-                                <label for="refNo" class="form-label">REF No</label>
+                            <div class="col-md-2">
+                                <label for="refNo" class="form-label">REF.No</label>
                                 <input type="text" class="form-control" id="refNo" name="refNo" 
                                        placeholder="GF20240101001" th:value="${param.refNo}">
                             </div>
                             
-                            <div class="col-md-3">
-                                <label for="destination" class="form-label">여행지</label>
+                            <div class="col-md-2">
+                                <label for="destination" class="form-label">団体番号</label>
                                 <input type="text" class="form-control" id="destination" name="destination" 
-                                       placeholder="서울, 부산, 제주도 등" th:value="${param.destination}">
+                                       placeholder="" th:value="${param.destination}">
                             </div>
                             
-                            <div class="col-md-3">
-                                <label for="manager" class="form-label">담당자</label>
+                            <div class="col-md-2">
+                                <label for="manager" class="form-label">担葬者</label>
                                 <input type="text" class="form-control" id="manager" name="manager" 
-                                       placeholder="담당자명" th:value="${param.manager}">
+                                       placeholder="" th:value="${param.manager}">
                             </div>
                             
-                            <div class="col-md-3">
-                                <label for="status" class="form-label">상태</label>
+                            <div class="col-md-2">
+                                <label for="status" class="form-label">State</label>
                                 <select class="form-select" id="status" name="status">
                                     <option value="">전체</option>
                                     <option value="DRAFT" th:selected="${param.status == 'DRAFT'}">신규</option>
@@ -66,15 +71,16 @@
                                     <option value="CANCELLED" th:selected="${param.status == 'CANCELLED'}">취소</option>
                                 </select>
                             </div>
-                            
-                            <div class="col-12">
-                                <div class="d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-search me-2"></i>검색
+
+                            <div class="col-md-2" style="margin: 1%">
+                                <label for="status" class="form-label"></label>
+                                <div class="btn-group w-100" role="group">
+                                    <button type="button" class="btn btn-outline-primary" id="searchBtn">
+                                        <i class="fas fa-search me-1"></i>search
                                     </button>
-                                    <a th:href="@{/files}" class="btn btn-outline-secondary">
-                                        <i class="fas fa-undo me-2"></i>초기화
-                                    </a>
+                                    <button type="button" class="btn btn-outline-secondary" id="resetBtn">
+                                        <i class="fas fa-undo me-1"></i>refresh
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -90,25 +96,12 @@
                     <div class="card-header bg-transparent">
                         <div class="d-flex justify-content-between align-items-center">
                             <h6 class="mb-0">
-                                <i class="fas fa-list me-2"></i>검색 결과 
-                                <span class="badge bg-primary ms-2">3건</span>
+                                <i class="fas fa-list me-2"></i>目録
+                                <span class="badge bg-primary ms-2">3件</span>
                             </h6>
                             <div class="d-flex gap-2">
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <input type="radio" class="btn-check" name="viewType" id="listView" checked>
-                                    <label class="btn btn-outline-secondary" for="listView">
-                                        <i class="fas fa-list"></i>
-                                    </label>
-                                    <input type="radio" class="btn-check" name="viewType" id="cardView">
-                                    <label class="btn btn-outline-secondary" for="cardView">
-                                        <i class="fas fa-th"></i>
-                                    </label>
-                                </div>
-                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#advancedSearchModal">
-                                    <i class="fas fa-search-plus me-1"></i>고급 검색
-                                </button>
                                 <button type="button" class="btn btn-outline-success btn-sm" id="exportBtn">
-                                    <i class="fas fa-file-excel me-1"></i>Excel 내보내기
+                                    <i class="fas fa-file-excel me-1"></i>Excel
                                 </button>
                             </div>
                         </div>
@@ -119,19 +112,18 @@
                             <table class="table table-hover mb-0" id="searchResultsTable">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col" width="5%">
+                                        <th scope="col" width="3%">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="selectAllResults">
                                             </div>
                                         </th>
                                         <th scope="col">REF No</th>
-                                        <th scope="col">여행지</th>
-                                        <th scope="col">담당자</th>
-                                        <th scope="col">고객수</th>
-                                        <th scope="col">여행일정</th>
-                                        <th scope="col">상태</th>
-                                        <th scope="col">등록일</th>
-                                        <th scope="col" width="15%">관리</th>
+                                        <th scope="col">団体番号</th>
+                                        <th scope="col">行事地域</th>
+                                        <th scope="col">担葬者</th>
+                                        <th scope="col">日程</th>
+                                        <th scope="col">State</th>
+                                        <th scope="col" width="10%"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="searchResults">
@@ -143,6 +135,7 @@
                                             </div>
                                         </td>
                                         <td><strong>GF20240115001</strong></td>
+                                        <td><strong>H120204-1</strong></td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="me-2">
@@ -156,36 +149,25 @@
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" 
-                                                     style="width: 30px; height: 30px; font-size: 12px;">
-                                                    김
-                                                </div>
                                                 <div>
                                                     <strong>김담당</strong>
                                                     <br><small class="text-muted">010-1234-5678</small>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><span class="badge bg-info">15명</span></td>
                                         <td>
                                             <strong>2024.01.15 ~ 01.18</strong>
-                                            <br><small class="text-muted">4일간</small>
                                         </td>
                                         <td><span class="badge bg-success">완료</span></td>
-                                        <td>2024.01.01</td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-primary" title="상세보기" 
+                                                <button type="button" class="btn btn-outline-primary" title="상세보기"
                                                         onclick="viewFile(1)">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-outline-warning" title="수정" 
                                                         onclick="editFile(1)">
                                                     <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-info" title="복사" 
-                                                        onclick="copyFile(1)">
-                                                    <i class="fas fa-copy"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-outline-danger" title="삭제" 
                                                         onclick="deleteFile(1)">
@@ -202,6 +184,7 @@
                                             </div>
                                         </td>
                                         <td><strong>GF20240201002</strong></td>
+                                        <td><strong>H120704-3</strong></td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="me-2">
@@ -215,23 +198,16 @@
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <div class="avatar-sm bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2" 
-                                                     style="width: 30px; height: 30px; font-size: 12px;">
-                                                    이
-                                                </div>
                                                 <div>
                                                     <strong>이담당</strong>
                                                     <br><small class="text-muted">010-9876-5432</small>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><span class="badge bg-info">22명</span></td>
                                         <td>
                                             <strong>2024.02.01 ~ 02.03</strong>
-                                            <br><small class="text-muted">3일간</small>
                                         </td>
                                         <td><span class="badge bg-warning">진행중</span></td>
-                                        <td>2024.01.25</td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group">
                                                 <button type="button" class="btn btn-outline-primary" title="상세보기" 
@@ -241,10 +217,6 @@
                                                 <button type="button" class="btn btn-outline-warning" title="수정" 
                                                         onclick="editFile(2)">
                                                     <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-info" title="복사" 
-                                                        onclick="copyFile(2)">
-                                                    <i class="fas fa-copy"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-outline-danger" title="삭제" 
                                                         onclick="deleteFile(2)">
@@ -261,6 +233,7 @@
                                             </div>
                                         </td>
                                         <td><strong>GF20240220003</strong></td>
+                                        <td><strong>H120402-2</strong></td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="me-2">
@@ -274,23 +247,16 @@
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <div class="avatar-sm bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-2" 
-                                                     style="width: 30px; height: 30px; font-size: 12px;">
-                                                    박
-                                                </div>
                                                 <div>
                                                     <strong>박담당</strong>
                                                     <br><small class="text-muted">010-1111-2222</small>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><span class="badge bg-info">8명</span></td>
                                         <td>
                                             <strong>2024.02.20</strong>
-                                            <br><small class="text-muted">1일간</small>
                                         </td>
-                                        <td><span class="badge bg-secondary">초안</span></td>
-                                        <td>2024.02.15</td>
+                                        <td><span class="badge bg-secondary">신규</span></td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group">
                                                 <button type="button" class="btn btn-outline-primary" title="상세보기" 
@@ -300,10 +266,6 @@
                                                 <button type="button" class="btn btn-outline-warning" title="수정" 
                                                         onclick="editFile(3)">
                                                     <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-info" title="복사" 
-                                                        onclick="copyFile(3)">
-                                                    <i class="fas fa-copy"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-outline-danger" title="삭제" 
                                                         onclick="deleteFile(3)">
