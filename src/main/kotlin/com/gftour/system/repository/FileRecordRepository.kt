@@ -28,5 +28,7 @@ interface FileRecordRepository : JpaRepository<FileRecord, Long> {
         pageable: Pageable
     ): Page<FileRecord>
     
+    fun findAllByOrderByCreatedAtDesc(pageable: Pageable): Page<FileRecord>
+    
     fun existsByRefNo(refNo: String): Boolean
 }

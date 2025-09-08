@@ -1,5 +1,6 @@
 package com.gftour.system.dto
 
+import com.gftour.system.entity.UserRole
 import java.time.LocalDateTime
 
 // Common Response wrapper
@@ -17,9 +18,11 @@ data class LoginRequest(
 )
 
 data class RegisterRequest(
+    val name: String,
     val email: String,
+    val phone: String,
     val password: String,
-    val name: String
+    val userRole: UserRole
 )
 
 data class AuthResponse(
@@ -32,5 +35,6 @@ data class UserDto(
     val id: Long,
     val email: String,
     val name: String,
+    val phone: String,
     val role: String
 )

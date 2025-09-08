@@ -101,7 +101,6 @@
                             <div>
                                 <h6 class="mb-0">Sub Total</h6>
                                 <h4 class="mb-0 text-info">₩1,500,000</h4>
-                                <small class="text-muted">판매 - 수취 - 운용</small>
                             </div>
                         </div>
                     </div>
@@ -165,7 +164,6 @@
                                         <input type="text" class="form-control fw-bold text-primary" 
                                                id="subTotal" readonly>
                                     </div>
-                                    <small class="text-muted">판매송금 - 수취송금 - 운용비용</small>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold">수수료 금액</label>
@@ -174,7 +172,6 @@
                                         <input type="text" class="form-control fw-bold text-success" 
                                                id="commissionAmount" readonly>
                                     </div>
-                                    <small class="text-muted">Sub Total × 수수료율</small>
                                 </div>
                             </div>
                         </form>
@@ -238,8 +235,6 @@
                                 <div class="col-8" th:text="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}">날짜</div>
                                 <div class="col-4 text-muted">발행자:</div>
                                 <div class="col-8" sec:authentication="name">사용자명</div>
-                                <div class="col-4 text-muted">회사:</div>
-                                <div class="col-8">Good Feel Tour</div>
                             </div>
                         </div>
                     </div>

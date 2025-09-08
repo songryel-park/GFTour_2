@@ -26,9 +26,14 @@
                         </h2>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-gf-primary" data-bs-toggle="modal" data-bs-target="#documentModal">
-                            <i class="fas fa-plus me-2"></i>문서 작성
-                        </button>
+                        <div class="btn-group" role="group">
+                            <a th:href="@{/documents/generator}" class="btn btn-success me-2">
+                                <i class="fas fa-magic me-2"></i>문서 생성기
+                            </a>
+                            <button type="button" class="btn btn-gf-primary" data-bs-toggle="modal" data-bs-target="#documentModal">
+                                <i class="fas fa-plus me-2"></i>문서 작성
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

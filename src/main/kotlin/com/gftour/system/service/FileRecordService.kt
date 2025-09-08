@@ -114,6 +114,16 @@ class FileRecordService(
         return toDto(savedRecord)
     }
     
+    fun getTotalFileCount(): Long {
+        return fileRecordRepository.count()
+    }
+    
+    fun getRecentFiles(limit: Int): List<FileRecordDto> {
+        val pageable = PageRequest.of(0, limit)
+        val recentFiles = fileRecordRepository.findAllByOrderByCreatedAtDesc(pageable)
+        return recentFiles.content.map { toDto(it) }
+    }
+    
     private fun generateRefNo(): String {
         val currentDate = LocalDateTime.now()
         val dateFormat = DateTimeFormatter.ofPattern("yyyyMMdd")

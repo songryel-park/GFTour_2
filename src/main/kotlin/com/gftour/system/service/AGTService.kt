@@ -74,6 +74,10 @@ class AGTService(
         agtRepository.deleteById(id)
     }
     
+    fun getTotalAgtCount(): Long {
+        return agtRepository.count()
+    }
+    
     private fun toDto(agt: AGT): AGTDto {
         return AGTDto(
             id = agt.id,

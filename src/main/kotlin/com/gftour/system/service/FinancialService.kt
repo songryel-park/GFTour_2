@@ -104,6 +104,17 @@ class FinancialService(
         )
     }
     
+    fun getMonthlySettlement(): String {
+        val currentMonth = LocalDateTime.now()
+        val startOfMonth = currentMonth.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0)
+        val endOfMonth = currentMonth.withDayOfMonth(currentMonth.month.length(currentMonth.year % 4 == 0)).withHour(23).withMinute(59).withSecond(59)
+        
+        val monthlyRecords = financialRecordRepository.findByDateRange(startOfMonth, endOfMonth)
+        val totalSettlement = monthlyRecords.sumOf { it.subTotal }
+        
+        return "₩${String.format("%,d", totalSettlement.toLong())}"
+    }
+    
     private fun calculateSubTotal(salesAmount: BigDecimal, receiptAmount: BigDecimal, operatingCost: BigDecimal): BigDecimal {
         return salesAmount.subtract(receiptAmount).subtract(operatingCost)
     }

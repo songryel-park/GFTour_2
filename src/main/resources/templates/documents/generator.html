@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ko" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      th:replace="~{layout/base :: html}">
+<head>
+    <meta charset="UTF-8">
+    <title>문서 생성기 - Good Feel Tour</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts - Noto Sans KR -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .template-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+        }
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .template-preview {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            min-height: 200px;
+            border-radius: 8px;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .print-area { margin: 0; padding: 1rem; border: none; }
+        }
+    </style>
+</head>
+<body>
+    <div th:block="content">
+        <!-- Page Header -->
+        <div class="row mb-4 no-print">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="gf-secondary mb-0">
+                            <i class="fas fa-file-contract me-2"></i>문서 생성기
+                        </h2>
+                        <p class="text-muted mb-0">다양한 여행 관련 문서를 자동으로 생성하고 관리하세요</p>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline-primary me-2" onclick="showHistory()">
+                            <i class="fas fa-history me-2"></i>생성 이력
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Document Template Categories -->
+        <div class="row mb-4">
+            <div class="col">
+                <!-- Navigation Tabs -->
+                <ul class="nav nav-pills justify-content-center" id="document-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="booking-tab" data-bs-toggle="pill" data-bs-target="#booking-docs" type="button" role="tab">
+                            <i class="fas fa-file-invoice me-2"></i>예약 문서
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="customer-tab" data-bs-toggle="pill" data-bs-target="#customer-docs" type="button" role="tab">
+                            <i class="fas fa-user-check me-2"></i>고객 확인서
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="guide-tab" data-bs-toggle="pill" data-bs-target="#guide-docs" type="button" role="tab">
+                            <i class="fas fa-clipboard-list me-2"></i>가이드 문서
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="financial-tab" data-bs-toggle="pill" data-bs-target="#financial-docs" type="button" role="tab">
+                            <i class="fas fa-receipt me-2"></i>정산 문서
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="legal-tab" data-bs-toggle="pill" data-bs-target="#legal-docs" type="button" role="tab">
+                            <i class="fas fa-gavel me-2"></i>법정 서류
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Template Content -->
+        <div class="tab-content" id="document-tab-content">
+            <!-- Booking Documents -->
+            <div class="tab-pane fade show active" id="booking-docs" role="tabpanel">
+                <div class="row g-4">
+                    <!-- Quote Template -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('quote')">
+                            <div class="card-header bg-primary text-white text-center">
+                                <h6 class="mb-0"><i class="fas fa-file-invoice me-2"></i>견적서</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-calculator fa-3x text-primary opacity-50"></i>
+                                </div>
+                                <h6>여행 견적서</h6>
+                                <p class="text-muted small">여행 상품에 대한 상세 견적서를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Booking Confirmation -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('booking')">
+                            <div class="card-header bg-success text-white text-center">
+                                <h6 class="mb-0"><i class="fas fa-file-contract me-2"></i>수배서</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-handshake fa-3x text-success opacity-50"></i>
+                                </div>
+                                <h6>여행 수배서</h6>
+                                <p class="text-muted small">여행사와 고객 간의 계약 수배서를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invoice -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('invoice')">
+                            <div class="card-header bg-warning text-white text-center">
+                                <h6 class="mb-0"><i class="fas fa-file-invoice-dollar me-2"></i>청구서</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-money-bill-wave fa-3x text-warning opacity-50"></i>
+                                </div>
+                                <h6>여행비 청구서</h6>
+                                <p class="text-muted small">여행비 청구 및 결제 안내서를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Documents -->
+            <div class="tab-pane fade" id="customer-docs" role="tabpanel">
+                <div class="row g-4">
+                    <!-- Customer Confirmation -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('customer-confirm')">
+                            <div class="card-header bg-info text-white text-center">
+                                <h6 class="mb-0"><i class="fas fa-user-check me-2"></i>고객확인서</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-clipboard-check fa-3x text-info opacity-50"></i>
+                                </div>
+                                <h6>여행 고객 확인서</h6>
+                                <p class="text-muted small">고객 정보 확인 및 동의서를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Travel Insurance -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('insurance')">
+                            <div class="card-header bg-secondary text-white text-center">
+                                <h6 class="mb-0"><i class="fas fa-shield-alt me-2"></i>여행보험</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-umbrella fa-3x text-secondary opacity-50"></i>
+                                </div>
+                                <h6>여행자보험 안내서</h6>
+                                <p class="text-muted small">여행자보험 가입 안내 및 약관을 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Contact -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('emergency')">
+                            <div class="card-header bg-danger text-white text-center">
+                                <h6 class="mb-0"><i class="fas fa-phone me-2"></i>비상연락망</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-address-book fa-3x text-danger opacity-50"></i>
+                                </div>
+                                <h6>비상연락망</h6>
+                                <p class="text-muted small">여행 중 비상상황을 위한 연락망을 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guide Documents -->
+            <div class="tab-pane fade" id="guide-docs" role="tabpanel">
+                <div class="row g-4">
+                    <!-- Guide Instructions -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('guide-instructions')">
+                            <div class="card-header bg-dark text-white text-center">
+                                <h6 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>가이드지침서</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-map fa-3x text-dark opacity-50"></i>
+                                </div>
+                                <h6>가이드 업무지침서</h6>
+                                <p class="text-muted small">가이드를 위한 상세 업무 지침서를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Itinerary -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('itinerary')">
+                            <div class="card-header" style="background: #6f42c1; color: white;">
+                                <h6 class="mb-0 text-center"><i class="fas fa-route me-2"></i>여행일정표</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-calendar-alt fa-3x opacity-50" style="color: #6f42c1;"></i>
+                                </div>
+                                <h6>상세 여행일정표</h6>
+                                <p class="text-muted small">일자별 상세 여행 일정표를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Action Plan -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('emergency-plan')">
+                            <div class="card-header" style="background: #e83e8c; color: white;">
+                                <h6 class="mb-0 text-center"><i class="fas fa-exclamation-triangle me-2"></i>응급대응계획서</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-first-aid fa-3x opacity-50" style="color: #e83e8c;"></i>
+                                </div>
+                                <h6>응급상황 대응계획서</h6>
+                                <p class="text-muted small">응급상황 발생시 대응 계획서를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Documents -->
+            <div class="tab-pane fade" id="financial-docs" role="tabpanel">
+                <div class="row g-4">
+                    <!-- Settlement Report -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('settlement')">
+                            <div class="card-header" style="background: #20c997; color: white;">
+                                <h6 class="mb-0 text-center"><i class="fas fa-chart-line me-2"></i>정산보고서</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-chart-bar fa-3x opacity-50" style="color: #20c997;"></i>
+                                </div>
+                                <h6>여행 정산보고서</h6>
+                                <p class="text-muted small">여행 관련 모든 비용 정산 보고서를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Receipt -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('receipt')">
+                            <div class="card-header" style="background: #fd7e14; color: white;">
+                                <h6 class="mb-0 text-center"><i class="fas fa-receipt me-2"></i>관광영수증</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-file-invoice fa-3x opacity-50" style="color: #fd7e14;"></i>
+                                </div>
+                                <h6>관광영수증</h6>
+                                <p class="text-muted small">관광진흥법에 따른 관광영수증을 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commission Report -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('commission')">
+                            <div class="card-header" style="background: #6610f2; color: white;">
+                                <h6 class="mb-0 text-center"><i class="fas fa-percentage me-2"></i>수수료 정산서</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-coins fa-3x opacity-50" style="color: #6610f2;"></i>
+                                </div>
+                                <h6>수수료 정산서</h6>
+                                <p class="text-muted small">여행사 수수료 정산 내역서를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legal Documents -->
+            <div class="tab-pane fade" id="legal-docs" role="tabpanel">
+                <div class="row g-4">
+                    <!-- Tourism Business Registration -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('tourism-approval')">
+                            <div class="card-header" style="background: #198754; color: white;">
+                                <h6 class="mb-0 text-center"><i class="fas fa-stamp me-2"></i>관광일정승인서</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-certificate fa-3x opacity-50" style="color: #198754;"></i>
+                                </div>
+                                <h6>관광일정승인서</h6>
+                                <p class="text-muted small">관광청에 제출할 일정승인서를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tourism Confirmation -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('tourism-confirm')">
+                            <div class="card-header" style="background: #0d6efd; color: white;">
+                                <h6 class="mb-0 text-center"><i class="fas fa-check-circle me-2"></i>관광확인승인서</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-award fa-3x text-primary opacity-50"></i>
+                                </div>
+                                <h6>관광확인승인서</h6>
+                                <p class="text-muted small">관광 완료 확인 승인서를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Work Confirmation -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card template-card border-0 shadow-sm" onclick="generateDocument('work-confirm')">
+                            <div class="card-header" style="background: #dc3545; color: white;">
+                                <h6 class="mb-0 text-center"><i class="fas fa-tasks me-2"></i>업무확인서</h6>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="template-preview d-flex align-items-center justify-content-center mb-3">
+                                    <i class="fas fa-clipboard-check fa-3x text-danger opacity-50"></i>
+                                </div>
+                                <h6>업무확인서</h6>
+                                <p class="text-muted small">가이드 및 관련 업무 확인서를 생성합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Document Generation Modal -->
+    <div class="modal fade" id="documentGeneratorModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">문서 생성</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Step 1: REF No Selection -->
+                    <div id="step1" class="generator-step">
+                        <h6 class="mb-3">1단계: REF No 선택</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="refNoSelect" class="form-label">REF No 선택</label>
+                                <select class="form-select" id="refNoSelect" onchange="loadRefData()">
+                                    <option value="">선택하세요</option>
+                                    <option value="GF20240115001">GF20240115001 - 제주도 3박 4일</option>
+                                    <option value="GF20240201002">GF20240201002 - 부산 2박 3일</option>
+                                    <option value="GF20240220003">GF20240220003 - 서울 당일투어</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="documentTitle" class="form-label">문서 제목</label>
+                                <input type="text" class="form-control" id="documentTitle" placeholder="문서 제목을 입력하세요">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Document Preview -->
+                    <div id="step2" class="generator-step" style="display: none;">
+                        <h6 class="mb-3">2단계: 문서 미리보기</h6>
+                        <div class="border rounded p-3" id="documentPreview" style="min-height: 400px; background: #f8f9fa;">
+                            <!-- Document preview will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Customization Options -->
+                    <div id="step3" class="generator-step" style="display: none;">
+                        <h6 class="mb-3">3단계: 사용자 정의</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="companyLogo" class="form-label">회사 로고</label>
+                                <input type="file" class="form-control" id="companyLogo" accept="image/*">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="signatureName" class="form-label">서명자</label>
+                                <input type="text" class="form-control" id="signatureName" placeholder="서명자 이름">
+                            </div>
+                            <div class="col-12">
+                                <label for="additionalNotes" class="form-label">추가 메모</label>
+                                <textarea class="form-control" id="additionalNotes" rows="3" 
+                                          placeholder="추가로 포함할 내용이 있다면 입력하세요..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-outline-primary" id="prevStep" onclick="previousStep()" style="display: none;">이전</button>
+                    <button type="button" class="btn btn-primary" id="nextStep" onclick="nextStep()">다음</button>
+                    <button type="button" class="btn btn-success" id="generateBtn" onclick="finalizeDocument()" style="display: none;">
+                        <i class="fas fa-file-download me-2"></i>문서 생성
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let currentStep = 1;
+        let selectedDocumentType = '';
+        const maxSteps = 3;
+
+        function generateDocument(type) {
+            selectedDocumentType = type;
+            const modal = new bootstrap.Modal(document.getElementById('documentGeneratorModal'));
+            
+            // Reset to step 1
+            currentStep = 1;
+            showStep(1);
+            updateButtons();
+            
+            // Update modal title
+            const typeNames = {
+                'quote': '견적서',
+                'booking': '수배서',
+                'invoice': '청구서',
+                'customer-confirm': '고객확인서',
+                'insurance': '여행보험 안내서',
+                'emergency': '비상연락망',
+                'guide-instructions': '가이드지침서',
+                'itinerary': '여행일정표',
+                'emergency-plan': '응급대응계획서',
+                'settlement': '정산보고서',
+                'receipt': '관광영수증',
+                'commission': '수수료 정산서',
+                'tourism-approval': '관광일정승인서',
+                'tourism-confirm': '관광확인승인서',
+                'work-confirm': '업무확인서'
+            };
+            
+            document.querySelector('.modal-title').textContent = `${typeNames[type]} 생성`;
+            modal.show();
+        }
+
+        function nextStep() {
+            if (currentStep < maxSteps) {
+                if (validateCurrentStep()) {
+                    currentStep++;
+                    showStep(currentStep);
+                    updateButtons();
+                    
+                    if (currentStep === 2) {
+                        generatePreview();
+                    }
+                }
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+                updateButtons();
+            }
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.generator-step').forEach(el => el.style.display = 'none');
+            document.getElementById(`step${step}`).style.display = 'block';
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevStep');
+            const nextBtn = document.getElementById('nextStep');
+            const generateBtn = document.getElementById('generateBtn');
+
+            prevBtn.style.display = currentStep > 1 ? 'inline-block' : 'none';
+            nextBtn.style.display = currentStep < maxSteps ? 'inline-block' : 'none';
+            generateBtn.style.display = currentStep === maxSteps ? 'inline-block' : 'none';
+        }
+
+        function validateCurrentStep() {
+            if (currentStep === 1) {
+                const refNo = document.getElementById('refNoSelect').value;
+                if (!refNo) {
+                    alert('REF No를 선택해주세요.');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function loadRefData() {
+            const refNo = document.getElementById('refNoSelect').value;
+            if (refNo) {
+                // Set default document title based on REF No
+                const refData = {
+                    'GF20240115001': '제주도 3박 4일',
+                    'GF20240201002': '부산 2박 3일',
+                    'GF20240220003': '서울 당일투어'
+                };
+                
+                const typeNames = {
+                    'quote': '견적서',
+                    'booking': '수배서',
+                    'invoice': '청구서',
+                    'customer-confirm': '고객확인서',
+                    'settlement': '정산보고서',
+                    'receipt': '관광영수증'
+                };
+                
+                const title = `${refData[refNo]} ${typeNames[selectedDocumentType] || '문서'}`;
+                document.getElementById('documentTitle').value = title;
+            }
+        }
+
+        function generatePreview() {
+            const refNo = document.getElementById('refNoSelect').value;
+            const title = document.getElementById('documentTitle').value;
+            
+            // Generate document preview based on selected type
+            const previewContent = generateDocumentPreview(selectedDocumentType, refNo, title);
+            document.getElementById('documentPreview').innerHTML = previewContent;
+        }
+
+        function generateDocumentPreview(type, refNo, title) {
+            const commonHeader = `
+                <div class="text-center mb-4">
+                    <h3 class="gf-secondary"><i class="fas fa-plane me-2"></i>Good Feel Tour</h3>
+                    <h4>${title}</h4>
+                    <hr style="border: 2px solid #2E86AB; width: 100px; margin: 20px auto;">
+                </div>
+            `;
+
+            const sampleData = {
+                refNo: refNo,
+                destination: refNo === 'GF20240115001' ? '제주도 3박 4일' : (refNo === 'GF20240201002' ? '부산 2박 3일' : '서울 당일투어'),
+                customer: '김고객',
+                amount: '1,500,000',
+                period: refNo === 'GF20240115001' ? '2024.01.15 ~ 01.18' : (refNo === 'GF20240201002' ? '2024.02.01 ~ 02.03' : '2024.02.20'),
+                manager: '김담당'
+            };
+
+            switch (type) {
+                case 'quote':
+                    return commonHeader + `
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <strong>REF No:</strong> ${sampleData.refNo}<br>
+                                <strong>고객명:</strong> ${sampleData.customer}<br>
+                                <strong>여행지:</strong> ${sampleData.destination}
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <strong>견적일:</strong> ${new Date().toLocaleDateString('ko-KR')}<br>
+                                <strong>유효기간:</strong> 7일<br>
+                                <strong>담당자:</strong> ${sampleData.manager}
+                            </div>
+                        </div>
+                        <table class="table table-bordered">
+                            <thead class="bg-light">
+                                <tr><th>항목</th><th>내용</th><th class="text-end">금액</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>여행비</td><td>${sampleData.destination}</td><td class="text-end">₩${sampleData.amount}</td></tr>
+                                <tr><td>부가세</td><td>10%</td><td class="text-end">₩150,000</td></tr>
+                                <tr class="table-primary"><td colspan="2"><strong>총 금액</strong></td><td class="text-end"><strong>₩1,650,000</strong></td></tr>
+                            </tbody>
+                        </table>
+                    `;
+                
+                case 'receipt':
+                    return commonHeader + `
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <strong>영수증 번호:</strong> ${sampleData.refNo}<br>
+                                <strong>발행일:</strong> ${new Date().toLocaleDateString('ko-KR')}<br>
+                                <strong>고객명:</strong> ${sampleData.customer}
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <strong>여행사:</strong> Good Feel Tour<br>
+                                <strong>사업자번호:</strong> 123-45-67890<br>
+                                <strong>연락처:</strong> 02-1234-5678
+                            </div>
+                        </div>
+                        <table class="table table-bordered">
+                            <thead class="bg-light">
+                                <tr><th>여행지</th><th>기간</th><th class="text-end">금액</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>${sampleData.destination}</td><td>${sampleData.period}</td><td class="text-end">₩${sampleData.amount}</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="text-center mt-4">
+                            <p class="text-muted small">본 영수증은 관광진흥법에 따라 발행되었습니다.</p>
+                        </div>
+                    `;
+                
+                default:
+                    return commonHeader + `
+                        <div class="text-center text-muted">
+                            <p>문서 내용이 여기에 생성됩니다.</p>
+                            <p>REF No: ${sampleData.refNo}</p>
+                            <p>제목: ${title}</p>
+                        </div>
+                    `;
+            }
+        }
+
+        function finalizeDocument() {
+            console.log('Generating final document:', selectedDocumentType);
+            alert('문서가 성공적으로 생성되었습니다!');
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('documentGeneratorModal'));
+            modal.hide();
+        }
+
+        function showHistory() {
+            alert('생성 이력 기능은 개발 중입니다.');
+        }
+    </script>
+</body>
+</html>

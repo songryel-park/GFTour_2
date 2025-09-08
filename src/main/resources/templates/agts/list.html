@@ -22,12 +22,12 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <h2 class="gf-secondary mb-0">
-                            <i class="fas fa-building me-2"></i>AGT 관리
+                            <i class="fas fa-building me-2"></i>AGT 管理
                         </h2>
                     </div>
                     <div>
                         <button type="button" class="btn btn-gf-primary" data-bs-toggle="modal" data-bs-target="#agtModal">
-                            <i class="fas fa-plus me-2"></i>신규 AGT 등록
+                            <i class="fas fa-plus me-2"></i>AGT 追加
                         </button>
                     </div>
                 </div>
@@ -45,34 +45,34 @@
                                     <span class="input-group-text">
                                         <i class="fas fa-search"></i>
                                     </span>
-                                    <input type="text" class="form-control" placeholder="AGT, 담당자 검색"
+                                    <input type="text" class="form-control" placeholder="AGT, 担葬者"
                                            id="searchInput">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-select" id="regionFilter">
-                                    <option value="">지역 전체</option>
+                                    <option value="">全地域</option>
                                     <option value="서울">서울</option>
                                     <option value="부산">부산</option>
                                     <option value="제주">제주</option>
                                     <option value="경기">경기</option>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2" style="margin: 1%">
                                 <div class="btn-group w-100" role="group">
                                     <button type="button" class="btn btn-outline-primary" id="searchBtn">
-                                        <i class="fas fa-search me-1"></i>검색
+                                        <i class="fas fa-search me-1"></i>search
                                     </button>
                                     <button type="button" class="btn btn-outline-secondary" id="resetBtn">
-                                        <i class="fas fa-undo me-1"></i>초기화
+                                        <i class="fas fa-undo me-1"></i>refresh
                                     </button>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-select" id="pageSize">
-                                    <option value="10">10개씩 보기</option>
-                                    <option value="20">20개씩 보기</option>
-                                    <option value="50">50개씩 보기</option>
+                                    <option value="10">10個ずつ</option>
+                                    <option value="30">30個ずつ</option>
+                                    <option value="100">100個ずつ</option>
                                 </select>
                             </div>
                         </div>
@@ -88,12 +88,12 @@
                     <div class="card-header bg-transparent">
                         <div class="d-flex justify-content-between align-items-center">
                             <h6 class="mb-0">
-                                <i class="fas fa-list me-2"></i>AGT 목록 
-                                <span class="badge bg-primary ms-2">0건</span>
+                                <i class="fas fa-list me-2"></i>AGT 目録
+                                <span class="badge bg-primary ms-2">0件</span>
                             </h6>
                             <div class="btn-group btn-group-sm" role="group">
                                 <button type="button" class="btn btn-outline-success" id="exportExcel">
-                                    <i class="fas fa-file-excel me-1"></i>Excel 내보내기
+                                    <i class="fas fa-file-excel me-1"></i>Excel
                                 </button>
                             </div>
                         </div>
@@ -109,13 +109,12 @@
                                             </div>
                                         </th>
                                         <th scope="col">AGT</th>
-                                        <th scope="col">지점/대리점</th>
-                                        <th scope="col">담당자</th>
-                                        <th scope="col">주소</th>
-                                        <th scope="col">지역</th>
-                                        <th scope="col">전화번호</th>
-                                        <th scope="col">우편번호</th>
-                                        <th scope="col" width="10%">관리</th>
+                                        <th scope="col">支店/代理店</th>
+                                        <th scope="col">担葬者</th>
+                                        <th scope="col">住所</th>
+                                        <th scope="col">地域</th>
+                                        <th scope="col">Tel.</th>
+                                        <th scope="col" width="10%"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="agtTableBody">
@@ -141,18 +140,13 @@
                                             <i class="fas fa-fax me-1"></i>064-123-4568
                                         </small>
                                         </td>
-                                        <td>130-94</td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-primary" title="상세보기" 
-                                                        onclick="viewAGT(1)">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-warning" title="수정" 
+                                                <button type="button" class="btn btn-outline-warning" title="수정"
                                                         onclick="editAGT(1)">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-outline-danger" title="삭제" 
+                                                <button type="button" class="btn btn-outline-danger" title="삭제"
                                                         onclick="deleteAGT(1)">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
@@ -172,9 +166,6 @@
                             <p class="text-muted mb-4">
                                 새로운 AGT를 등록하여 관리를 시작하세요.
                             </p>
-                            <button type="button" class="btn btn-gf-primary" data-bs-toggle="modal" data-bs-target="#agtModal">
-                                <i class="fas fa-plus me-2"></i>첫 AGT 등록하기
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -236,7 +227,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">AGT 정보</h5>
+                    <h5 class="modal-title">AGT 情報</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -246,23 +237,23 @@
                             <div class="col-md-6">
                                 <label for="agtName" class="form-label">AGT <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="agtName" name="name" required>
-                                <div class="invalid-feedback">AGT를 입력해주세요.</div>
+                                <div class="invalid-feedback">AGTを入力してください.</div>
                             </div>
                             <div class="col-md-6">
-                                <label for="agencise" class="form-label">지점/대리점</label>
+                                <label for="agencise" class="form-label">支店/代理店</label>
                                 <input type="text" class="form-control" id="agencise" name="agencise">
                             </div>
                             <div class="col-md-6">
-                                <label for="managerName" class="form-label">담당자</label>
+                                <label for="managerName" class="form-label">担葬者</label>
                                 <input type="text" class="form-control" id="managerName" name="managerName">
                             </div>
                             <div class="col-12">
-                                <label for="address" class="form-label">주소</label>
+                                <label for="address" class="form-label">住所</label>
                                 <textarea class="form-control" id="address" name="address" rows="2"
-                                          placeholder="상세 주소를 입력하세요..."></textarea>
+                                          placeholder="詳細住所を入力してください..."></textarea>
                             </div>
                             <div class="col-md-6">
-                                <label for="region" class="form-label">지역</label>
+                                <label for="region" class="form-label">地域</label>
                                 <select class="form-select" id="region" name="region">
                                     <option value="">선택하세요</option>
                                     <option value="서울">서울</option>
@@ -285,31 +276,21 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="tellNumber" class="form-label">전화번호</label>
+                                <label for="tellNumber" class="form-label">Tel.</label>
                                 <input type="tel" class="form-control" id="tellNumber" name="tellNumber"
                                        placeholder="02-1234-5678">
                             </div>
                             <div class="col-md-6">
-                                <label for="faxNumber" class="form-label">FAX 번호</label>
+                                <label for="faxNumber" class="form-label">FAX</label>
                                 <input type="tel" class="form-control" id="faxNumber" name="faxNumber"
                                        placeholder="02-1234-5679">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="post" class="form-label">우편번호</label>
-                                <input type="text" class="form-control" id="post" name="post"
-                                       value="130-94">
-                            </div>
-                            <div class="col-12">
-                                <label for="agtNotes" class="form-label">비고</label>
-                                <textarea class="form-control" id="agtNotes" name="notes" rows="2" 
-                                          placeholder="추가 정보나 특이사항을 입력하세요..."></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary" id="saveAGT">저장</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveAGT">Save</button>
                 </div>
             </div>
         </div>

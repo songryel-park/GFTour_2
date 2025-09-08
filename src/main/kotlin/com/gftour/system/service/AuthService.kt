@@ -30,9 +30,10 @@ class AuthService(
             email = request.email,
             password = passwordEncoder.encode(request.password),
             name = request.name,
+            phone = request.phone,
             role = UserRole.USER
         )
-        
+
         val savedUser = userRepository.save(user)
         
         val token = jwtUtil.generateToken(savedUser)
@@ -45,6 +46,7 @@ class AuthService(
                 id = savedUser.id,
                 email = savedUser.email,
                 name = savedUser.name,
+                phone = savedUser.phone,
                 role = savedUser.role.name
             )
         )
@@ -68,6 +70,7 @@ class AuthService(
                 id = user.id,
                 email = user.email,
                 name = user.name,
+                phone = user.phone,
                 role = user.role.name
             )
         )
