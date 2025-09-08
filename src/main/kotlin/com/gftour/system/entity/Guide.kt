@@ -23,9 +23,6 @@ data class Guide(
     @Column(columnDefinition = "TEXT")
     val schedule: String? = null,
     
-    @Column(name = "safety_rules", columnDefinition = "TEXT")
-    val safetyRules: String? = null,
-    
     @Column(columnDefinition = "TEXT")
     val precautions: String? = null,
     
@@ -34,9 +31,6 @@ data class Guide(
     
     @Column(name = "meeting_point", length = 200)
     val meetingPoint: String? = null,
-    
-    @Column(name = "emergency_contact", length = 20)
-    val emergencyContact: String? = null,
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -13,10 +13,12 @@ data class FileRecord(
     
     @Column(unique = true, nullable = false, length = 20)
     val refNo: String = "",
-    
-    @NotBlank(message = "여행지는 필수입니다")
+
     @Column(nullable = false, length = 100)
-    val destination: String = "",
+    val groupNumber: String = "",
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    val tourName: String = "",
     
     @NotBlank(message = "담당자는 필수입니다")
     @Column(nullable = false, length = 50)

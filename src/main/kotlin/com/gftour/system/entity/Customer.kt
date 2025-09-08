@@ -18,6 +18,9 @@ data class Customer(
     
     @Column(nullable = false)
     val age: Int = 0,
+
+    @Column(nullable = false)
+    val gender: Boolean = false,
     
     @NotBlank(message = "여권번호는 필수입니다")
     @Pattern(regexp = "[A-Z0-9]{8,9}", message = "올바른 여권번호 형식이 아닙니다")

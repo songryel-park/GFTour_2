@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/customers")
-@Tag(name = "Customer", description = "고객명단 관리 API - 이름, 나이, 여권번호")
+@Tag(name = "Customer", description = "고객명단 관리 API - 이름, 나이, 성별, 여권번호")
 class CustomerController(
     private val customerService: CustomerService
 ) {
