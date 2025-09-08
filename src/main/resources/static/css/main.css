@@ -1,8 +1,8 @@
 /* Good Feel Tour Custom Styles */
 
 :root {
-    --gf-primary: #2E86AB;
-    --gf-secondary: #A23B72;
+    --gf-primary: #F4D03F;
+    --gf-secondary: #58D68D;
     --gf-light: #f8f9fa;
     --gf-dark: #343a40;
 }
@@ -26,7 +26,7 @@ body {
 }
 
 .btn-gf-primary:hover {
-    background: linear-gradient(135deg, #246b8a 0%, #8b2d5f 100%);
+    background: linear-gradient(135deg, #8effd0 0%, #8b2d5f 100%);
     color: white;
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);

@@ -50,12 +50,10 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <select class="form-select" id="regionFilter">
-                                    <option value="">全地域</option>
-                                    <option value="서울">서울</option>
-                                    <option value="부산">부산</option>
-                                    <option value="제주">제주</option>
-                                    <option value="경기">경기</option>
+                                <select class="form-select" id="pageSize">
+                                    <option value="10">10個ずつ</option>
+                                    <option value="30">30個ずつ</option>
+                                    <option value="100">100個ずつ</option>
                                 </select>
                             </div>
                             <div class="col-md-2" style="margin: 1%">
@@ -67,13 +65,6 @@
                                         <i class="fas fa-undo me-1"></i>refresh
                                     </button>
                                 </div>
-                            </div>
-                            <div class="col-md-2">
-                                <select class="form-select" id="pageSize">
-                                    <option value="10">10個ずつ</option>
-                                    <option value="30">30個ずつ</option>
-                                    <option value="100">100個ずつ</option>
-                                </select>
                             </div>
                         </div>
                     </div>
@@ -88,8 +79,8 @@
                     <div class="card-header bg-transparent">
                         <div class="d-flex justify-content-between align-items-center">
                             <h6 class="mb-0">
-                                <i class="fas fa-list me-2"></i>AGT 目録
-                                <span class="badge bg-primary ms-2">0件</span>
+                                <i class="fas fa-list me-2"></i>AGT List
+                                <span class="badge bg-info ms-2">0件</span>
                             </h6>
                             <div class="btn-group btn-group-sm" role="group">
                                 <button type="button" class="btn btn-outline-success" id="exportExcel">
@@ -109,10 +100,9 @@
                                             </div>
                                         </th>
                                         <th scope="col">AGT</th>
-                                        <th scope="col">支店/代理店</th>
                                         <th scope="col">担葬者</th>
+                                        <th scope="col">支店/代理店</th>
                                         <th scope="col">住所</th>
-                                        <th scope="col">地域</th>
                                         <th scope="col">Tel.</th>
                                         <th scope="col" width="10%"></th>
                                     </tr>
@@ -128,12 +118,11 @@
                                         <td>
                                             <strong>XX여행사</strong>
                                         </td>
-                                        <td>OO점</td>
                                         <td>박ㅁㅁ</td>
+                                        <td>OO점</td>
                                         <td>
                                             서울특별시 동대문구 전농로 XXX
                                         </td>
-                                        <td><span class="badge bg-info">서울</span></td>
                                         <td>
                                             <i class="fas fa-phone text-muted me-1"></i>064-123-4567
                                             <br><small class="text-muted">
@@ -240,40 +229,17 @@
                                 <div class="invalid-feedback">AGTを入力してください.</div>
                             </div>
                             <div class="col-md-6">
-                                <label for="agencise" class="form-label">支店/代理店</label>
-                                <input type="text" class="form-control" id="agencise" name="agencise">
-                            </div>
-                            <div class="col-md-6">
                                 <label for="managerName" class="form-label">担葬者</label>
                                 <input type="text" class="form-control" id="managerName" name="managerName">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="agencise" class="form-label">支店/代理店</label>
+                                <input type="text" class="form-control" id="agencise" name="agencise">
                             </div>
                             <div class="col-12">
                                 <label for="address" class="form-label">住所</label>
                                 <textarea class="form-control" id="address" name="address" rows="2"
                                           placeholder="詳細住所を入力してください..."></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="region" class="form-label">地域</label>
-                                <select class="form-select" id="region" name="region">
-                                    <option value="">선택하세요</option>
-                                    <option value="서울">서울</option>
-                                    <option value="부산">부산</option>
-                                    <option value="대구">대구</option>
-                                    <option value="인천">인천</option>
-                                    <option value="광주">광주</option>
-                                    <option value="대전">대전</option>
-                                    <option value="울산">울산</option>
-                                    <option value="세종">세종</option>
-                                    <option value="제주">제주</option>
-                                    <option value="경기">경기</option>
-                                    <option value="강원">강원</option>
-                                    <option value="충북">충북</option>
-                                    <option value="충남">충남</option>
-                                    <option value="전북">전북</option>
-                                    <option value="전남">전남</option>
-                                    <option value="경북">경북</option>
-                                    <option value="경남">경남</option>
-                                </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="tellNumber" class="form-label">Tel.</label>
