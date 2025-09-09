@@ -18,7 +18,7 @@ data class FileRecord(
     val groupNumber: String = "",
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    val tourName: String = "",
+    val tourTitle: String = "",
     
     @NotBlank(message = "담당자는 필수입니다")
     @Column(nullable = false, length = 50)
