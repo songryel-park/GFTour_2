@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" 
+<html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       th:replace="~{layout/base :: html}">
@@ -13,403 +13,936 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts - Noto Sans KR -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+        .table th:first-child, .table td:first-child {
+            text-align: left;
+        }
+        .table th:last-child, .table td:last-child {
+            text-align: right;
+            padding-right: 15px;
+        }
+
+        /* 호텔 테이블 정렬 */
+        #hotelTable {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        #hotelTable th:nth-child(1) { width: 20%; }
+        #hotelTable th:nth-child(2) { width: 15%; }
+        #hotelTable th:nth-child(3) { width: 15%; }
+        #hotelTable th:nth-child(4) { width: 10%; }
+        #hotelTable th:nth-child(5) { width: 10%; }
+        #hotelTable th:nth-child(6) { width: 10%; }
+        #hotelTable th:nth-child(7) { width: 20%; }
+        #hotelTable th:nth-child(8) { width: 10%; }
+        #hotelTable th:last-child,
+        #hotelTable td:last-child {
+            text-align: right;
+            padding-right: 15px;
+        }
+
+        /* 고객 테이블 정렬 */
+        #customerTable {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        #customerTable th:nth-child(1) { width: 25%; }
+        #customerTable th:nth-child(2) { width: 15%; }
+        #customerTable th:nth-child(3) { width: 15%; }
+        #customerTable th:nth-child(4) { width: 30%; }
+        #customerTable th:nth-child(5) { width: 10%; }
+        #customerTable th:last-child,
+        #customerTable td:last-child {
+            text-align: right;
+            padding-right: 15px;
+        }
+
+        /* 금액 테이블 정렬 */
+        .total-row {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            border-top: 2px solid #dee2e6;
+        }
+        .currency-input {
+            text-align: right;
+        }
+        #estimateTable, #arrangementTable {
+            table-layout: fixed;
+            width: 100%;
+        }
+        #estimateTable th:nth-child(1), #arrangementTable th:nth-child(1) { width: 25%; }
+        #estimateTable th:nth-child(2), #arrangementTable th:nth-child(2) { width: 15%; }
+        #estimateTable th:nth-child(3), #arrangementTable th:nth-child(3) { width: 10%; }
+        #estimateTable th:nth-child(4), #arrangementTable th:nth-child(4) { width: 20%; }
+        #estimateTable th:nth-child(5), #arrangementTable th:nth-child(5) { width: 10%; }
+        #estimateTable th:nth-child(6), #arrangementTable th:nth-child(6) { width: 20%; }
+        #estimateTable th:nth-child(7), #arrangementTable th:nth-child(7) { width: 5%; }
+    </style>
 </head>
 <body>
-    <div th:block="content">
-        <!-- Page Header -->
-        <div class="row mb-3">
-            <div class="col">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h2 class="gf-secondary mb-0">
-                            <i class="fas fa-tachometer-alt me-2"></i>File Info
-                        </h2>
-                    </div>
-                    <div>
-                        <a th:href="@{/files}" class="btn btn-outline-secondary me-2">
-                            <i class="fas fa-home me-2"></i>Home
-                        </a>
-                    </div>
+<div th:block="content">
+    <!-- Page Header -->
+    <div class="row mb-3">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="gf-secondary mb-0">
+                        <i class="fas fa-tachometer-alt me-2"></i>File Info
+                    </h2>
+                </div>
+                <div>
+                    <a th:href="@{/files}" class="btn btn-outline-secondary me-2">
+                        <i class="fas fa-home me-2"></i>Home
+                    </a>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Registration Form -->
-        <form th:action="@{/files/new}" method="post" class="needs-validation" novalidate>
-            <div class="row">
-                <!-- Main Information -->
-                <div class="col-9">
-                    <div class="card border-0 shadow-sm mb-4">
-                        <div class="card-body">
-                            <div class="row g-3">
-                                <!-- REF.No (Auto-generated) -->
-                                <div class="col-md-4">
-                                    <label for="refNo" class="form-label"><strong>REF.No</strong></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="refNo" name="refNo" 
-                                               value="GF20240101001" readonly>
-                                        <button class="btn btn-outline-secondary" type="button" id="generateRefNo">
-                                            <i class="fas fa-sync-alt"></i>
-                                        </button>
-                                    </div>
-                                    <div class="form-text">REF.No는 GF + YYYYMMDD + 3자리 순번으로 자동 생성됩니다.</div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="destination" class="form-label"><strong>団体番号</strong></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="groupNum" name="groupNum">
-                                    </div>
-                                </div>
-
-                                <!-- Destination -->
-                                <div class="col-md-8">
-                                    <label for="destination" class="form-label">ツアー名</label>
-                                    <input type="text" class="form-control" id="destination" name="destination" 
-                                           placeholder="예: 제주도 3박 4일" required>
-                                    <div class="invalid-feedback">투어명을 입력해주세요.</div>
-                                </div>
-
-                                <!-- Agency -->
-                                <div class="col-md-4">
-                                    <label for="manager" class="form-label">AGT</label>
-                                    <input type="text" class="form-control" id="agency" name="agency"
-                                           placeholder="에이전트" required>
-                                    <div class="invalid-feedback">AGT를 지정해주세요.</div>
-                                </div>
-
-                                <!-- Branch -->
-                                <div class="col-md-3">
-                                    <label for="branch" class="form-label">支店/代理店</label>
-                                    <input type="text" class="form-control" id="branch" name="branch"
-                                           placeholder="지점/대리점">
-                                </div>
-
-                                <!-- Address -->
-                                <div class="col-md-6">
-                                    <label for="agency" class="form-label">住所</label>
-                                    <input type="text" class="form-control" id="address" name="address"
-                                           placeholder="주소">
-                                </div>
-
-                                <!-- Manager -->
-                                <div class="col-md-3">
-                                    <label for="manager" class="form-label">担葬者</label>
-                                    <input type="text" class="form-control" id="manager" name="manager"
-                                           placeholder="담당자" required>
-                                    <div class="invalid-feedback">담당자를 입력해주세요.</div>
-                                </div>
-
-                                <!-- Tel -->
-                                <div class="col-md-3">
-                                    <label for="manager" class="form-label">
-                                        <i class="fas fa-phone text-muted me-1"></i>
-                                    </label>
-                                    <input type="text" class="form-control" id="telNumber" name="telNum"
-                                           placeholder="전화번호" required>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <label for="manager" class="form-label">
-                                        <i class="fas fa-fax text-muted me-1"></i>
-                                    </label>
-                                    <input type="text" class="form-control" id="faxNumber" name="faxNum"
-                                           placeholder="FAX번호" required>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <label for="manager" class="form-label">
-                                        <i class="fas fa-envelopes-bulk text-muted me-1"></i>
-                                    </label>
-                                    <input type="text" class="form-control" id="post" name="post"
-                                           placeholder="우편번호" required>
-                                </div>
-
-                                <!-- Airport Select -->
-                                <div class="col-md-3">
-                                    <label class="form-label">
-                                        <i class="fas fa-plane text-muted me-1"></i>
-                                    </label>
-                                    <div class="form-check-container bg-light p-2 rounded" style="text-align: center">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="selAirport" name="airports" value="SEL">
-                                            <label class="form-check-label" for="selAirport">SEL</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="pusAirport" name="airports" value="PUS">
-                                            <label class="form-check-label" for="pusAirport">PUS</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="cjuAirport" name="airports" value="CJU">
-                                            <label class="form-check-label" for="cjuAirport">CJU</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Air Code1 -->
-                                <div class="col-md-2">
-                                    <label for="manager" class="form-label">CODE</label>
-                                    <input type="text" class="form-control" id="code1" name="code1"
-                                           placeholder="항공코드" required>
-                                    <div class="invalid-feedback">항공코드를 입력해주세요.</div>
-                                </div>
-
-                                <!-- Travel Dates -->
-                                <div class="col-md-3">
-                                    <label for="travelStartDate" class="form-label">出国</label>
-                                    <input type="datetime-local" class="form-control" id="travelStartDate" name="departDate">
-                                </div>
-
-                                <!-- Air Code2 -->
-                                <div class="col-md-2">
-                                    <label for="manager" class="form-label">CODE</label>
-                                    <input type="text" class="form-control" id="code2" name="code2"
-                                           placeholder="항공코드" required>
-                                    <div class="invalid-feedback">항공코드를 입력해주세요.</div>
-                                </div>
-
-                                <!-- Travel Dates -->
-                                <div class="col-md-3">
-                                    <label for="travelEndDate" class="form-label">帰国</label>
-                                    <input type="datetime-local" class="form-control" id="travelEndDate" name="returnDate">
-                                </div>
-
-                                <!-- Customer Count -->
-                                <div class="col-md-2">
-                                    <label for="customerCount" class="form-label"><i class="fas fa-users me-2"></i></label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control text-center" id="customerCount"
-                                               name="customerCount" value="0" min="0" max="1000">
-                                        <span class="input-group-text">人</span>
-                                    </div>
-                                </div>
-
-                                <!-- Notes -->
-                                <div class="col-12">
-                                    <label for="notes" class="form-label">etc.</label>
-                                    <textarea class="form-control" id="notes" name="notes" rows="3" 
-                                              placeholder="추가 정보나 특이사항을 입력하세요..."></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Customer Information -->
-                    <div class="col-4">
-                        <div class="card border-0 shadow-sm mb-4">
-                            <div class="card-header bg-transparent">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h6 class="mb-0">
-                                        <i class="fas fa-users me-2"></i>顧客名簿
-                                    </h6>
-                                    <button type="button" class="btn btn-sm btn-outline-success" id="addCustomer">
-                                        <i class="fas fa-plus me-1"></i>追加
+    <!-- Registration Form -->
+    <form th:action="@{/files/new}" method="post" class="needs-validation" novalidate>
+        <div class="row">
+            <!-- Main Information -->
+            <div class="col-9">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <!-- REF.No (Auto-generated) -->
+                            <div class="col-md-4">
+                                <label for="refNo" class="form-label"><strong>REF.No</strong></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="refNo" name="refNo"
+                                           value="GF20240101001" readonly>
+                                    <button class="btn btn-outline-secondary" type="button" id="generateRefNo">
+                                        <i class="fas fa-sync-alt"></i>
                                     </button>
                                 </div>
+                                <div class="form-text">REF.No는 GF + YYYYMMDD + 3자리 순번으로 자동생성됩니다.</div>
                             </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-sm" id="customerTable">
-                                        <thead class="bg-light">
-                                        <tr>
-                                            <th>名前</th>
-                                            <th>年齢</th>
-                                            <th>性別</th>
-                                            <th>Passport</th>
-                                            <th>管理</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="customerList">
-                                        <!-- Customer rows will be added dynamically -->
-                                        </tbody>
-                                    </table>
-                                    <div id="noCustomers" class="text-center text-muted py-3">
-                                        <i class="fas fa-user-plus fa-2x mb-2"></i>
-                                        <p class="mb-0">고객을 추가해주세요.</p>
+
+                            <div class="col-md-4">
+                                <label for="destination" class="form-label"><strong>団体番号</strong></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="groupNum" name="groupNum"
+                                           placeholder="단체번호" required>
+                                </div>
+                            </div>
+
+                            <!-- Destination -->
+                            <div class="col-md-8">
+                                <label for="destination" class="form-label">ツアー名</label>
+                                <input type="text" class="form-control" id="destination" name="destination"
+                                       placeholder="여행주제" required>
+                                <div class="invalid-feedback">여행주제를 입력해주세요.</div>
+                            </div>
+
+                            <!-- Agency -->
+                            <div class="col-md-4">
+                                <label for="manager" class="form-label">AGT</label>
+                                <input type="text" class="form-control" id="agency" name="agency"
+                                       placeholder="에이전트" required>
+                                <div class="invalid-feedback">AGT를 지정해주세요.</div>
+                            </div>
+
+                            <!-- Branch -->
+                            <div class="col-md-3">
+                                <label for="branch" class="form-label">支店/代理店</label>
+                                <input type="text" class="form-control" id="branch" name="branch"
+                                       placeholder="지점/대리점">
+                            </div>
+
+                            <!-- Address -->
+                            <div class="col-md-6">
+                                <label for="agency" class="form-label">住所</label>
+                                <input type="text" class="form-control" id="address" name="address"
+                                       placeholder="주소">
+                            </div>
+
+                            <!-- Manager -->
+                            <div class="col-md-3">
+                                <label for="manager" class="form-label">担葬者</label>
+                                <input type="text" class="form-control" id="manager" name="manager"
+                                       placeholder="담당자" required>
+                                <div class="invalid-feedback">담당자를 입력해주세요.</div>
+                            </div>
+
+                            <!-- Tel -->
+                            <div class="col-md-3">
+                                <label for="manager" class="form-label">
+                                    <i class="fas fa-phone text-muted me-1"></i>
+                                </label>
+                                <input type="text" class="form-control" id="telNumber" name="telNum"
+                                       placeholder="전화번호" required>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="manager" class="form-label">
+                                    <i class="fas fa-fax text-muted me-1"></i>
+                                </label>
+                                <input type="text" class="form-control" id="faxNumber" name="faxNum"
+                                       placeholder="FAX번호" required>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="manager" class="form-label">
+                                    <i class="fas fa-envelopes-bulk text-muted me-1"></i>
+                                </label>
+                                <input type="text" class="form-control" id="post" name="post"
+                                       placeholder="우편번호" required>
+                            </div>
+
+                            <!-- Airport Select -->
+                            <div class="col-md-3">
+                                <label class="form-label">
+                                    <i class="fas fa-plane text-muted me-1"></i>
+                                </label>
+                                <div class="form-check-container bg-light p-2 rounded" style="text-align: center">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="selAirport" name="airports" value="SEL">
+                                        <label class="form-check-label" for="selAirport">SEL</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="pusAirport" name="airports" value="PUS">
+                                        <label class="form-check-label" for="pusAirport">PUS</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="cjuAirport" name="airports" value="CJU">
+                                        <label class="form-check-label" for="cjuAirport">CJU</label>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Sidebar -->
-                <div class="col-lg-3">
-                    <!-- Actions -->
-                    <div class="card border-0 shadow-sm mb-4">
-                        <div class="card-header bg-transparent">
-                            <h6 class="mb-0">
-                                <i class="fas fa-cog me-2"></i>
-                            </h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-outline-primary">
-                                    <i class="fas fa-save me-2"></i>Save
-                                </button>
-                                <button type="button" class="btn btn-outline-info" id="saveDraft">
-                                    <i class="fas fa-file-alt me-2"></i>Temporary
-                                </button>
-                                <a th:href="@{/files}" class="btn btn-outline-warning">
-                                    <i class="fas fa-times me-2"></i>Cancel
-                                </a>
+                            <!-- Air Code1 -->
+                            <div class="col-md-2">
+                                <label for="manager" class="form-label">CODE</label>
+                                <input type="text" class="form-control" id="code1" name="code1"
+                                       placeholder="항공코드" required>
+                                <div class="invalid-feedback">항공코드를 입력해주세요.</div>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- File Status -->
-                    <div class="card border-0 shadow-sm mb-4">
-                        <div class="card-body">
-                            <div class="row g-2 text-sm">
-                                <div class="col-4 text-muted">State:</div>
-                                <div class="col-8">
-                                    <span class="badge bg-warning">신규</span>
+                            <!-- Travel Dates -->
+                            <div class="col-md-3">
+                                <label for="travelStartDate" class="form-label">出国</label>
+                                <input type="datetime-local" class="form-control" id="travelStartDate" name="departDate">
+                            </div>
+
+                            <!-- Air Code2 -->
+                            <div class="col-md-2">
+                                <label for="manager" class="form-label">CODE</label>
+                                <input type="text" class="form-control" id="code2" name="code2"
+                                       placeholder="항공코드" required>
+                                <div class="invalid-feedback">항공코드를 입력해주세요.</div>
+                            </div>
+
+                            <!-- Travel Dates -->
+                            <div class="col-md-3">
+                                <label for="travelEndDate" class="form-label">帰国</label>
+                                <input type="datetime-local" class="form-control" id="travelEndDate" name="returnDate">
+                            </div>
+
+                            <!-- Customer Count -->
+                            <div class="col-md-2">
+                                <label for="customerCount" class="form-label"><i class="fas fa-users me-2"></i></label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control text-center" id="customerCount"
+                                           name="customerCount" value="0" min="0" max="1000">
+                                    <span class="input-group-text">人</span>
                                 </div>
-                                <div class="col-4 text-muted">作成者:</div>
-                                <div class="col-8" sec:authentication="name">사용자명</div>
-                                <div class="col-4 text-muted">作成時間:</div>
-                                <div class="col-8" th:text="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm')}">작성시간</div>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- Quick Actions -->
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-header bg-transparent">
-                            <h6 class="mb-0">
-                                <i class="fas fa-bolt me-2"></i>빠른 작업
-                            </h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-grid gap-2">
-                                <button type="button" class="btn btn-sm btn-outline-primary" disabled>
-                                    <i class="fas fa-file-invoice me-2"></i>견적서 생성
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-primary" disabled>
-                                    <i class="fas fa-calendar me-2"></i>일정 관리
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-primary" disabled>
-                                    <i class="fas fa-chart-line me-2"></i>정산 관리
-                                </button>
-                            </div>
-                            <div class="form-text mt-2">
-                                <i class="fas fa-info-circle me-1"></i>
-                                파일 저장 후 이용 가능합니다.
+                            <!-- Notes -->
+                            <div class="col-12">
+                                <label for="notes" class="form-label">etc.</label>
+                                <textarea class="form-control" id="notes" name="notes" rows="3"
+                                          placeholder="추가 정보나 특이사항을 입력하세요..."></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
 
-    <!-- Customer Modal -->
-    <div class="modal fade" id="customerModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">顧客情報</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="customerForm">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="customerName" class="form-label">名前</label>
-                                <input type="text" class="form-control" id="customerName" required>
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+                <!-- Company Info -->
+                <div class="card border-1 shadow-sm mb-4">
+                    <div class="card-header bg-transparent">
+                        <h4 class="mb-0">(株) Good Feel Tour 本社</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <div class="col-12">
+                                <i class="fas fa-map-location-dot text-muted me-1"> : ソウル特別市 東大門区 祭基路 103-161 2階</i>
                             </div>
-                            <div class="col-md-6">
-                                <label for="customerAge" class="form-label">年齢</label>
-                                <input type="number" class="form-control" id="customerAge" min="0" max="150">
+                            <div class="col-12">
+                                <i class="fas fa-phone text-muted me-1"> : 090-8958-4546 /</i>
+                                <i class="fas fa-fax text-muted me-1"> : 02-963-7559</i>
                             </div>
-                            <div class="col-md-6">
-                                <label for="customerAge" class="form-label">性別</label>
-                                <input type="text" class="form-control" id="customerGender" min="0" max="150">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="customerPassport" class="form-label">Passport</label>
-                                <input type="text" class="form-control" id="customerPassport" 
-                                       placeholder="A12345678" maxlength="9">
+                            <div class="col-12">
+                                <i class="fas fa-envelope text-muted me-1"></i>: gftour@goodfeeltour.co.kr
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="saveCustomer">save</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+
+                <!-- Actions -->
+                <div class="card border-1 shadow-sm mb-3">
+                    <div class="card-header bg-transparent">
+                        <h6 class="mb-0">
+                            <i class="fas fa-cog me-2"></i>
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-outline-primary">
+                                <i class="fas fa-save me-2"></i>Save
+                            </button>
+                            <button type="button" class="btn btn-outline-info" id="saveDraft">
+                                <i class="fas fa-file-alt me-2"></i>Temporary
+                            </button>
+                            <a th:href="@{/files}" class="btn btn-outline-warning">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File Status -->
+                <div class="card border-1 shadow-sm mb-3">
+                    <div class="card-body">
+                        <div class="row g-2 text-sm">
+                            <div class="col-4 text-muted">State:</div>
+                            <div class="col-8">
+                                <span class="badge bg-warning">신규</span>
+                            </div>
+                            <div class="col-4 text-muted">作成者:</div>
+                            <div class="col-8" sec:authentication="name">사용자명</div>
+                            <div class="col-4 text-muted">作成時間:</div>
+                            <div class="col-8" th:text="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm')}">작성시간</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hotel Information and Customer Information Row -->
+            <div class="row">
+                <!-- Hotel Information -->
+                <div class="col-md-8">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-transparent">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-hotel me-2"></i>Hotel
+                                </h5>
+                                <button type="button" class="btn btn-sm btn-outline-success" id="addInfo1">
+                                    <i class="fas fa-plus me-1"></i>追加
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm" id="hotelTable">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th>ホテル名</th>
+                                        <th>宿泊日</th>
+                                        <th>食事</th>
+                                        <th>Type</th>
+                                        <th>数</th>
+                                        <th>回答</th>
+                                        <th>備考</th>
+                                        <th>-</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="hotelList">
+                                    <!-- Hotel rows will be added dynamically -->
+                                    </tbody>
+                                </table>
+                                <div id="noHotel" class="text-center text-muted py-3">
+                                    <i class="fas fa-plus fa-2x mb-2"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Information -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-transparent">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-users me-2"></i>顧客名簿
+                                </h5>
+                                <button type="button" class="btn btn-sm btn-outline-success" id="addInfo2">
+                                    <i class="fas fa-plus me-1"></i>追加
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm" id="customerTable">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th>名前</th>
+                                        <th>年齢</th>
+                                        <th>性別</th>
+                                        <th>Passport</th>
+                                        <th>-</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="customerList">
+                                    <!-- Customer rows will be added dynamically -->
+                                    </tbody>
+                                </table>
+                                <div id="noCustomers" class="text-center text-muted py-3">
+                                    <i class="fas fa-user-plus fa-2x mb-2"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Information -->
+            <div class="col-12">
+                <div class="card border-0 mb-4">
+                    <div class="card-header bg-transparent">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="fas fa-calendar-alt me-2"></i>日程
+                            </h5>
+                            <div class="card-body">
+                                <textarea class="form-control" id="schedule" name="schedule" rows="7"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sheet Information -->
+            <div class="col-10">
+                <!-- Estimate -->
+                <div class="card border-0 mb-4">
+                    <div class="card-header bg-transparent">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="fas fa-won-sign me-2"></i>見積書用
+                            </h5>
+                            <button type="button" class="btn btn-sm btn-outline-success" id="addInfo3">
+                                <i class="fas fa-plus me-1"></i>追加
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm" id="estimateTable">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th>費目</th>
+                                        <th>単価</th>
+                                        <th>数</th>
+                                        <th>KRW</th>
+                                        <th>Rate</th>
+                                        <th>JPY</th>
+                                        <th>-</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="estimateList">
+                                    <!-- Hotel rows will be added dynamically -->
+                                    </tbody>
+                                    <tfoot>
+                                    <tr class="total-row">
+                                        <td colspan="3">合計</td>
+                                        <td id="estimateTotalKrw">₩ 0</td>
+                                        <td>-</td>
+                                        <td id="estimateTotalJpy">¥ 0</td>
+                                        <td>-</td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div id="noEstimate" class="text-center text-muted py-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arrangement -->
+                <div class="card border-0 mb-4">
+                    <div class="card-header bg-transparent">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="fas fa-yen-sign me-3"></i>手配書用
+                            </h5>
+                            <button type="button" class="btn btn-sm btn-outline-success" id="addInfo4">
+                                <i class="fas fa-plus me-1"></i>追加
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm" id="arrangementTable">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th>費目</th>
+                                        <th>単価</th>
+                                        <th>数</th>
+                                        <th>KRW</th>
+                                        <th>Rate</th>
+                                        <th>JPY</th>
+                                        <th>-</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="arrangementList">
+                                    <!-- Hotel rows will be added dynamically -->
+                                    </tbody>
+                                    <tfoot>
+                                    <tr class="total-row">
+                                        <td colspan="3">合計</td>
+                                        <td id="arrangementTotalKrw">₩ 0</td>
+                                        <td>-</td>
+                                        <td id="arrangementTotalJpy">¥ 0</td>
+                                        <td>-</td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div id="noArrangement" class="text-center text-muted py-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="col-lg-2">
+                <div class="card border-1 shadow-sm">
+                    <div class="card-header bg-transparent">
+                        <h5 class="mb-0">
+                            <i class="fas fa-file-invoice me-2"></i>
+                            <span class="badge bg-info">문서작업</span>
+                        </h5>
+                        <small>파일 저장 후 이용 가능합니다.</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-3">
+                            <button type="button" class="btn btn-sm btn-outline-info" disabled>見積書</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" disabled>手配書</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" disabled>HOTEL & その他</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" disabled>Final</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" disabled>請求書</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" disabled>連絡台帳</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" disabled>顧客名簿</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" disabled>団体行事指針書</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" disabled>外国人観光行事精算報吿書</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </form>
+</div>
+
+              <!----------                          MODAL                                   ---------->
+
+<!-- Hotel Modal -->
+<div class="modal fade" id="hotelModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Hotel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="hotelForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="hotelName" class="form-label">ホテル名</label>
+                            <input type="text" class="form-control" id="hotelName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="stayDate" class="form-label">宿泊日</label>
+                            <input type="text" class="form-control" id="stayDate" min="0" max="150">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">食事</label>
+                            <div class="form-check-container bg-light p-2 rounded" style="text-align: center">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="breakfast" name="airports" value="SEL">
+                                    <label class="form-check-label" for="breakfast">朝 </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="lunch" name="airports" value="PUS">
+                                    <label class="form-check-label" for="lunch">中 </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="dinner" name="airports" value="CJU">
+                                    <label class="form-check-label" for="dinner">夕 </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="room" class="form-label">Type</label>
+                            <input type="text" class="form-control" id="room" maxlength="10">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="amount" class="form-label">数</label>
+                            <input type="number" class="form-control" id="amount" maxlength="10">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="reply" class="form-label">回答</label>
+                            <input type="text" class="form-control" id="reply" maxlength="100">
+                        </div>
+                        <div class="col-md-12">
+                            <label for="comment" class="form-label">備考</label>
+                            <input type="text" class="form-control" id="comment" maxlength="100">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="saveHotel">save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+            </div>
+        </div>
     </div>
+</div>
 
-    <!-- Additional JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let customerIndex = 0;
+<!-- Customer Modal -->
+<div class="modal fade" id="customerModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">顧客情報</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customerForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="customerName" class="form-label">名前</label>
+                            <input type="text" class="form-control" id="customerName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="customerAge" class="form-label">年齢</label>
+                            <input type="number" class="form-control" id="customerAge" min="0" max="150">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="customerAge" class="form-label">性別</label>
+                            <input type="text" class="form-control" id="customerGender" min="0" max="150">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="customerPassport" class="form-label">Passport</label>
+                            <input type="text" class="form-control" id="customerPassport"
+                                   placeholder="A12345678" maxlength="9">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="saveCustomer">save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-            // Customer count controls
-            document.getElementById('decreaseCount').addEventListener('click', function() {
-                const input = document.getElementById('customerCount');
-                const currentValue = parseInt(input.value);
-                if (currentValue > 0) {
-                    input.value = currentValue - 1;
+<!-- 견적서 항목 추가 모달 -->
+<div class="modal fade" id="estimateModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">見積書 項目</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="estimateForm">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="estimateItem" class="form-label">費目</label>
+                            <input type="text" class="form-control" id="estimateItem" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="estimateUnitPrice" class="form-label">単価</label>
+                            <input type="number" class="form-control currency-input" id="estimateUnitPrice" min="0" step="1000" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="estimateQuantity" class="form-label">数</label>
+                            <input type="number" class="form-control" id="estimateQuantity" min="1" value="1" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="estimateRate" class="form-label">Rate</label>
+                            <input type="number" class="form-control currency-input" id="estimateRate" min="0" step="0.01" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">合計</label>
+                            <input type="text" class="form-control" id="estimatePreview" readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="saveEstimate">save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 수배서 항목 추가 모달 -->
+<div class="modal fade" id="arrangementModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">手配書 項目</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="arrangementForm">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="arrangementItem" class="form-label">費目</label>
+                            <input type="text" class="form-control" id="arrangementItem" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="arrangementUnitPrice" class="form-label">単価</label>
+                            <input type="number" class="form-control currency-input" id="arrangementUnitPrice" min="0" step="1000" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="arrangementQuantity" class="form-label">数</label>
+                            <input type="number" class="form-control" id="arrangementQuantity" min="1" value="1" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="arrangementRate" class="form-label">Rate</label>
+                            <input type="number" class="form-control currency-input" id="arrangementRate" min="0" step="0.01" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">合計</label>
+                            <input type="text" class="form-control" id="arrangementPreview" readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="saveArrangement">save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Additional JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let hotelIndex = 0;
+        let customerIndex = 0;
+
+        // Customer count controls
+        document.getElementById('decreaseCount')?.addEventListener('click', function() {
+            const input = document.getElementById('customerCount');
+            const currentValue = parseInt(input.value);
+            if (currentValue > 0) {
+                input.value = currentValue - 1;
+            }
+        });
+
+        document.getElementById('increaseCount')?.addEventListener('click', function() {
+            const input = document.getElementById('customerCount');
+            const currentValue = parseInt(input.value);
+            if (currentValue < 1000) {
+                input.value = currentValue + 1;
+            }
+        });
+
+        // REF.No generation
+        document.getElementById('generateRefNo').addEventListener('click', function() {
+            const now = new Date();
+            const year = now.getUTCFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const sequence = String(Math.floor(Math.random() * 999) + 1).padStart(3, '0');
+
+            document.getElementById('refNo').value = `GF${year}${month}${day}${sequence}`;
+        });
+
+        // Hotel management
+        const hotelModal = new bootstrap.Modal(document.getElementById('hotelModal'));
+
+        document.getElementById('addInfo1').addEventListener('click', function() {
+            // Clear form
+            document.getElementById('hotelForm').reset();
+            // 체크박스들도 초기화
+            document.getElementById('breakfast').checked = false;
+            document.getElementById('lunch').checked = false;
+            document.getElementById('dinner').checked = false;
+            hotelModal.show();
+        });
+
+        document.getElementById('saveHotel').addEventListener('click', function() {
+            const hotelName = document.getElementById('hotelName').value;
+            const stayDate = document.getElementById('stayDate').value;
+            const room = document.getElementById('room').value;
+            const amount = document.getElementById('amount').value;
+            const reply = document.getElementById('reply').value;
+            const comment = document.getElementById('comment').value;
+
+            // 식사 체크박스 값들 가져오기
+            const breakfast = document.getElementById('breakfast').checked ? '朝' : '';
+            const lunch = document.getElementById('lunch').checked ? '中' : '';
+            const dinner = document.getElementById('dinner').checked ? '夕' : '';
+            const meals = [breakfast, lunch, dinner].filter(meal => meal).join(' ');
+
+            if (!hotelName) {
+                alert('호텔명을 입력해주세요.');
+                return;
+            }
+
+            addHotelToTable(hotelName, stayDate, meals, room, amount, reply, comment);
+            hotelModal.hide();
+        });
+
+        function addHotelToTable(hotelName, stayDate, meals, room, amount, reply, comment) {
+            const tbody = document.getElementById('hotelList');
+            const noHotel = document.getElementById('noHotel');
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                    <td>${hotelName}</td>
+                    <td>${stayDate || '-'}</td>
+                    <td>${meals || '-'}</td>
+                    <td>${room || '-'}</td>
+                    <td>${amount || '-'}</td>
+                    <td>${reply || '-'}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <span class="me-2" title="${comment}">${comment ? (comment.length > 25 ? comment.substring(0, 25) + '...' : comment) : '-'}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-danger remove-hotel">
+                                <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                     `;
+
+            tbody.appendChild(row);
+            noHotel.style.display = 'none';
+            hotelIndex++;
+
+            // Add update functionality
+            row.querySelector('.remove-hotel').addEventListener('click', function() {
+                if (confirm('이 호텔 정보를 삭제하시겠습니까?')) {
+                    row.remove();
+
+                    if (tbody.children.length === 0) {
+                        noHotel.style.display = 'block';
+                    }
                 }
             });
+        }
 
-            document.getElementById('increaseCount').addEventListener('click', function() {
-                const input = document.getElementById('customerCount');
-                const currentValue = parseInt(input.value);
-                if (currentValue < 1000) {
-                    input.value = currentValue + 1;
-                }
-            });
+        // 호텔 테이블의 행을 편집할 수 있도록 더블클릭 이벤트 추가 (선택사항)
+        document.getElementById('hotelList').addEventListener('dblclick', function(e) {
+            if (e.target.closest('tr') && !e.target.closest('button')) {
+                const row = e.target.closest('tr');
+                const cells = row.querySelectorAll('td');
 
-            // REF.No generation
-            document.getElementById('generateRefNo').addEventListener('click', function() {
-                const now = new Date();
-                const year = now.getUTCFullYear();
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const day = String(now.getDate()).padStart(2, '0');
-                const sequence = String(Math.floor(Math.random() * 999) + 1).padStart(3, '0');
-                
-                document.getElementById('refNo').value = `GF${year}${month}${day}${sequence}`;
-            });
+                // 기존 데이터로 모달 폼 채우기
+                document.getElementById('hotelName').value = cells[0].textContent;
+                document.getElementById('stayDate').value = cells[1].textContent === '-' ? '' : cells[1].textContent;
+                document.getElementById('room').value = cells[3].textContent === '-' ? '' : cells[3].textContent;
+                document.getElementById('amount').value = cells[4].textContent === '-' ? '' : cells[4].textContent;
+                document.getElementById('reply').value = cells[5].textContent === '-' ? '' : cells[5].textContent;
 
-            // Customer management
-            const customerModal = new bootstrap.Modal(document.getElementById('customerModal'));
-            
-            document.getElementById('addCustomer').addEventListener('click', function() {
-                // Clear form
-                document.getElementById('customerForm').reset();
-                customerModal.show();
-            });
+                // 식사 체크박스 설정
+                const meals = cells[2].textContent;
+                document.getElementById('breakfast').checked = meals.includes('朝');
+                document.getElementById('lunch').checked = meals.includes('中');
+                document.getElementById('dinner').checked = meals.includes('夕');
 
-            document.getElementById('saveCustomer').addEventListener('click', function() {
-                const name = document.getElementById('customerName').value;
-                const age = document.getElementById('customerAge').value;
-                const passport = document.getElementById('customerPassport').value;
-                const phone = document.getElementById('customerPhone').value;
+                // 비고 필드 설정 (수정된 부분)
+                const commentSpan = cells[6].querySelector('span');
+                document.getElementById('comment').value = commentSpan.getAttribute('title') || '';
 
-                if (!name) {
-                    alert('고객 이름을 입력해주세요.');
-                    return;
-                }
+                // 저장 버튼을 업데이트 모드로 변경
+                const saveButton = document.getElementById('saveHotel');
+                const originalSaveFunction = saveButton.onclick; // 원래 함수 저장
 
-                addCustomerToTable(name, age, passport, phone);
-                updateCustomerCount();
-                customerModal.hide();
-            });
+                saveButton.textContent = 'update';
+                saveButton.onclick = function() {
+                    // 업데이트 로직
+                    const hotelName = document.getElementById('hotelName').value;
+                    if (!hotelName) {
+                        alert('호텔명을 입력해주세요.');
+                        return;
+                    }
 
-            function addCustomerToTable(name, age, passport, phone) {
-                const tbody = document.getElementById('customerList');
-                const noCustomers = document.getElementById('noCustomers');
-                
-                const row = document.createElement('tr');
-                row.innerHTML = `
+                    // 기존 행 삭제
+                    row.remove();
+
+                    // 새로운 데이터로 행 추가
+                    const stayDate = document.getElementById('stayDate').value;
+                    const room = document.getElementById('room').value;
+                    const amount = document.getElementById('amount').value;
+                    const reply = document.getElementById('reply').value;
+                    const comment = document.getElementById('comment').value;
+
+                    const breakfast = document.getElementById('breakfast').checked ? '朝' : '';
+                    const lunch = document.getElementById('lunch').checked ? '中' : '';
+                    const dinner = document.getElementById('dinner').checked ? '夕' : '';
+                    const meals = [breakfast, lunch, dinner].filter(meal => meal).join(' ');
+
+                    addHotelToTable(hotelName, stayDate, meals, room, amount, reply, comment);
+
+                    // 저장 버튼을 원래 상태로 복원
+                    saveButton.textContent = 'save';
+                    saveButton.onclick = originalSaveFunction;
+                    hotelModal.hide();
+                };
+                hotelModal.show();
+            }
+        });
+
+        // Customer management
+        const customerModal = new bootstrap.Modal(document.getElementById('customerModal'));
+
+        document.getElementById('addInfo2').addEventListener('click', function() {
+            // Clear form
+            document.getElementById('customerForm').reset();
+            customerModal.show();
+        });
+
+        document.getElementById('saveCustomer').addEventListener('click', function() {
+            const name = document.getElementById('customerName').value;
+            const age = document.getElementById('customerAge').value;
+            const gender = document.getElementById('customerGender').value;
+            const passport = document.getElementById('customerPassport').value;
+
+            if (!name) {
+                alert('고객 이름을 입력해주세요.');
+                return;
+            }
+
+            addCustomerToTable(name, age, gender, passport);
+            updateCustomerCount();
+            customerModal.hide();
+        });
+
+        function addCustomerToTable(name, age, gender, passport) {
+            const tbody = document.getElementById('customerList');
+            const noCustomers = document.getElementById('noCustomers');
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
                     <td>${name}</td>
                     <td>${age || '-'}</td>
+                    <td>${gender || '-'}</td>
                     <td>${passport || '-'}</td>
-                    <td>${phone || '-'}</td>
                     <td>
                         <button type="button" class="btn btn-sm btn-outline-danger remove-customer">
                             <i class="fas fa-trash"></i>
@@ -417,55 +950,269 @@
                     </td>
                 `;
 
-                tbody.appendChild(row);
-                noCustomers.style.display = 'none';
-                customerIndex++;
+            tbody.appendChild(row);
+            noCustomers.style.display = 'none';
+            customerIndex++;
 
-                // Add remove functionality
-                row.querySelector('.remove-customer').addEventListener('click', function() {
-                    row.remove();
-                    updateCustomerCount();
-                    
-                    if (tbody.children.length === 0) {
-                        noCustomers.style.display = 'block';
-                    }
-                });
-            }
+            // Add remove functionality
+            row.querySelector('.remove-customer').addEventListener('click', function() {
+                row.remove();
+                updateCustomerCount();
 
-            function updateCustomerCount() {
-                const count = document.getElementById('customerList').children.length;
-                document.getElementById('customerCount').value = count;
-            }
-
-            // Form validation
-            (function() {
-                'use strict';
-                const forms = document.querySelectorAll('.needs-validation');
-                
-                Array.prototype.slice.call(forms).forEach(function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            })();
-
-            // Travel date validation
-            document.getElementById('travelStartDate').addEventListener('change', function() {
-                const startDate = this.value;
-                const endDateInput = document.getElementById('travelEndDate');
-                
-                if (startDate) {
-                    endDateInput.min = startDate;
-                    if (endDateInput.value && endDateInput.value < startDate) {
-                        endDateInput.value = startDate;
-                    }
+                if (tbody.children.length === 0) {
+                    noCustomers.style.display = 'block';
                 }
             });
+        }
+
+        function updateCustomerCount() {
+            const count = document.getElementById('customerList').children.length;
+            document.getElementById('customerCount').value = count;
+        }
+
+        // Form validation
+        (function() {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+
+            Array.prototype.slice.call(forms).forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+
+        // Travel date validation
+        document.getElementById('travelStartDate').addEventListener('change', function() {
+            const startDate = this.value;
+            const endDateInput = document.getElementById('travelEndDate');
+
+            if (startDate) {
+                endDateInput.min = startDate;
+                if (endDateInput.value && endDateInput.value < startDate) {
+                    endDateInput.value = startDate;
+                }
+            }
         });
-    </script>
+
+
+        // 숫자 포맷팅 함수
+        function formatNumber(num) {
+            return new Intl.NumberFormat('ko-KR').format(num);
+        }
+
+        function formatCurrency(num, currency) {
+            if (currency === 'KRW') {
+                return '₩ ' + formatNumber(num);
+            } else if (currency === 'JPY') {
+                return '¥ ' + formatNumber(Math.floor(num));
+            }
+            return formatNumber(num);
+        }
+
+        function calculateTotal(unitPrice, quantity) {
+            return unitPrice * quantity;
+        }
+
+        function calculateJPY(krwAmount, rate) {
+            return krwAmount / rate;
+        }
+
+        function updateEstimateTotals() {
+            let totalKrw = 0;
+            let totalJpy = 0;
+
+            const rows = document.querySelectorAll('#estimateList tr');
+            rows.forEach(row => {
+                const krwCell = row.querySelector('.krw-amount');
+                const jpyCell = row.querySelector('.jpy-amount');
+                if (krwCell && jpyCell) {
+                    totalKrw += parseFloat(krwCell.dataset.value || 0);
+                    totalJpy += parseFloat(jpyCell.dataset.value || 0);
+                }
+            });
+
+            document.getElementById('estimateTotalKrw').textContent = formatCurrency(totalKrw, 'KRW');
+            document.getElementById('estimateTotalJpy').textContent = formatCurrency(totalJpy, 'JPY');
+
+            const noEstimate = document.getElementById('noEstimate');
+            noEstimate.style.display = rows.length === 0 ? 'block' : 'none';
+        }
+
+        function updateArrangementTotals() {
+            let totalKrw = 0;
+            let totalJpy = 0;
+
+            const rows = document.querySelectorAll('#arrangementList tr');
+            rows.forEach(row => {
+                const krwCell = row.querySelector('.krw-amount');
+                const jpyCell = row.querySelector('.jpy-amount');
+                if (krwCell && jpyCell) {
+                    totalKrw += parseFloat(krwCell.dataset.value || 0);
+                    totalJpy += parseFloat(jpyCell.dataset.value || 0);
+                }
+            });
+
+            document.getElementById('arrangementTotalKrw').textContent = formatCurrency(totalKrw, 'KRW');
+            document.getElementById('arrangementTotalJpy').textContent = formatCurrency(totalJpy, 'JPY');
+
+            const noArrangement = document.getElementById('noArrangement');
+            noArrangement.style.display = rows.length === 0 ? 'block' : 'none';
+        }
+
+        // 견적서 모달 및 기능
+        const estimateModal = new bootstrap.Modal(document.getElementById('estimateModal'));
+
+        document.getElementById('addInfo3').addEventListener('click', function() {
+            document.getElementById('estimateForm').reset();
+            document.getElementById('estimateQuantity').value = '1';
+            document.getElementById('estimatePreview').value = '';
+            estimateModal.show();
+        });
+
+        function updateEstimatePreview() {
+            const unitPrice = parseFloat(document.getElementById('estimateUnitPrice').value) || 0;
+            const quantity = parseFloat(document.getElementById('estimateQuantity').value) || 0;
+            const rate = parseFloat(document.getElementById('estimateRate').value) || 0;
+
+            const total = calculateTotal(unitPrice, quantity);
+            const jpy = calculateJPY(total, rate);
+
+            document.getElementById('estimatePreview').value =
+                `${formatCurrency(total, 'KRW')} → ${formatCurrency(jpy, 'JPY')}`;
+        }
+
+        ['estimateUnitPrice', 'estimateQuantity', 'estimateRate'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateEstimatePreview);
+        });
+
+        document.getElementById('saveEstimate').addEventListener('click', function() {
+            const item = document.getElementById('estimateItem').value;
+            const unitPrice = parseFloat(document.getElementById('estimateUnitPrice').value) || 0;
+            const quantity = parseFloat(document.getElementById('estimateQuantity').value) || 0;
+            const rate = parseFloat(document.getElementById('estimateRate').value) || 0;
+
+            if (!item || unitPrice <= 0 || quantity <= 0 || rate <= 0) {
+                alert('모든 필드를 올바르게 입력해주세요.');
+                return;
+            }
+
+            const total = calculateTotal(unitPrice, quantity);
+            const jpy = calculateJPY(total, rate);
+
+            addEstimateRow(item, unitPrice, quantity, total, total, rate, jpy);
+            estimateModal.hide();
+        });
+
+        function addEstimateRow(item, unitPrice, quantity, subtotal, krwAmount, rate, jpyAmount) {
+            const tbody = document.getElementById('estimateList');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${item}</td>
+                <td class="currency-input">${formatNumber(unitPrice)}</td>
+                <td>${quantity}</td>
+                <td class="currency-input krw-amount" data-value="${krwAmount}">${formatCurrency(krwAmount, 'KRW')}</td>
+                <td class="currency-input">${rate}</td>
+                <td class="currency-input jpy-amount" data-value="${jpyAmount}">${formatCurrency(jpyAmount, 'JPY')}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger remove-estimate">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+
+            tbody.appendChild(row);
+
+            row.querySelector('.remove-estimate').addEventListener('click', function() {
+                if (confirm('이 항목을 삭제하시겠습니까?')) {
+                    row.remove();
+                    updateEstimateTotals();
+                }
+            });
+            updateEstimateTotals();
+        }
+
+        // 수배서 모달 및 기능
+        const arrangementModal = new bootstrap.Modal(document.getElementById('arrangementModal'));
+
+        document.getElementById('addInfo4').addEventListener('click', function() {
+            document.getElementById('arrangementForm').reset();
+            document.getElementById('arrangementQuantity').value = '1';
+            document.getElementById('arrangementPreview').value = '';
+            arrangementModal.show();
+        });
+
+        function updateArrangementPreview() {
+            const unitPrice = parseFloat(document.getElementById('arrangementUnitPrice').value) || 0;
+            const quantity = parseFloat(document.getElementById('arrangementQuantity').value) || 0;
+            const rate = parseFloat(document.getElementById('arrangementRate').value) || 0;
+
+            const total = calculateTotal(unitPrice, quantity);
+            const jpy = calculateJPY(total, rate);
+
+            document.getElementById('arrangementPreview').value =
+                `${formatCurrency(total, 'KRW')} → ${formatCurrency(jpy, 'JPY')}`;
+        }
+
+        ['arrangementUnitPrice', 'arrangementQuantity', 'arrangementRate'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateArrangementPreview);
+        });
+
+        document.getElementById('saveArrangement').addEventListener('click', function() {
+            const item = document.getElementById('arrangementItem').value;
+            const unitPrice = parseFloat(document.getElementById('arrangementUnitPrice').value) || 0;
+            const quantity = parseFloat(document.getElementById('arrangementQuantity').value) || 0;
+            const rate = parseFloat(document.getElementById('arrangementRate').value) || 0;
+
+            if (!item || unitPrice <= 0 || quantity <= 0 || rate <= 0) {
+                alert('모든 필드를 올바르게 입력해주세요.');
+                return;
+            }
+
+            const total = calculateTotal(unitPrice, quantity);
+            const jpy = calculateJPY(total, rate);
+
+            addArrangementRow(item, unitPrice, quantity, total, total, rate, jpy);
+            arrangementModal.hide();
+        });
+
+        function addArrangementRow(item, unitPrice, quantity, subtotal, krwAmount, rate, jpyAmount) {
+            const tbody = document.getElementById('arrangementList');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${item}</td>
+                <td class="currency-input">${formatNumber(unitPrice)}</td>
+                <td>${quantity}</td>
+                <td class="currency-input krw-amount" data-value="${krwAmount}">${formatCurrency(krwAmount, 'KRW')}</td>
+                <td class="currency-input">${rate}</td>
+                <td class="currency-input jpy-amount" data-value="${jpyAmount}">${formatCurrency(jpyAmount, 'JPY')}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger remove-arrangement">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+
+            tbody.appendChild(row);
+
+            row.querySelector('.remove-arrangement').addEventListener('click', function() {
+                if (confirm('이 항목을 삭제하시겠습니까?')) {
+                    row.remove();
+                    updateArrangementTotals();
+                }
+            });
+            updateArrangementTotals();
+        }
+        // 초기 상태 설정
+        updateEstimateTotals();
+        updateArrangementTotals();
+    });
+</script>
 </body>
 </html>
