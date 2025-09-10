@@ -83,7 +83,31 @@
         #estimateTable th:nth-child(4), #arrangementTable th:nth-child(4) { width: 20%; }
         #estimateTable th:nth-child(5), #arrangementTable th:nth-child(5) { width: 10%; }
         #estimateTable th:nth-child(6), #arrangementTable th:nth-child(6) { width: 20%; }
-        #estimateTable th:nth-child(7), #arrangementTable th:nth-child(7) { width: 5%; }
+        #estimateTable th:nth-child(7), #arrangementTable th:nth-child(7) { width: 10%; }
+
+        /* 인라인 편집 행 스타일 */
+        .input-row {
+            background-color: #f8f9fa;
+            border: 2px dashed #dee2e6;
+        }
+        .input-row input, .input-row select {
+            border: 1px solid #ced4da;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            width: 100%;
+        }
+        .meal-checkboxes {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+        .meal-checkboxes input[type="checkbox"] {
+            width: auto;
+        }
+        .meal-checkboxes label {
+            font-size: 0.8rem;
+            margin: 0 2px;
+        }
     </style>
 </head>
 <body>
@@ -98,7 +122,7 @@
                     </h2>
                 </div>
                 <div>
-                    <a th:href="@{/files}" class="btn btn-outline-secondary me-2">
+                    <a th:href="@{/dashboard}" class="btn btn-outline-secondary me-2">
                         <i class="fas fa-home me-2"></i>Home
                     </a>
                 </div>
@@ -127,50 +151,41 @@
                                 <div class="form-text">REF.No는 GF + YYYYMMDD + 3자리 순번으로 자동생성됩니다.</div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="destination" class="form-label"><strong>団体番号</strong></label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="groupNum" name="groupNum"
-                                           placeholder="단체번호" required>
+                                    <input type="text" class="form-control" id="groupNum" name="groupNum" placeholder="단체번호" required>
                                 </div>
                             </div>
 
                             <!-- Destination -->
-                            <div class="col-md-8">
+                            <div class="col-md-5">
                                 <label for="destination" class="form-label">ツアー名</label>
-                                <input type="text" class="form-control" id="destination" name="destination"
-                                       placeholder="여행주제" required>
-                                <div class="invalid-feedback">여행주제를 입력해주세요.</div>
+                                <input type="text" class="form-control" id="destination" name="destination" placeholder="여행주제" required>
                             </div>
 
                             <!-- Agency -->
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="manager" class="form-label">AGT</label>
-                                <input type="text" class="form-control" id="agency" name="agency"
-                                       placeholder="에이전트" required>
-                                <div class="invalid-feedback">AGT를 지정해주세요.</div>
+                                <input type="text" class="form-control" id="agency" name="agency" placeholder="에이전트" required>
                             </div>
 
                             <!-- Branch -->
                             <div class="col-md-3">
                                 <label for="branch" class="form-label">支店/代理店</label>
-                                <input type="text" class="form-control" id="branch" name="branch"
-                                       placeholder="지점/대리점">
+                                <input type="text" class="form-control" id="branch" name="branch" placeholder="지점/대리점">
                             </div>
 
                             <!-- Address -->
                             <div class="col-md-6">
                                 <label for="agency" class="form-label">住所</label>
-                                <input type="text" class="form-control" id="address" name="address"
-                                       placeholder="주소">
+                                <input type="text" class="form-control" id="address" name="address" placeholder="주소">
                             </div>
 
                             <!-- Manager -->
                             <div class="col-md-3">
                                 <label for="manager" class="form-label">担葬者</label>
-                                <input type="text" class="form-control" id="manager" name="manager"
-                                       placeholder="담당자" required>
-                                <div class="invalid-feedback">담당자를 입력해주세요.</div>
+                                <input type="text" class="form-control" id="manager" name="manager" placeholder="담당자" required>
                             </div>
 
                             <!-- Tel -->
@@ -178,24 +193,21 @@
                                 <label for="manager" class="form-label">
                                     <i class="fas fa-phone text-muted me-1"></i>
                                 </label>
-                                <input type="text" class="form-control" id="telNumber" name="telNum"
-                                       placeholder="전화번호" required>
+                                <input type="text" class="form-control" id="telNumber" name="telNum" placeholder="전화번호" required>
                             </div>
 
                             <div class="col-md-3">
                                 <label for="manager" class="form-label">
                                     <i class="fas fa-fax text-muted me-1"></i>
                                 </label>
-                                <input type="text" class="form-control" id="faxNumber" name="faxNum"
-                                       placeholder="FAX번호" required>
+                                <input type="text" class="form-control" id="faxNumber" name="faxNum" placeholder="FAX번호" required>
                             </div>
 
                             <div class="col-md-3">
                                 <label for="manager" class="form-label">
-                                    <i class="fas fa-envelopes-bulk text-muted me-1"></i>
+                                    <i class="fas fa-tenge-sign text-muted me-1"></i>
                                 </label>
-                                <input type="text" class="form-control" id="post" name="post"
-                                       placeholder="우편번호" required>
+                                <input type="text" class="form-control" id="post" name="post" placeholder="우편번호" required>
                             </div>
 
                             <!-- Airport Select -->
@@ -220,31 +232,36 @@
                             </div>
 
                             <!-- Air Code1 -->
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <label for="manager" class="form-label">CODE</label>
-                                <input type="text" class="form-control" id="code1" name="code1"
-                                       placeholder="항공코드" required>
-                                <div class="invalid-feedback">항공코드를 입력해주세요.</div>
+                                <input type="text" class="form-control" id="code1" name="code1" placeholder="항공코드" required>
                             </div>
 
                             <!-- Travel Dates -->
                             <div class="col-md-3">
-                                <label for="travelStartDate" class="form-label">出国</label>
-                                <input type="datetime-local" class="form-control" id="travelStartDate" name="departDate">
+                                <label for="travelStartDate" class="form-label">出発</label>
+                                <input type="datetime-local" class="form-control" id="travelStartDate" name="departDate" required>
+                                <div class="invalid-feedback"></div>
                             </div>
 
                             <!-- Air Code2 -->
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <label for="manager" class="form-label">CODE</label>
-                                <input type="text" class="form-control" id="code2" name="code2"
-                                       placeholder="항공코드" required>
-                                <div class="invalid-feedback">항공코드를 입력해주세요.</div>
+                                <input type="text" class="form-control" id="code2" name="code2" placeholder="항공코드" required>
                             </div>
 
                             <!-- Travel Dates -->
                             <div class="col-md-3">
-                                <label for="travelEndDate" class="form-label">帰国</label>
-                                <input type="datetime-local" class="form-control" id="travelEndDate" name="returnDate">
+                                <label for="travelEndDate" class="form-label">帰還</label>
+                                <input type="datetime-local" class="form-control" id="travelEndDate" name="returnDate" required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="col-10">
+                                <label for="notes" class="form-label">etc.</label>
+                                <textarea class="form-control" id="notes" name="notes" rows="3"
+                                          placeholder="추가 정보나 특이사항을 입력하세요..."></textarea>
                             </div>
 
                             <!-- Customer Count -->
@@ -255,13 +272,6 @@
                                            name="customerCount" value="0" min="0" max="1000">
                                     <span class="input-group-text">人</span>
                                 </div>
-                            </div>
-
-                            <!-- Notes -->
-                            <div class="col-12">
-                                <label for="notes" class="form-label">etc.</label>
-                                <textarea class="form-control" id="notes" name="notes" rows="3"
-                                          placeholder="추가 정보나 특이사항을 입력하세요..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -361,6 +371,27 @@
                                     </tr>
                                     </thead>
                                     <tbody id="hotelList">
+                                    <!-- Hotel input row - initially hidden -->
+                                    <tr id="hotelInputRow" class="input-row" style="display: none;">
+                                        <td><input type="text" id="newHotelName"></td>
+                                        <td><input type="text" id="newStayDate"></td>
+                                        <td>
+                                            <div class="meal-checkboxes">
+                                                <div><input type="checkbox" id="newBreakfast"><label for="newBreakfast">朝</label></div>
+                                                <div><input type="checkbox" id="newLunch"><label for="newLunch">中</label></div>
+                                                <div><input type="checkbox" id="newDinner"><label for="newDinner">夕</label></div>
+                                            </div>
+                                        </td>
+                                        <td><input type="text" id="newRoom"></td>
+                                        <td><input type="number" id="newAmount"></td>
+                                        <td><input type="text" id="newReply"></td>
+                                        <td><input type="text" id="newComment"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-success me-1" id="saveHotelRow">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
                                     <!-- Hotel rows will be added dynamically -->
                                     </tbody>
                                 </table>
@@ -398,6 +429,18 @@
                                     </tr>
                                     </thead>
                                     <tbody id="customerList">
+                                    <!-- Customer input row - initially hidden -->
+                                    <tr id="customerInputRow" class="input-row" style="display: none;">
+                                        <td><input type="text" id="newCustomerName"></td>
+                                        <td><input type="number" id="newCustomerAge"></td>
+                                        <td><input type="text" id="newCustomerGender"></td>
+                                        <td><input type="text" id="newCustomerPassport"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-success me-1" id="saveCustomerRow">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
                                     <!-- Customer rows will be added dynamically -->
                                     </tbody>
                                 </table>
@@ -433,7 +476,7 @@
                     <div class="card-header bg-transparent">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">
-                                <i class="fas fa-won-sign me-2"></i>見積書用
+                                <i class="fas fa-coins me-2"></i>見積書用
                             </h5>
                             <button type="button" class="btn btn-sm btn-outline-success" id="addInfo3">
                                 <i class="fas fa-plus me-1"></i>追加
@@ -454,7 +497,21 @@
                                     </tr>
                                     </thead>
                                     <tbody id="estimateList">
-                                    <!-- Hotel rows will be added dynamically -->
+                                    <!-- Estimate input row - initially hidden -->
+                                    <tr id="estimateInputRow" class="input-row" style="display: none;">
+                                        <td><input type="text" id="newEstimateItem"></td>
+                                        <td><input type="number" id="newEstimateUnitPrice" class="currency-input" step="1000"></td>
+                                        <td><input type="number" id="newEstimateQuantity" value="1" min="1"></td>
+                                        <td><input type="text" id="newEstimateKrw" readonly class="currency-input"></td>
+                                        <td><input type="number" id="newEstimateRate" class="currency-input" step="0.01"></td>
+                                        <td><input type="text" id="newEstimateJpy" readonly class="currency-input"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-success me-1" id="saveEstimateRow">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <!-- Estimate rows will be added dynamically -->
                                     </tbody>
                                     <tfoot>
                                     <tr class="total-row">
@@ -477,7 +534,7 @@
                     <div class="card-header bg-transparent">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">
-                                <i class="fas fa-yen-sign me-3"></i>手配書用
+                                <i class="fas fa-coins me-3"></i>手配書用
                             </h5>
                             <button type="button" class="btn btn-sm btn-outline-success" id="addInfo4">
                                 <i class="fas fa-plus me-1"></i>追加
@@ -498,7 +555,21 @@
                                     </tr>
                                     </thead>
                                     <tbody id="arrangementList">
-                                    <!-- Hotel rows will be added dynamically -->
+                                    <!-- Arrangement input row - initially hidden -->
+                                    <tr id="arrangementInputRow" class="input-row" style="display: none;">
+                                        <td><input type="text" id="newArrangementItem"></td>
+                                        <td><input type="number" id="newArrangementUnitPrice" class="currency-input" step="1000"></td>
+                                        <td><input type="number" id="newArrangementQuantity" value="1" min="1"></td>
+                                        <td><input type="text" id="newArrangementKrw" readonly class="currency-input"></td>
+                                        <td><input type="number" id="newArrangementRate" class="currency-input" step="0.01"></td>
+                                        <td><input type="text" id="newArrangementJpy" readonly class="currency-input"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-success me-1" id="saveArrangementRow">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <!-- Arrangement rows will be added dynamically -->
                                     </tbody>
                                     <tfoot>
                                     <tr class="total-row">
@@ -546,195 +617,6 @@
     </form>
 </div>
 
-              <!----------                          MODAL                                   ---------->
-
-<!-- Hotel Modal -->
-<div class="modal fade" id="hotelModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Hotel</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="hotelForm">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label for="hotelName" class="form-label">ホテル名</label>
-                            <input type="text" class="form-control" id="hotelName" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="stayDate" class="form-label">宿泊日</label>
-                            <input type="text" class="form-control" id="stayDate" min="0" max="150">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">食事</label>
-                            <div class="form-check-container bg-light p-2 rounded" style="text-align: center">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="breakfast" name="airports" value="SEL">
-                                    <label class="form-check-label" for="breakfast">朝 </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="lunch" name="airports" value="PUS">
-                                    <label class="form-check-label" for="lunch">中 </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="dinner" name="airports" value="CJU">
-                                    <label class="form-check-label" for="dinner">夕 </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <label for="room" class="form-label">Type</label>
-                            <input type="text" class="form-control" id="room" maxlength="10">
-                        </div>
-                        <div class="col-md-2">
-                            <label for="amount" class="form-label">数</label>
-                            <input type="number" class="form-control" id="amount" maxlength="10">
-                        </div>
-                        <div class="col-md-2">
-                            <label for="reply" class="form-label">回答</label>
-                            <input type="text" class="form-control" id="reply" maxlength="100">
-                        </div>
-                        <div class="col-md-12">
-                            <label for="comment" class="form-label">備考</label>
-                            <input type="text" class="form-control" id="comment" maxlength="100">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="saveHotel">save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Customer Modal -->
-<div class="modal fade" id="customerModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">顧客情報</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="customerForm">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label for="customerName" class="form-label">名前</label>
-                            <input type="text" class="form-control" id="customerName" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="customerAge" class="form-label">年齢</label>
-                            <input type="number" class="form-control" id="customerAge" min="0" max="150">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="customerAge" class="form-label">性別</label>
-                            <input type="text" class="form-control" id="customerGender" min="0" max="150">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="customerPassport" class="form-label">Passport</label>
-                            <input type="text" class="form-control" id="customerPassport"
-                                   placeholder="A12345678" maxlength="9">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="saveCustomer">save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 견적서 항목 추가 모달 -->
-<div class="modal fade" id="estimateModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">見積書 項目</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="estimateForm">
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <label for="estimateItem" class="form-label">費目</label>
-                            <input type="text" class="form-control" id="estimateItem" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="estimateUnitPrice" class="form-label">単価</label>
-                            <input type="number" class="form-control currency-input" id="estimateUnitPrice" min="0" step="1000" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="estimateQuantity" class="form-label">数</label>
-                            <input type="number" class="form-control" id="estimateQuantity" min="1" value="1" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="estimateRate" class="form-label">Rate</label>
-                            <input type="number" class="form-control currency-input" id="estimateRate" min="0" step="0.01" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">合計</label>
-                            <input type="text" class="form-control" id="estimatePreview" readonly>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="saveEstimate">save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 수배서 항목 추가 모달 -->
-<div class="modal fade" id="arrangementModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">手配書 項目</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="arrangementForm">
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <label for="arrangementItem" class="form-label">費目</label>
-                            <input type="text" class="form-control" id="arrangementItem" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="arrangementUnitPrice" class="form-label">単価</label>
-                            <input type="number" class="form-control currency-input" id="arrangementUnitPrice" min="0" step="1000" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="arrangementQuantity" class="form-label">数</label>
-                            <input type="number" class="form-control" id="arrangementQuantity" min="1" value="1" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="arrangementRate" class="form-label">Rate</label>
-                            <input type="number" class="form-control currency-input" id="arrangementRate" min="0" step="0.01" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">合計</label>
-                            <input type="text" class="form-control" id="arrangementPreview" readonly>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="saveArrangement">save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <!-- Additional JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -742,249 +624,16 @@
         let hotelIndex = 0;
         let customerIndex = 0;
 
-        // Customer count controls
-        document.getElementById('decreaseCount')?.addEventListener('click', function() {
-            const input = document.getElementById('customerCount');
-            const currentValue = parseInt(input.value);
-            if (currentValue > 0) {
-                input.value = currentValue - 1;
-            }
-        });
-
-        document.getElementById('increaseCount')?.addEventListener('click', function() {
-            const input = document.getElementById('customerCount');
-            const currentValue = parseInt(input.value);
-            if (currentValue < 1000) {
-                input.value = currentValue + 1;
-            }
-        });
-
         // REF.No generation
         document.getElementById('generateRefNo').addEventListener('click', function() {
             const now = new Date();
-            const year = now.getUTCFullYear();
+            const year = now.getFullYear();
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const day = String(now.getDate()).padStart(2, '0');
             const sequence = String(Math.floor(Math.random() * 999) + 1).padStart(3, '0');
 
             document.getElementById('refNo').value = `GF${year}${month}${day}${sequence}`;
         });
-
-        // Hotel management
-        const hotelModal = new bootstrap.Modal(document.getElementById('hotelModal'));
-
-        document.getElementById('addInfo1').addEventListener('click', function() {
-            // Clear form
-            document.getElementById('hotelForm').reset();
-            // 체크박스들도 초기화
-            document.getElementById('breakfast').checked = false;
-            document.getElementById('lunch').checked = false;
-            document.getElementById('dinner').checked = false;
-            hotelModal.show();
-        });
-
-        document.getElementById('saveHotel').addEventListener('click', function() {
-            const hotelName = document.getElementById('hotelName').value;
-            const stayDate = document.getElementById('stayDate').value;
-            const room = document.getElementById('room').value;
-            const amount = document.getElementById('amount').value;
-            const reply = document.getElementById('reply').value;
-            const comment = document.getElementById('comment').value;
-
-            // 식사 체크박스 값들 가져오기
-            const breakfast = document.getElementById('breakfast').checked ? '朝' : '';
-            const lunch = document.getElementById('lunch').checked ? '中' : '';
-            const dinner = document.getElementById('dinner').checked ? '夕' : '';
-            const meals = [breakfast, lunch, dinner].filter(meal => meal).join(' ');
-
-            if (!hotelName) {
-                alert('호텔명을 입력해주세요.');
-                return;
-            }
-
-            addHotelToTable(hotelName, stayDate, meals, room, amount, reply, comment);
-            hotelModal.hide();
-        });
-
-        function addHotelToTable(hotelName, stayDate, meals, room, amount, reply, comment) {
-            const tbody = document.getElementById('hotelList');
-            const noHotel = document.getElementById('noHotel');
-
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                    <td>${hotelName}</td>
-                    <td>${stayDate || '-'}</td>
-                    <td>${meals || '-'}</td>
-                    <td>${room || '-'}</td>
-                    <td>${amount || '-'}</td>
-                    <td>${reply || '-'}</td>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <span class="me-2" title="${comment}">${comment ? (comment.length > 25 ? comment.substring(0, 25) + '...' : comment) : '-'}</span>
-                        </div>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger remove-hotel">
-                                <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                     `;
-
-            tbody.appendChild(row);
-            noHotel.style.display = 'none';
-            hotelIndex++;
-
-            // Add update functionality
-            row.querySelector('.remove-hotel').addEventListener('click', function() {
-                if (confirm('이 호텔 정보를 삭제하시겠습니까?')) {
-                    row.remove();
-
-                    if (tbody.children.length === 0) {
-                        noHotel.style.display = 'block';
-                    }
-                }
-            });
-        }
-
-        // 호텔 테이블의 행을 편집할 수 있도록 더블클릭 이벤트 추가 (선택사항)
-        document.getElementById('hotelList').addEventListener('dblclick', function(e) {
-            if (e.target.closest('tr') && !e.target.closest('button')) {
-                const row = e.target.closest('tr');
-                const cells = row.querySelectorAll('td');
-
-                // 기존 데이터로 모달 폼 채우기
-                document.getElementById('hotelName').value = cells[0].textContent;
-                document.getElementById('stayDate').value = cells[1].textContent === '-' ? '' : cells[1].textContent;
-                document.getElementById('room').value = cells[3].textContent === '-' ? '' : cells[3].textContent;
-                document.getElementById('amount').value = cells[4].textContent === '-' ? '' : cells[4].textContent;
-                document.getElementById('reply').value = cells[5].textContent === '-' ? '' : cells[5].textContent;
-
-                // 식사 체크박스 설정
-                const meals = cells[2].textContent;
-                document.getElementById('breakfast').checked = meals.includes('朝');
-                document.getElementById('lunch').checked = meals.includes('中');
-                document.getElementById('dinner').checked = meals.includes('夕');
-
-                // 비고 필드 설정 (수정된 부분)
-                const commentSpan = cells[6].querySelector('span');
-                document.getElementById('comment').value = commentSpan.getAttribute('title') || '';
-
-                // 저장 버튼을 업데이트 모드로 변경
-                const saveButton = document.getElementById('saveHotel');
-                const originalSaveFunction = saveButton.onclick; // 원래 함수 저장
-
-                saveButton.textContent = 'update';
-                saveButton.onclick = function() {
-                    // 업데이트 로직
-                    const hotelName = document.getElementById('hotelName').value;
-                    if (!hotelName) {
-                        alert('호텔명을 입력해주세요.');
-                        return;
-                    }
-
-                    // 기존 행 삭제
-                    row.remove();
-
-                    // 새로운 데이터로 행 추가
-                    const stayDate = document.getElementById('stayDate').value;
-                    const room = document.getElementById('room').value;
-                    const amount = document.getElementById('amount').value;
-                    const reply = document.getElementById('reply').value;
-                    const comment = document.getElementById('comment').value;
-
-                    const breakfast = document.getElementById('breakfast').checked ? '朝' : '';
-                    const lunch = document.getElementById('lunch').checked ? '中' : '';
-                    const dinner = document.getElementById('dinner').checked ? '夕' : '';
-                    const meals = [breakfast, lunch, dinner].filter(meal => meal).join(' ');
-
-                    addHotelToTable(hotelName, stayDate, meals, room, amount, reply, comment);
-
-                    // 저장 버튼을 원래 상태로 복원
-                    saveButton.textContent = 'save';
-                    saveButton.onclick = originalSaveFunction;
-                    hotelModal.hide();
-                };
-                hotelModal.show();
-            }
-        });
-
-        // Customer management
-        const customerModal = new bootstrap.Modal(document.getElementById('customerModal'));
-
-        document.getElementById('addInfo2').addEventListener('click', function() {
-            // Clear form
-            document.getElementById('customerForm').reset();
-            customerModal.show();
-        });
-
-        document.getElementById('saveCustomer').addEventListener('click', function() {
-            const name = document.getElementById('customerName').value;
-            const age = document.getElementById('customerAge').value;
-            const gender = document.getElementById('customerGender').value;
-            const passport = document.getElementById('customerPassport').value;
-
-            if (!name) {
-                alert('고객 이름을 입력해주세요.');
-                return;
-            }
-
-            addCustomerToTable(name, age, gender, passport);
-            updateCustomerCount();
-            customerModal.hide();
-        });
-
-        function addCustomerToTable(name, age, gender, passport) {
-            const tbody = document.getElementById('customerList');
-            const noCustomers = document.getElementById('noCustomers');
-
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                    <td>${name}</td>
-                    <td>${age || '-'}</td>
-                    <td>${gender || '-'}</td>
-                    <td>${passport || '-'}</td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger remove-customer">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-
-            tbody.appendChild(row);
-            noCustomers.style.display = 'none';
-            customerIndex++;
-
-            // Add remove functionality
-            row.querySelector('.remove-customer').addEventListener('click', function() {
-                row.remove();
-                updateCustomerCount();
-
-                if (tbody.children.length === 0) {
-                    noCustomers.style.display = 'block';
-                }
-            });
-        }
-
-        function updateCustomerCount() {
-            const count = document.getElementById('customerList').children.length;
-            document.getElementById('customerCount').value = count;
-        }
-
-        // Form validation
-        (function() {
-            'use strict';
-            const forms = document.querySelectorAll('.needs-validation');
-
-            Array.prototype.slice.call(forms).forEach(function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        })();
 
         // Travel date validation
         document.getElementById('travelStartDate').addEventListener('change', function() {
@@ -999,8 +648,351 @@
             }
         });
 
+        // Hotel inline editing
+        document.getElementById('addInfo1').addEventListener('click', function() {
+            const inputRow = document.getElementById('hotelInputRow');
+            const addButton = document.getElementById('addInfo1');
 
-        // 숫자 포맷팅 함수
+            if (inputRow.style.display === 'none') {
+                // Clear inputs
+                clearHotelInputs();
+                inputRow.style.display = '';
+                addButton.disabled = true;
+                document.getElementById('newHotelName').focus();
+            }
+        });
+
+        document.getElementById('saveHotelRow').addEventListener('click', function() {
+            const hotelName = document.getElementById('newHotelName').value;
+            const stayDate = document.getElementById('newStayDate').value;
+            const room = document.getElementById('newRoom').value;
+            const amount = document.getElementById('newAmount').value;
+            const reply = document.getElementById('newReply').value;
+            const comment = document.getElementById('newComment').value;
+
+            // Get meal checkboxes
+            const breakfast = document.getElementById('newBreakfast').checked ? '朝' : '';
+            const lunch = document.getElementById('newLunch').checked ? '中' : '';
+            const dinner = document.getElementById('newDinner').checked ? '夕' : '';
+            const meals = [breakfast, lunch, dinner].filter(meal => meal).join(' ');
+
+            addHotelToTable(hotelName, stayDate, meals, room, amount, reply, comment);
+            hideHotelInputRow();
+        });
+
+        function clearHotelInputs() {
+            document.getElementById('newHotelName').value = '';
+            document.getElementById('newStayDate').value = '';
+            document.getElementById('newRoom').value = '';
+            document.getElementById('newAmount').value = '';
+            document.getElementById('newReply').value = '';
+            document.getElementById('newComment').value = '';
+            document.getElementById('newBreakfast').checked = false;
+            document.getElementById('newLunch').checked = false;
+            document.getElementById('newDinner').checked = false;
+        }
+
+        function hideHotelInputRow() {
+            document.getElementById('hotelInputRow').style.display = 'none';
+            document.getElementById('addInfo1').disabled = false;
+        }
+
+        function addHotelToTable(hotelName, stayDate, meals, room, amount, reply, comment) {
+            const tbody = document.getElementById('hotelList');
+            const noHotel = document.getElementById('noHotel');
+            const inputRow = document.getElementById('hotelInputRow');
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${hotelName}</td>
+                <td>${stayDate || '-'}</td>
+                <td>${meals || '-'}</td>
+                <td>${room || '-'}</td>
+                <td>${amount || '-'}</td>
+                <td>${reply || '-'}</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2" title="${comment}">${comment ? (comment.length > 25 ? comment.substring(0, 25) + '...' : comment) : '-'}</span>
+                    </div>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger remove-hotel">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+
+            // Insert before input row
+            tbody.insertBefore(row, inputRow);
+            noHotel.style.display = 'none';
+            hotelIndex++;
+
+            // Add remove functionality
+            row.querySelector('.remove-hotel').addEventListener('click', function() {
+                if (confirm('이 호텔정보를 삭제하시겠습니까?')) {
+                    row.remove();
+                    if (tbody.children.length === 1) { // Only input row left
+                        noHotel.style.display = 'block';
+                    }
+                }
+            });
+
+            // Add double-click edit functionality
+            row.addEventListener('dblclick', function(e) {
+                if (!e.target.closest('button')) {
+                    editHotelRow(row);
+                }
+            });
+        }
+
+        function editHotelRow(row) {
+            const cells = row.querySelectorAll('td');
+
+            // Fill input row with existing data
+            document.getElementById('newHotelName').value = cells[0].textContent;
+            document.getElementById('newStayDate').value = cells[1].textContent === '-' ? '' : cells[1].textContent;
+            document.getElementById('newRoom').value = cells[3].textContent === '-' ? '' : cells[3].textContent;
+            document.getElementById('newAmount').value = cells[4].textContent === '-' ? '' : cells[4].textContent;
+            document.getElementById('newReply').value = cells[5].textContent === '-' ? '' : cells[5].textContent;
+
+            // Set meal checkboxes
+            const meals = cells[2].textContent;
+            document.getElementById('newBreakfast').checked = meals.includes('朝');
+            document.getElementById('newLunch').checked = meals.includes('中');
+            document.getElementById('newDinner').checked = meals.includes('夕');
+
+            // Set comment
+            const commentSpan = cells[6].querySelector('span');
+            document.getElementById('newComment').value = commentSpan.getAttribute('title') || '';
+
+            // Remove the row being edited
+            row.remove();
+
+            // Show input row
+            const inputRow = document.getElementById('hotelInputRow');
+            inputRow.style.display = '';
+            document.getElementById('addInfo1').disabled = true;
+            document.getElementById('newHotelName').focus();
+        }
+
+        // Customer inline editing
+        document.getElementById('addInfo2').addEventListener('click', function() {
+            const inputRow = document.getElementById('customerInputRow');
+            const addButton = document.getElementById('addInfo2');
+
+            if (inputRow.style.display === 'none') {
+                clearCustomerInputs();
+                inputRow.style.display = '';
+                addButton.disabled = true;
+                document.getElementById('newCustomerName').focus();
+            }
+        });
+
+        document.getElementById('saveCustomerRow').addEventListener('click', function() {
+            const name = document.getElementById('newCustomerName').value;
+            const age = document.getElementById('newCustomerAge').value;
+            const gender = document.getElementById('newCustomerGender').value;
+            const passport = document.getElementById('newCustomerPassport').value;
+
+            addCustomerToTable(name, age, gender, passport);
+            hideCustomerInputRow();
+            updateCustomerCount();
+        });
+
+        function clearCustomerInputs() {
+            document.getElementById('newCustomerName').value = '';
+            document.getElementById('newCustomerAge').value = '';
+            document.getElementById('newCustomerGender').value = '';
+            document.getElementById('newCustomerPassport').value = '';
+        }
+
+        function hideCustomerInputRow() {
+            document.getElementById('customerInputRow').style.display = 'none';
+            document.getElementById('addInfo2').disabled = false;
+        }
+
+        function addCustomerToTable(name, age, gender, passport) {
+            const tbody = document.getElementById('customerList');
+            const noCustomers = document.getElementById('noCustomers');
+            const inputRow = document.getElementById('customerInputRow');
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${name}</td>
+                <td>${age || '-'}</td>
+                <td>${gender || '-'}</td>
+                <td>${passport || '-'}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger remove-customer">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+
+            tbody.insertBefore(row, inputRow);
+            noCustomers.style.display = 'none';
+            customerIndex++;
+
+            row.querySelector('.remove-customer').addEventListener('click', function() {
+                if (confirm('이 고객정보를 삭제하시겠습니까?')) {
+                    row.remove();
+                    updateCustomerCount();
+                    if (tbody.children.length === 1) { // Only input row left
+                        noCustomers.style.display = 'block';
+                    }
+                }
+            });
+
+            // Add double-click edit functionality
+            row.addEventListener('dblclick', function(e) {
+                if (!e.target.closest('button')) {
+                    editCustomerRow(row);
+                }
+            });
+        }
+
+        function editCustomerRow(row) {
+            const cells = row.querySelectorAll('td');
+
+            document.getElementById('newCustomerName').value = cells[0].textContent;
+            document.getElementById('newCustomerAge').value = cells[1].textContent === '-' ? '' : cells[1].textContent;
+            document.getElementById('newCustomerGender').value = cells[2].textContent === '-' ? '' : cells[2].textContent;
+            document.getElementById('newCustomerPassport').value = cells[3].textContent === '-' ? '' : cells[3].textContent;
+
+            row.remove();
+
+            const inputRow = document.getElementById('customerInputRow');
+            inputRow.style.display = '';
+            document.getElementById('addInfo2').disabled = true;
+            document.getElementById('newCustomerName').focus();
+        }
+
+        function updateCustomerCount() {
+            const count = document.getElementById('customerList').children.length - 1; // Subtract input row
+            document.getElementById('customerCount').value = count;
+        }
+
+        // Estimate inline editing
+        document.getElementById('addInfo3').addEventListener('click', function() {
+            const inputRow = document.getElementById('estimateInputRow');
+            const addButton = document.getElementById('addInfo3');
+
+            if (inputRow.style.display === 'none') {
+                clearEstimateInputs();
+                inputRow.style.display = '';
+                addButton.disabled = true;
+                document.getElementById('newEstimateItem').focus();
+            }
+        });
+
+        function clearEstimateInputs() {
+            document.getElementById('newEstimateItem').value = '';
+            document.getElementById('newEstimateUnitPrice').value = '';
+            document.getElementById('newEstimateQuantity').value = '';
+            document.getElementById('newEstimateKrw').value = '';
+            document.getElementById('newEstimateRate').value = '';
+            document.getElementById('newEstimateJpy').value = '';
+        }
+
+        function updateEstimateCalculation() {
+            const unitPrice = parseFloat(document.getElementById('newEstimateUnitPrice').value) || 0;
+            const quantity = parseFloat(document.getElementById('newEstimateQuantity').value) || 0;
+            const rate = parseFloat(document.getElementById('newEstimateRate').value) || 0;
+
+            const total = unitPrice * quantity;
+            const jpy = rate > 0 ? total / rate : 0;
+
+            document.getElementById('newEstimateKrw').value = formatCurrency(total, 'KRW');
+            document.getElementById('newEstimateJpy').value = formatCurrency(jpy, 'JPY');
+        }
+
+        ['newEstimateUnitPrice', 'newEstimateQuantity', 'newEstimateRate'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateEstimateCalculation);
+        });
+
+        document.getElementById('saveEstimateRow').addEventListener('click', function() {
+            const item = document.getElementById('newEstimateItem').value;
+            const unitPrice = parseFloat(document.getElementById('newEstimateUnitPrice').value) || 0;
+            const quantity = parseFloat(document.getElementById('newEstimateQuantity').value) || 0;
+            const rate = parseFloat(document.getElementById('newEstimateRate').value) || 0;
+
+            if (!item.trim() || unitPrice <= 0 || quantity <= 0 || rate <= 0) {
+                alert('모든 필드를 올바르게 입력해주세요.');
+                return;
+            }
+            const total = unitPrice * quantity;
+            const jpy = total / rate;
+
+            addEstimateRow(item, unitPrice, quantity, total, rate, jpy);
+            hideEstimateInputRow();
+        });
+
+        function hideEstimateInputRow() {
+            document.getElementById('estimateInputRow').style.display = 'none';
+            document.getElementById('addInfo3').disabled = false;
+        }
+
+        // Arrangement inline editing
+        document.getElementById('addInfo4').addEventListener('click', function() {
+            const inputRow = document.getElementById('arrangementInputRow');
+            const addButton = document.getElementById('addInfo4');
+
+            if (inputRow.style.display === 'none') {
+                clearArrangementInputs();
+                inputRow.style.display = '';
+                addButton.disabled = true;
+                document.getElementById('newArrangementItem').focus();
+            }
+        });
+
+        function clearArrangementInputs() {
+            document.getElementById('newArrangementItem').value = '';
+            document.getElementById('newArrangementUnitPrice').value = '';
+            document.getElementById('newArrangementQuantity').value = '';
+            document.getElementById('newArrangementKrw').value = '';
+            document.getElementById('newArrangementRate').value = '';
+            document.getElementById('newArrangementJpy').value = '';
+        }
+
+        function updateArrangementCalculation() {
+            const unitPrice = parseFloat(document.getElementById('newArrangementUnitPrice').value) || 0;
+            const quantity = parseFloat(document.getElementById('newArrangementQuantity').value) || 0;
+            const rate = parseFloat(document.getElementById('newArrangementRate').value) || 0;
+
+            const total = unitPrice * quantity;
+            const jpy = rate > 0 ? total / rate : 0;
+
+            document.getElementById('newArrangementKrw').value = formatCurrency(total, 'KRW');
+            document.getElementById('newArrangementJpy').value = formatCurrency(jpy, 'JPY');
+        }
+
+        ['newArrangementUnitPrice', 'newArrangementQuantity', 'newArrangementRate'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateArrangementCalculation);
+        });
+
+        document.getElementById('saveArrangementRow').addEventListener('click', function() {
+            const item = document.getElementById('newArrangementItem').value;
+            const unitPrice = parseFloat(document.getElementById('newArrangementUnitPrice').value) || 0;
+            const quantity = parseFloat(document.getElementById('newArrangementQuantity').value) || 0;
+            const rate = parseFloat(document.getElementById('newArrangementRate').value) || 0;
+
+            if (!item.trim() || unitPrice <= 0 || quantity <= 0 || rate <= 0) {
+                alert('모든 필드를 올바르게 입력해주세요.');
+                return;
+            }
+            const total = unitPrice * quantity;
+            const jpy = total / rate;
+
+            addArrangementRow(item, unitPrice, quantity, total, rate, jpy);
+            hideArrangementInputRow();
+        });
+
+        function hideArrangementInputRow() {
+            document.getElementById('arrangementInputRow').style.display = 'none';
+            document.getElementById('addInfo4').disabled = false;
+        }
+
+        // Formatting Function
         function formatNumber(num) {
             return new Intl.NumberFormat('ko-KR').format(num);
         }
@@ -1014,19 +1006,146 @@
             return formatNumber(num);
         }
 
-        function calculateTotal(unitPrice, quantity) {
-            return unitPrice * quantity;
+        // Parse formatted number back to number
+        function parseFormattedNumber(str) {
+            return parseFloat(str.replace(/[₩¥,\s]/g, '')) || 0;
         }
 
-        function calculateJPY(krwAmount, rate) {
-            return krwAmount / rate;
+        function editEstimateRow(row) {
+            const inputRow = document.getElementById('estimateInputRow');
+            if (inputRow.style.display !== 'none') {
+                return; // Don't allow editing if input row is visible
+            }
+
+            const cells = row.querySelectorAll('td');
+            const item = cells[0].textContent;
+            const unitPrice = parseFormattedNumber(cells[1].textContent);
+            const quantity = parseFloat(cells[2].textContent);
+            const rate = parseFormattedNumber(cells[4].textContent);
+
+            document.getElementById('newEstimateItem').value = item;
+            document.getElementById('newEstimateUnitPrice').value = unitPrice;
+            document.getElementById('newEstimateQuantity').value = quantity;
+            document.getElementById('newEstimateRate').value = rate;
+
+            updateEstimateCalculation();
+
+            // Show input row and disable add button
+            inputRow.style.display = '';
+            document.getElementById('addInfo3').disabled = true;
+
+            row.remove();
+            updateEstimateTotals();
+
+            // Focus on first input
+            document.getElementById('newEstimateItem').focus();
+        }
+
+        function editArrangementRow(row) {
+            const inputRow = document.getElementById('arrangementInputRow');
+            if (inputRow.style.display !== 'none') {
+                return; // Don't allow editing if input row is visible
+            }
+
+            const cells = row.querySelectorAll('td');
+            const item = cells[0].textContent;
+            const unitPrice = parseFormattedNumber(cells[1].textContent);
+            const quantity = parseFloat(cells[2].textContent);
+            const rate = parseFormattedNumber(cells[4].textContent);
+
+            document.getElementById('newArrangementItem').value = item;
+            document.getElementById('newArrangementUnitPrice').value = unitPrice;
+            document.getElementById('newArrangementQuantity').value = quantity;
+            document.getElementById('newArrangementRate').value = rate;
+
+            updateArrangementCalculation();
+
+            inputRow.style.display = '';
+            document.getElementById('addInfo4').disabled = true;
+
+            row.remove();
+            updateArrangementTotals();
+
+            document.getElementById('newArrangementItem').focus();
+        }
+
+        function addEstimateRow(item, unitPrice, quantity, krwAmount, rate, jpyAmount) {
+            const tbody = document.getElementById('estimateList');
+            const inputRow = document.getElementById('estimateInputRow');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${item}</td>
+                <td class="currency-input">${formatNumber(unitPrice)}</td>
+                <td>${quantity}</td>
+                <td class="currency-input krw-amount" data-value="${krwAmount}">${formatCurrency(krwAmount, 'KRW')}</td>
+                <td class="currency-input">${rate}</td>
+                <td class="currency-input jpy-amount" data-value="${jpyAmount}">${formatCurrency(jpyAmount, 'JPY')}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger remove-estimate">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+
+            tbody.insertBefore(row, inputRow);
+            row.querySelector('.remove-estimate').addEventListener('click', function() {
+                if (confirm('이 항목을 삭제하시겠습니까?')) {
+                    row.remove();
+                    updateEstimateTotals();
+                }
+            });
+
+            row.addEventListener('dblclick', function(e) {
+                if (!e.target.closest('button')) {
+                    editEstimateRow(row);
+                }
+            });
+
+            updateEstimateTotals();
+        }
+
+        function addArrangementRow(item, unitPrice, quantity, krwAmount, rate, jpyAmount) {
+            const tbody = document.getElementById('arrangementList');
+            const inputRow = document.getElementById('arrangementInputRow');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${item}</td>
+                <td class="currency-input">${formatNumber(unitPrice)}</td>
+                <td>${quantity}</td>
+                <td class="currency-input krw-amount" data-value="${krwAmount}">${formatCurrency(krwAmount, 'KRW')}</td>
+                <td class="currency-input">${rate}</td>
+                <td class="currency-input jpy-amount" data-value="${jpyAmount}">${formatCurrency(jpyAmount, 'JPY')}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger remove-arrangement">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+
+            tbody.insertBefore(row, inputRow);
+            row.querySelector('.remove-arrangement').addEventListener('click', function() {
+                if (confirm('이 항목을 삭제하시겠습니까?')) {
+                    row.remove();
+                    updateArrangementTotals();
+                }
+            });
+
+            row.addEventListener('dblclick', function(e) {
+                if (!e.target.closest('button')) {
+                    editArrangementRow(row);
+                }
+            });
+
+            updateArrangementTotals();
         }
 
         function updateEstimateTotals() {
             let totalKrw = 0;
             let totalJpy = 0;
 
-            const rows = document.querySelectorAll('#estimateList tr');
+            const rows = document.querySelectorAll('#estimateList tr:not(.input-row)');
             rows.forEach(row => {
                 const krwCell = row.querySelector('.krw-amount');
                 const jpyCell = row.querySelector('.jpy-amount');
@@ -1047,7 +1166,7 @@
             let totalKrw = 0;
             let totalJpy = 0;
 
-            const rows = document.querySelectorAll('#arrangementList tr');
+            const rows = document.querySelectorAll('#arrangementList tr:not(.input-row)');
             rows.forEach(row => {
                 const krwCell = row.querySelector('.krw-amount');
                 const jpyCell = row.querySelector('.jpy-amount');
@@ -1064,152 +1183,23 @@
             noArrangement.style.display = rows.length === 0 ? 'block' : 'none';
         }
 
-        // 견적서 모달 및 기능
-        const estimateModal = new bootstrap.Modal(document.getElementById('estimateModal'));
+        // Form validation
+        (function() {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
 
-        document.getElementById('addInfo3').addEventListener('click', function() {
-            document.getElementById('estimateForm').reset();
-            document.getElementById('estimateQuantity').value = '1';
-            document.getElementById('estimatePreview').value = '';
-            estimateModal.show();
-        });
-
-        function updateEstimatePreview() {
-            const unitPrice = parseFloat(document.getElementById('estimateUnitPrice').value) || 0;
-            const quantity = parseFloat(document.getElementById('estimateQuantity').value) || 0;
-            const rate = parseFloat(document.getElementById('estimateRate').value) || 0;
-
-            const total = calculateTotal(unitPrice, quantity);
-            const jpy = calculateJPY(total, rate);
-
-            document.getElementById('estimatePreview').value =
-                `${formatCurrency(total, 'KRW')} → ${formatCurrency(jpy, 'JPY')}`;
-        }
-
-        ['estimateUnitPrice', 'estimateQuantity', 'estimateRate'].forEach(id => {
-            document.getElementById(id).addEventListener('input', updateEstimatePreview);
-        });
-
-        document.getElementById('saveEstimate').addEventListener('click', function() {
-            const item = document.getElementById('estimateItem').value;
-            const unitPrice = parseFloat(document.getElementById('estimateUnitPrice').value) || 0;
-            const quantity = parseFloat(document.getElementById('estimateQuantity').value) || 0;
-            const rate = parseFloat(document.getElementById('estimateRate').value) || 0;
-
-            if (!item || unitPrice <= 0 || quantity <= 0 || rate <= 0) {
-                alert('모든 필드를 올바르게 입력해주세요.');
-                return;
-            }
-
-            const total = calculateTotal(unitPrice, quantity);
-            const jpy = calculateJPY(total, rate);
-
-            addEstimateRow(item, unitPrice, quantity, total, total, rate, jpy);
-            estimateModal.hide();
-        });
-
-        function addEstimateRow(item, unitPrice, quantity, subtotal, krwAmount, rate, jpyAmount) {
-            const tbody = document.getElementById('estimateList');
-            const row = document.createElement('tr');
-
-            row.innerHTML = `
-                <td>${item}</td>
-                <td class="currency-input">${formatNumber(unitPrice)}</td>
-                <td>${quantity}</td>
-                <td class="currency-input krw-amount" data-value="${krwAmount}">${formatCurrency(krwAmount, 'KRW')}</td>
-                <td class="currency-input">${rate}</td>
-                <td class="currency-input jpy-amount" data-value="${jpyAmount}">${formatCurrency(jpyAmount, 'JPY')}</td>
-                <td>
-                    <button type="button" class="btn btn-sm btn-outline-danger remove-estimate">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </td>
-            `;
-
-            tbody.appendChild(row);
-
-            row.querySelector('.remove-estimate').addEventListener('click', function() {
-                if (confirm('이 항목을 삭제하시겠습니까?')) {
-                    row.remove();
-                    updateEstimateTotals();
-                }
+            Array.prototype.slice.call(forms).forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
             });
-            updateEstimateTotals();
-        }
+        })();
 
-        // 수배서 모달 및 기능
-        const arrangementModal = new bootstrap.Modal(document.getElementById('arrangementModal'));
-
-        document.getElementById('addInfo4').addEventListener('click', function() {
-            document.getElementById('arrangementForm').reset();
-            document.getElementById('arrangementQuantity').value = '1';
-            document.getElementById('arrangementPreview').value = '';
-            arrangementModal.show();
-        });
-
-        function updateArrangementPreview() {
-            const unitPrice = parseFloat(document.getElementById('arrangementUnitPrice').value) || 0;
-            const quantity = parseFloat(document.getElementById('arrangementQuantity').value) || 0;
-            const rate = parseFloat(document.getElementById('arrangementRate').value) || 0;
-
-            const total = calculateTotal(unitPrice, quantity);
-            const jpy = calculateJPY(total, rate);
-
-            document.getElementById('arrangementPreview').value =
-                `${formatCurrency(total, 'KRW')} → ${formatCurrency(jpy, 'JPY')}`;
-        }
-
-        ['arrangementUnitPrice', 'arrangementQuantity', 'arrangementRate'].forEach(id => {
-            document.getElementById(id).addEventListener('input', updateArrangementPreview);
-        });
-
-        document.getElementById('saveArrangement').addEventListener('click', function() {
-            const item = document.getElementById('arrangementItem').value;
-            const unitPrice = parseFloat(document.getElementById('arrangementUnitPrice').value) || 0;
-            const quantity = parseFloat(document.getElementById('arrangementQuantity').value) || 0;
-            const rate = parseFloat(document.getElementById('arrangementRate').value) || 0;
-
-            if (!item || unitPrice <= 0 || quantity <= 0 || rate <= 0) {
-                alert('모든 필드를 올바르게 입력해주세요.');
-                return;
-            }
-
-            const total = calculateTotal(unitPrice, quantity);
-            const jpy = calculateJPY(total, rate);
-
-            addArrangementRow(item, unitPrice, quantity, total, total, rate, jpy);
-            arrangementModal.hide();
-        });
-
-        function addArrangementRow(item, unitPrice, quantity, subtotal, krwAmount, rate, jpyAmount) {
-            const tbody = document.getElementById('arrangementList');
-            const row = document.createElement('tr');
-
-            row.innerHTML = `
-                <td>${item}</td>
-                <td class="currency-input">${formatNumber(unitPrice)}</td>
-                <td>${quantity}</td>
-                <td class="currency-input krw-amount" data-value="${krwAmount}">${formatCurrency(krwAmount, 'KRW')}</td>
-                <td class="currency-input">${rate}</td>
-                <td class="currency-input jpy-amount" data-value="${jpyAmount}">${formatCurrency(jpyAmount, 'JPY')}</td>
-                <td>
-                    <button type="button" class="btn btn-sm btn-outline-danger remove-arrangement">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </td>
-            `;
-
-            tbody.appendChild(row);
-
-            row.querySelector('.remove-arrangement').addEventListener('click', function() {
-                if (confirm('이 항목을 삭제하시겠습니까?')) {
-                    row.remove();
-                    updateArrangementTotals();
-                }
-            });
-            updateArrangementTotals();
-        }
-        // 초기 상태 설정
+        // Initialize totals
         updateEstimateTotals();
         updateArrangementTotals();
     });

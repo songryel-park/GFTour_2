@@ -26,9 +26,9 @@
                         </h2>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-gf-primary" data-bs-toggle="modal" data-bs-target="#agtModal">
-                            <i class="fas fa-plus me-2"></i>AGT 追加
-                        </button>
+                        <a th:href="@{/}" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-home me-2"></i>Home
+                        </a>
                     </div>
                 </div>
             </div>
@@ -82,6 +82,9 @@
                                 <i class="fas fa-list me-2"></i>AGT List
                                 <span class="badge bg-info ms-2">0件</span>
                             </h6>
+                            <button type="button" class="btn btn-gf-secondary" data-bs-toggle="modal" data-bs-target="#agtModal">
+                                <i class="fas fa-plus me-2"></i>AGT 追加
+                            </button>
                             <div class="btn-group btn-group-sm" role="group">
                                 <button type="button" class="btn btn-outline-success" id="exportExcel">
                                     <i class="fas fa-file-excel me-1"></i>Excel
@@ -123,7 +126,7 @@
                                         <td>
                                             서울특별시 동대문구 전농로 XXX
                                             <br><small class="text-muted">
-                                                <i class="fas fa-envelopes-bulk me-1"></i>130-161
+                                                <i class="fas fa-tenge-sign me-1"></i>123-456
                                             </small>
                                         </td>
                                         <td>
@@ -245,12 +248,12 @@
                                           placeholder="詳細住所を入力してください..."></textarea>
                             </div>
                             <div class="col-md-6">
-                                <label for="post" class="form-label">FAX</label>
+                                <label for="post" class="form-label">郵便</label>
                                 <input type="tel" class="form-control" id="post" name="post"
                                        placeholder="02-1234-5679">
                             </div>
                             <div class="col-md-6">
-                                <label for="tellNumber" class="form-label">Tel.</label>
+                                <label for="tellNumber" class="form-label">Tel</label>
                                 <input type="tel" class="form-control" id="tellNumber" name="tellNumber"
                                        placeholder="02-1234-5678">
                             </div>
