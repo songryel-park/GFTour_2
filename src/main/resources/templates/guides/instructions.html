@@ -15,12 +15,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        .guide-section {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        }
-        .guide-card {
-            border-left: 4px solid #2E86AB;
-        }
         .print-area {
             background: white;
             padding: 2rem;
@@ -48,10 +42,10 @@
                     <div>
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-outline-secondary me-1" onclick="printGuide()">
-                                <i class="fas fa-print me-1"></i>
+                                <i class="fas fa-print"></i>
                             </button>
                             <button type="button" class="btn btn-outline-warning me-3" onclick="exportToPDF()">
-                                <i class="fas fa-file-pdf me-1"></i>
+                                <i class="fas fa-file-pdf"></i>
                             </button>
                         </div>
                     </div>
@@ -65,13 +59,13 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
                         <div class="row g-3">
-                            <div class="col-md-4">
-                                <label for="refNoSelect" class="form-label">REF No 선택</label>
+                            <div class="col-md-3">
+                                <label for="refNoSelect" class="form-label">REF.No 검색</label>
                                 <select class="form-select" id="refNoSelect" onchange="loadGuideData()">
                                     <option value="">선택하세요</option>
-                                    <option value="GF20240115001">GF20240115001 - 제주도 3박 4일</option>
-                                    <option value="GF20240201002">GF20240201002 - 부산 2박 3일</option>
-                                    <option value="GF20240220003">GF20240220003 - 서울 당일투어</option>
+                                    <option value="GF20240115001">GF20240315001</option>
+                                    <option value="GF20240201002">GF20240601193</option>
+                                    <option value="GF20240220003">GF20241020647</option>
                                 </select>
                             </div>
                         </div>
@@ -114,9 +108,8 @@
                                     <strong>日程:</strong> <span id="displayPeriod">2024.01.15 ~ 01.18</span>
                                 </div>
                                 <div class="col-md-6">
-                                    <strong>人数:</strong> <span id="displayParticipants">15人</span><br>
+                                    <strong>人員:</strong> <span id="displayParticipants">15人</span><br>
                                     <strong>ガイド:</strong> <span id="displayGuide">김가이드</span><br>
-                                    <strong>Tel:</strong> <span id="displayGuidePhone">010-1234-5678</span>
                                 </div>
                             </div>
                         </div>
@@ -136,10 +129,10 @@
                                 <table class="table table-bordered table-sm">
                                     <thead class="bg-light">
                                     <tr>
-                                        <th width="15%">日数</th>
-                                        <th width="15%">時間</th>
+                                        <th width="10%">日数</th>
+                                        <th width="10%">時間</th>
                                         <th>日程</th>
-                                        <th width="15%">住所</th>
+                                        <th width="25%">場所</th>
                                     </tr>
                                     </thead>
                                     <tbody id="scheduleTable">

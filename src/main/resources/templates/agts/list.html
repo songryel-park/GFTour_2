@@ -13,6 +13,31 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts - Noto Sans KR -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        #agtTable {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        #agtTable th:nth-child(1) { width: 20%; }
+        #agtTable th:nth-child(2) { width: 15%; }
+        #agtTable th:nth-child(3) { width: 15%; }
+        #agtTable th:nth-child(4) { width: 40%; }
+        #agtTable th:nth-child(5) { width: 15%; }
+        #agtTable th:nth-child(6) { width: 10%; }
+        #agtTable th:last-child,
+        #agtTable td:last-child {
+            text-align: left;
+            padding-right: 15px;
+        }
+    </style>
 </head>
 <body>
     <div th:block="content">
@@ -62,7 +87,7 @@
                                         <i class="fas fa-search me-1"></i>search
                                     </button>
                                     <button type="button" class="btn btn-outline-secondary" id="resetBtn">
-                                        <i class="fas fa-undo me-1"></i>refresh
+                                        <i class="fas fa-undo me-1"></i>reset
                                     </button>
                                 </div>
                             </div>
@@ -80,12 +105,12 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h6 class="mb-0">
                                 <i class="fas fa-list me-2"></i>AGT List
-                                <span class="badge bg-info ms-2">0件</span>
+                                <span class="badge bg-info ms-2" id="totalCount">0件</span>
                             </h6>
-                            <button type="button" class="btn btn-gf-secondary" data-bs-toggle="modal" data-bs-target="#agtModal">
-                                <i class="fas fa-plus me-2"></i>AGT 追加
-                            </button>
-                            <div class="btn-group btn-group-sm" role="group">
+                            <div class="d-flex gap-3">
+                                <button type="button" class="btn btn-outline-primary" id="addAGTBtn">
+                                        <i class="fas fa-plus me-2"></i>AGT 追加
+                                </button>
                                 <button type="button" class="btn btn-outline-success" id="exportExcel">
                                     <i class="fas fa-file-excel me-1"></i>Excel
                                 </button>
@@ -94,60 +119,19 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table table-hover mb-0">
+                            <table class="table table-hover mb-0" id="agtTable">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col" width="5%">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="selectAll">
-                                            </div>
-                                        </th>
                                         <th scope="col">AGT</th>
                                         <th scope="col">担葬者</th>
                                         <th scope="col">支店/代理店</th>
                                         <th scope="col">住所</th>
                                         <th scope="col">Tel.</th>
-                                        <th scope="col" width="10%"></th>
+                                        <th scope="col" width="10%">-</th>
                                     </tr>
                                 </thead>
                                 <tbody id="agtTableBody">
                                     <!-- Sample Data Rows -->
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="1">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <strong>XX여행사</strong>
-                                        </td>
-                                        <td>박ㅁㅁ</td>
-                                        <td>OO점</td>
-                                        <td>
-                                            서울특별시 동대문구 전농로 XXX
-                                            <br><small class="text-muted">
-                                                <i class="fas fa-tenge-sign me-1"></i>123-456
-                                            </small>
-                                        </td>
-                                        <td>
-                                            <i class="fas fa-phone text-muted me-1"></i>064-123-4567
-                                            <br><small class="text-muted">
-                                                <i class="fas fa-fax me-1"></i>064-123-4568
-                                            </small>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-warning" title="수정"
-                                                        onclick="editAGT(1)">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-danger" title="삭제"
-                                                        onclick="deleteAGT(1)">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -155,12 +139,8 @@
                         <!-- Empty State (when no data) -->
                         <div id="emptyState" class="text-center p-5" style="display: none;">
                             <div class="mb-4">
-                                <i class="fas fa-building fa-4x text-muted opacity-50"></i>
+                                <i class="fas fa-plus fa-4x text-muted opacity-50"></i>
                             </div>
-                            <h5 class="text-muted">등록된 AGT가 없습니다</h5>
-                            <p class="text-muted mb-4">
-                                새로운 AGT를 등록하여 관리를 시작하세요.
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -189,170 +169,306 @@
                 </nav>
             </div>
         </div>
-
-        <!-- Bulk Actions -->
-        <div class="row mt-3">
-            <div class="col">
-                <div class="card border-0 shadow-sm" id="bulkActions" style="display: none;">
-                    <div class="card-body py-2">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="text-muted">선택된 항목: <span id="selectedCount">0</span>개</span>
-                            </div>
-                            <div class="btn-group btn-group-sm" role="group">
-                                <button type="button" class="btn btn-outline-success" id="bulkActivate">
-                                    <i class="fas fa-check me-1"></i>활성화
-                                </button>
-                                <button type="button" class="btn btn-outline-warning" id="bulkDeactivate">
-                                    <i class="fas fa-pause me-1"></i>비활성화
-                                </button>
-                                <button type="button" class="btn btn-outline-danger" id="bulkDelete">
-                                    <i class="fas fa-trash me-1"></i>삭제
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- AGT Modal -->
-    <div class="modal fade" id="agtModal" tabindex="-1">
+    <div class="modal fade" id="agtModal" tabindex="-1" aria-labelledby="agtModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">AGT 情報</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="agtModalLabel">AGT 情報</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="agtForm" class="needs-validation" novalidate>
                         <input type="hidden" id="agtId" name="id">
-                        <div class="row g-3">
+                        <div class="row g-7">
                             <div class="col-md-6">
-                                <label for="agtName" class="form-label">AGT <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="agtName" name="name" required>
-                                <div class="invalid-feedback">AGTを入力してください.</div>
+                                <label for="agency" class="form-label">AGT</label>
+                                <input type="text" class="form-control" id="agency" name="agency" required>
                             </div>
-                            <div class="col-md-6">
-                                <label for="managerName" class="form-label">担葬者</label>
-                                <input type="text" class="form-control" id="managerName" name="managerName">
+                            <div class="col-md-3">
+                                <label for="manager" class="form-label">担葬者</label>
+                                <input type="text" class="form-control" id="manager" name="manager" required>
                             </div>
-                            <div class="col-md-6">
-                                <label for="agencise" class="form-label">支店/代理店</label>
-                                <input type="text" class="form-control" id="agencise" name="agencise">
+                            <div class="col-md-3">
+                                <label for="branch" class="form-label">支店/代理店</label>
+                                <input type="text" class="form-control" id="branch" name="branch">
                             </div>
                             <div class="col-12">
                                 <label for="address" class="form-label">住所</label>
-                                <textarea class="form-control" id="address" name="address" rows="2"
-                                          placeholder="詳細住所を入力してください..."></textarea>
+                                <textarea class="form-control" id="address" name="address" rows="1" required></textarea>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label for="post" class="form-label">郵便</label>
-                                <input type="tel" class="form-control" id="post" name="post"
-                                       placeholder="02-1234-5679">
+                                <input type="tel" class="form-control" id="post" name="post" required>
                             </div>
-                            <div class="col-md-6">
-                                <label for="tellNumber" class="form-label">Tel</label>
-                                <input type="tel" class="form-control" id="tellNumber" name="tellNumber"
-                                       placeholder="02-1234-5678">
+                            <div class="col-md-4">
+                                <label for="tellNumber" class="form-label">戦火</label>
+                                <input type="tel" class="form-control" id="tellNumber" name="tellNumber" required>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label for="faxNumber" class="form-label">FAX</label>
-                                <input type="tel" class="form-control" id="faxNumber" name="faxNumber"
-                                       placeholder="02-1234-5679">
+                                <input type="tel" class="form-control" id="faxNumber" name="faxNumber" required>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="saveAGT">Save</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="saveAGT">Save</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Additional JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        let agtData = [];
+        let filteredData = [...agtData]; // 필터링된 데이터
+        let currentPage = 1;
+        let pageSize = 10;
+        let agtModal;
+
         document.addEventListener('DOMContentLoaded', function() {
-            // AGT management functions
-            window.viewAGT = function(id) {
-                // Implementation for viewing AGT details
-                console.log('View AGT:', id);
-            };
+            console.log('DOM loaded, initializing...');
 
-            window.editAGT = function(id) {
-                // Implementation for editing AGT
-                console.log('Edit AGT:', id);
-                // Show modal with AGT data
-                const modal = new bootstrap.Modal(document.getElementById('agtModal'));
-                modal.show();
-            };
+            agtModal = new bootstrap.Modal(document.getElementById('agtModal'));
 
-            window.deleteAGT = function(id) {
-                if (confirm('이 AGT를 삭제하시겠습니까?')) {
-                    console.log('Delete AGT:', id);
-                    // Implementation for deleting AGT
-                }
-            };
+            setupEventListeners();
+            renderTable(filteredData);
+            console.log('Initialization complete');
+        });
 
-            // Checkbox selection
-            const selectAll = document.getElementById('selectAll');
-            const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
-            const bulkActions = document.getElementById('bulkActions');
-            const selectedCount = document.getElementById('selectedCount');
-
-            selectAll.addEventListener('change', function() {
-                checkboxes.forEach(cb => cb.checked = this.checked);
-                updateBulkActions();
-            });
-
-            checkboxes.forEach(cb => {
-                cb.addEventListener('change', updateBulkActions);
-            });
-
-            function updateBulkActions() {
-                const selected = Array.from(checkboxes).filter(cb => cb.checked);
-                selectedCount.textContent = selected.length;
-                bulkActions.style.display = selected.length > 0 ? 'block' : 'none';
+        function setupEventListeners() {
+            const addBtn = document.getElementById('addAGTBtn');
+            if (addBtn) {
+                addBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log('AGT 추가 clicked');
+                    clearForm();
+                    document.getElementById('agtModalLabel').textContent = 'AGT 追加';
+                    agtModal.show();
+                });
             }
 
             // Search and filter
-            document.getElementById('searchBtn').addEventListener('click', function() {
-                const searchTerm = document.getElementById('searchInput').value;
-                const region = document.getElementById('regionFilter').value;
-                const status = document.getElementById('statusFilter').value;
-                
-                console.log('Search:', { searchTerm, region, status });
-                // Implement search functionality
-            });
+            const searchBtn = document.getElementById('searchBtn');
+            if (searchBtn) {
+                searchBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    applyCurrentFilter();
+                });
+            }
 
-            document.getElementById('resetBtn').addEventListener('click', function() {
-                document.getElementById('searchInput').value = '';
-                document.getElementById('regionFilter').value = '';
-                document.getElementById('statusFilter').value = '';
-            });
+            const resetBtn = document.getElementById('resetBtn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('searchInput').value = '';
+                    filteredData = [...agtData];
+                    renderTable(filteredData);
+                });
+            }
 
-            // AGT form handling
-            document.getElementById('saveAGT').addEventListener('click', function() {
-                const form = document.getElementById('agtForm');
-                if (form.checkValidity()) {
-                    // Save AGT data
-                    console.log('Save AGT');
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('agtModal'));
-                    modal.hide();
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        applyCurrentFilter();
+                    }
+                });
+            }
+
+            const saveBtn = document.getElementById('saveAGT');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    saveAGT();
+                });
+            }
+
+            // Excel Export
+            const excelBtn = document.getElementById('exportExcel');
+            if (excelBtn) {
+                excelBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    exportToExcel();
+                });
+            }
+
+        }
+
+        // AGT management functions
+        window.editAGT = function(id) {
+            console.log('Edit AGT:', id);
+            const agt = agtData.find(item => item.id === id);
+            if (agt) {
+                document.getElementById('agtId').value = agt.id;
+                document.getElementById('agency').value = agt.agency || '';
+                document.getElementById('manager').value = agt.manager || '';
+                document.getElementById('branch').value = agt.branch || '';
+                document.getElementById('address').value = agt.address || '';
+                document.getElementById('post').value = agt.post || '';
+                document.getElementById('tellNumber').value = agt.tellNumber || '';
+                document.getElementById('faxNumber').value = agt.faxNumber || '';
+
+                document.getElementById('agtModalLabel').textContent = 'AGT 修正';
+                agtModal.show();
+            }
+        };
+
+        window.deleteAGT = function(id) {
+            if (confirm('이 AGT를 삭제하시겠습니까?')) {
+                console.log('Delete AGT:', id);
+                // Implementation for deleting AGT
+                agtData = agtData.filter(item => item.id !== id);
+                applyCurrentFilter();
+            }
+        };
+
+        function clearForm() {
+            const form = document.getElementById('agtForm');
+            if (form) {
+                form.reset();
+                document.getElementById('agtId').value = '';
+                form.classList.remove('was-validated');
+            }
+        }
+
+        function applyCurrentFilter() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            if (searchTerm) {
+                filteredData = agtData.filter(agt =>
+                    agt.agency.toLowerCase().includes(searchTerm) ||
+                    (agt.manager && agt.manager.toLowerCase().includes(searchTerm))
+                );
+            } else {
+                filteredData = [...agtData];
+            }
+            renderTable(filteredData);
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('agtTableBody');
+            const totalCount = document.getElementById('totalCount');
+            const emptyState = document.getElementById('emptyState');
+
+            if (!tbody || !totalCount) {
+                console.error('Required elements not found');
+                return;
+            }
+
+            if (data.length === 0) {
+                tbody.innerHTML = '';
+                document.getElementById('emptyState').style.display = 'block';
+                totalCount.textContent = '0件';
+            } else {
+                document.getElementById('emptyState').style.display = 'none';
+                totalCount.textContent = data.length + '件';
+
+                tbody.innerHTML = data.map(agt => `
+                        <tr data-id="${agt.id}">
+                            <td><strong>${agt.agency}</strong></td>
+                            <td>${agt.manager || ''}</td>
+                            <td>${agt.branch || ''}</td>
+                            <td>
+                                ${agt.address || ''}
+                                ${agt.post ? `<br><small class="text-muted"><i class="fas fa-tenge-sign me-1"></i>${agt.post}</small>` : ''}
+                            </td>
+                            <td>
+                                ${agt.tellNumber ? `<i class="fas fa-phone text-muted me-1"></i>${agt.tellNumber}` : ''}
+                                ${agt.faxNumber ? `<br><small class="text-muted"><i class="fas fa-fax me-1"></i>${agt.faxNumber}</small>` : ''}
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <button type="button" class="btn btn-outline-warning" title="수정"
+                                            onclick="editAGT(${agt.id})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger" title="삭제"
+                                            onclick="deleteAGT(${agt.id})">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('');
+            }
+        }
+
+        // AGT form handling
+        function saveAGT() {
+            const form = document.getElementById('agtForm');
+            if (!form) return;
+
+            if (form.checkValidity()) {
+                const formData = new FormData(form);
+                const agtInfo = {
+                    agency: formData.get('agency'),
+                    manager: formData.get('manager'),
+                    branch: formData.get('branch'),
+                    address: formData.get('address'),
+                    post: formData.get('post'),
+                    tellNumber: formData.get('tellNumber'),
+                    faxNumber: formData.get('faxNumber')
+                };
+
+                const id = document.getElementById('agtId').value;
+                if (id) {
+                    const index = agtData.findIndex(item => item.id === parseInt(id));
+                    if (index !== -1) {
+                        agtData[index] = { ...agtData[index], ...agtInfo };
+                    }
+                    console.log('AGT 수정됨:', agtInfo);
                 } else {
-                    form.classList.add('was-validated');
+                    const newId = Math.max(...agtData.map(item => item.id), 0) + 1;
+                    agtData.push({ id: newId, ...agtInfo });
+                    console.log('AGT 추가됨:', agtInfo);
                 }
+
+                applyCurrentFilter();
+                agtModal.hide();
+                clearForm();
+            } else {
+                form.classList.add('was-validated');
+            }
+        }
+
+        // Export functionality
+        function exportToExcel() {
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+            csvContent += "AGT,担葬者,支店/代理店,住所,郵便,戦火,FAX\n";
+
+            filteredData.forEach(agt => {
+                const row = [
+                    agt.agency,
+                    agt.manager || '',
+                    agt.branch || '',
+                    agt.address || '',
+                    agt.post || '',
+                    agt.tellNumber || '',
+                    agt.faxNumber || ''
+                ].map(field => `"${field}"`).join(",");
+                csvContent += row + "\n";
             });
 
-            // Export functionality
-            document.getElementById('exportExcel').addEventListener('click', function() {
-                console.log('Export to Excel');
-                // Implement Excel export
-            });
-        });
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "AGT_list.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showAlert('Excel 파일이 다운로드되었습니다.', 'success');
+        }
+
+        // Initialize
+        renderTable(filteredData);
     </script>
 </body>
 </html>

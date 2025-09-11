@@ -43,7 +43,6 @@
         #hotelTable th:nth-child(8) { width: 10%; }
         #hotelTable th:last-child,
         #hotelTable td:last-child {
-            text-align: right;
             padding-right: 15px;
         }
 
@@ -60,7 +59,6 @@
         #customerTable th:nth-child(5) { width: 10%; }
         #customerTable th:last-child,
         #customerTable td:last-child {
-            text-align: right;
             padding-right: 15px;
         }
 
@@ -143,7 +141,7 @@
                                 <label for="refNo" class="form-label"><strong>REF.No</strong></label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="refNo" name="refNo"
-                                           value="GF20240101001" readonly>
+                                           value="" readonly>
                                     <button class="btn btn-outline-secondary" type="button" id="generateRefNo">
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
@@ -190,31 +188,23 @@
 
                             <!-- Tel -->
                             <div class="col-md-3">
-                                <label for="manager" class="form-label">
-                                    <i class="fas fa-phone text-muted me-1"></i>
-                                </label>
+                                <label for="manager" class="form-label">戦火</label>
                                 <input type="text" class="form-control" id="telNumber" name="telNum" placeholder="전화번호" required>
                             </div>
 
                             <div class="col-md-3">
-                                <label for="manager" class="form-label">
-                                    <i class="fas fa-fax text-muted me-1"></i>
-                                </label>
+                                <label for="manager" class="form-label">FAX</label>
                                 <input type="text" class="form-control" id="faxNumber" name="faxNum" placeholder="FAX번호" required>
                             </div>
 
                             <div class="col-md-3">
-                                <label for="manager" class="form-label">
-                                    <i class="fas fa-tenge-sign text-muted me-1"></i>
-                                </label>
+                                <label for="manager" class="form-label">郵便</label>
                                 <input type="text" class="form-control" id="post" name="post" placeholder="우편번호" required>
                             </div>
 
                             <!-- Airport Select -->
                             <div class="col-md-3">
-                                <label class="form-label">
-                                    <i class="fas fa-plane text-muted me-1"></i>
-                                </label>
+                                <label class="form-label"></label>
                                 <div class="form-check-container bg-light p-2 rounded" style="text-align: center">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="selAirport" name="airports" value="SEL">
@@ -260,17 +250,22 @@
                             <!-- Notes -->
                             <div class="col-10">
                                 <label for="notes" class="form-label">etc.</label>
-                                <textarea class="form-control" id="notes" name="notes" rows="3"
+                                <textarea class="form-control" id="notes" name="notes" rows="4"
                                           placeholder="추가 정보나 특이사항을 입력하세요..."></textarea>
                             </div>
 
-                            <!-- Customer Count -->
-                            <div class="col-md-2">
-                                <label for="customerCount" class="form-label"><i class="fas fa-users me-2"></i></label>
+                            <!-- Customer Count & Guide -->
+                            <div class="col-lg-2">
+                                <label for="customerCount" class="form-label">人員</label>
                                 <div class="input-group">
                                     <input type="number" class="form-control text-center" id="customerCount"
-                                           name="customerCount" value="0" min="0" max="1000">
+                                           name="customerCount" min="0" max="1000" required>
                                     <span class="input-group-text">人</span>
+                                </div>
+
+                                <label for="guide" class="form-label">ガイド</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="guide" name="guide">
                                 </div>
                             </div>
                         </div>
@@ -310,15 +305,14 @@
                     </div>
                     <div class="card-body">
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="fas fa-save me-2"></i>Save
-                            </button>
-                            <button type="button" class="btn btn-outline-info" id="saveDraft">
-                                <i class="fas fa-file-alt me-2"></i>Temporary
-                            </button>
-                            <a th:href="@{/files}" class="btn btn-outline-warning">
-                                <i class="fas fa-times me-2"></i>Cancel
-                            </a>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-primary me-2">
+                                    <i class="fas fa-save me-3"></i>Save
+                                </button>
+                                <button type="button" class="btn btn-outline-warning me-1">
+                                    <i class="fas fa-rotate-left me-2"></i>Cancel
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -534,7 +528,7 @@
                     <div class="card-header bg-transparent">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">
-                                <i class="fas fa-coins me-3"></i>手配書用
+                                <i class="fas fa-coins me-2"></i>手配書用
                             </h5>
                             <button type="button" class="btn btn-sm btn-outline-success" id="addInfo4">
                                 <i class="fas fa-plus me-1"></i>追加

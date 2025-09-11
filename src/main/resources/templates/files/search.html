@@ -27,7 +27,7 @@
                     </div>
                     <div>
                         <a th:href="@{/}" class="btn btn-outline-secondary me-2">
-                            <i class="fas fa-home me-2"></i>Home
+                            <i class="fas fa-home"></i>
                         </a>
                     </div>
                 </div>
@@ -50,9 +50,9 @@
                             </div>
                             
                             <div class="col-md-2">
-                                <label for="destination" class="form-label">団体番号</label>
-                                <input type="text" class="form-control" id="destination" name="destination" 
-                                       placeholder="" th:value="${param.destination}">
+                                <label for="groupNumber" class="form-label">団体番号</label>
+                                <input type="text" class="form-control" id="groupNumber" name="groupNumber"
+                                       placeholder="" th:value="${param.groupNumber}">
                             </div>
                             
                             <div class="col-md-2">
@@ -119,7 +119,7 @@
                                         </th>
                                         <th scope="col">REF No</th>
                                         <th scope="col">団体番号</th>
-                                        <th scope="col">行事地域</th>
+                                        <th scope="col">ツアー名</th>
                                         <th scope="col">担葬者</th>
                                         <th scope="col">日程</th>
                                         <th scope="col">State</th>
@@ -140,7 +140,6 @@
                                             <div class="d-flex align-items-center">
                                                 <div>
                                                     <strong>제주도 3박 4일</strong>
-                                                    <br><small class="text-muted">성산일출봉, 우도, 한라산</small>
                                                 </div>
                                             </div>
                                         </td>
@@ -148,7 +147,6 @@
                                             <div class="d-flex align-items-center">
                                                 <div>
                                                     <strong>김담당</strong>
-                                                    <br><small class="text-muted">010-1234-5678</small>
                                                 </div>
                                             </div>
                                         </td>
@@ -169,7 +167,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    
                                     <tr>
                                         <td>
                                             <div class="form-check">
@@ -182,7 +179,6 @@
                                             <div class="d-flex align-items-center">
                                                 <div>
                                                     <strong>부산 2박 3일</strong>
-                                                    <br><small class="text-muted">해운대, 감천문화마을, 태종대</small>
                                                 </div>
                                             </div>
                                         </td>
@@ -190,7 +186,6 @@
                                             <div class="d-flex align-items-center">
                                                 <div>
                                                     <strong>이담당</strong>
-                                                    <br><small class="text-muted">010-9876-5432</small>
                                                 </div>
                                             </div>
                                         </td>
@@ -224,7 +219,6 @@
                                             <div class="d-flex align-items-center">
                                                 <div>
                                                     <strong>서울 당일투어</strong>
-                                                    <br><small class="text-muted">경복궁, 북촌한옥마을, 명동</small>
                                                 </div>
                                             </div>
                                         </td>
@@ -232,7 +226,6 @@
                                             <div class="d-flex align-items-center">
                                                 <div>
                                                     <strong>박담당</strong>
-                                                    <br><small class="text-muted">010-1111-2222</small>
                                                 </div>
                                             </div>
                                         </td>
@@ -284,14 +277,15 @@
                             <table class="table table-hover mb-0">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col">REF No</th>
-                                        <th scope="col">여행지</th>
-                                        <th scope="col">담당자</th>
-                                        <th scope="col">고객수</th>
-                                        <th scope="col">여행일정</th>
-                                        <th scope="col">상태</th>
-                                        <th scope="col">등록일</th>
-                                        <th scope="col">관리</th>
+                                        <th scope="col">REF.No</th>
+                                        <th scope="col">ツアー名</th>
+                                        <th scope="col">AGT</th>
+                                        <th scope="col">担葬者</th>
+                                        <th scope="col">客人数</th>
+                                        <th scope="col">日程</th>
+                                        <th scope="col">State</th>
+                                        <th scope="col">作成時間</th>
+                                        <th scope="col">-</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -299,6 +293,7 @@
                                     <tr>
                                         <td><strong>GF20240101001</strong></td>
                                         <td>제주도 3박 4일</td>
+                                        <td>XX 여행사</td>
                                         <td>김담당</td>
                                         <td><span class="badge bg-info">15명</span></td>
                                         <td>2024.01.15 ~ 2024.01.18</td>
@@ -306,14 +301,8 @@
                                         <td>2024.01.01</td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-primary" title="상세보기">
+                                                <button type="button" class="btn btn-outline-success" title="상세보기">
                                                     <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-warning" title="수정">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline-danger" title="삭제">
-                                                    <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -365,9 +354,6 @@
                                 <button type="button" class="btn btn-outline-warning" onclick="bulkUpdateStatus('IN_PROGRESS')">
                                     <i class="fas fa-play me-1"></i>진행중 처리
                                 </button>
-                                <button type="button" class="btn btn-outline-info" onclick="bulkExport()">
-                                    <i class="fas fa-file-export me-1"></i>일괄 내보내기
-                                </button>
                                 <button type="button" class="btn btn-outline-danger" onclick="bulkDelete()">
                                     <i class="fas fa-trash me-1"></i>일괄 삭제
                                 </button>
@@ -390,7 +376,7 @@
                         <form id="advancedSearchForm">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label for="advRefNo" class="form-label">REF No</label>
+                                    <label for="advRefNo" class="form-label">REF.No</label>
                                     <input type="text" class="form-control" id="advRefNo" placeholder="GF20240101001">
                                 </div>
                                 <div class="col-md-6">
@@ -463,16 +449,12 @@
             window.copyFile = function(id) {
                 console.log('Copy file:', id);
                 if (confirm('이 파일을 복사하시겠습니까?')) {
-                    // Implement file copy logic
-                    alert('파일이 복사되었습니다.');
                 }
             };
 
             window.deleteFile = function(id) {
                 console.log('Delete file:', id);
                 if (confirm('이 파일을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
-                    // Implement file delete logic
-                    alert('파일이 삭제되었습니다.');
                 }
             };
 
@@ -493,7 +475,6 @@
                 
                 if (confirm(`선택된 ${selected.length}개 파일을 ${statusText[status]} 상태로 변경하시겠습니까?`)) {
                     console.log('Bulk update status:', status, selected);
-                    alert(`${selected.length}개 파일이 ${statusText[status]} 상태로 변경되었습니다.`);
                     updateBulkActionsDisplay();
                 }
             };
@@ -518,7 +499,6 @@
                 
                 if (confirm(`선택된 ${selected.length}개 파일을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.`)) {
                     console.log('Bulk delete:', selected);
-                    alert(`${selected.length}개 파일이 삭제되었습니다.`);
                     updateBulkActionsDisplay();
                 }
             };

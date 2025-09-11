@@ -45,8 +45,7 @@
                                     <span class="input-group-text">
                                         <i class="fas fa-search"></i>
                                     </span>
-                                    <input type="text" class="form-control" placeholder="REF.No 검색"
-                                           id="searchInput">
+                                    <input type="text" class="form-control" placeholder="REF.No 검색" id="searchInput">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -55,7 +54,7 @@
                                         <i class="fas fa-search me-1"></i>search
                                     </button>
                                     <button type="button" class="btn btn-outline-secondary" id="resetBtn">
-                                        <i class="fas fa-undo me-1"></i>refresh
+                                        <i class="fas fa-undo me-1"></i>reset
                                     </button>
                                 </div>
                             </div>
@@ -86,7 +85,7 @@
                                         <th scope="col">年齢</th>
                                         <th scope="col">性別</th>
                                         <th scope="col">Passport</th>
-                                        <th scope="col" width="18%">特異事項</th>
+                                        <th scope="col" width="10%">備考</th>
                                     </tr>
                                 </thead>
                                 <tbody id="customerTableBody">
@@ -94,9 +93,7 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <div>
-                                                    <strong>김여행</strong>
-                                                </div>
+                                                <strong>김여행</strong>
                                             </div>
                                         </td>
                                         <td>32</td>
@@ -115,9 +112,7 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <div>
-                                                    <strong>이관광</strong>
-                                                </div>
+                                                <strong>이관광</strong>
                                             </div>
                                         </td>
                                         <td>16</td>
@@ -136,9 +131,7 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <div>
-                                                    <strong>박투어</strong>
-                                                </div>
+                                                <strong>박투어</strong>
                                             </div>
                                         </td>
                                         <td>73</td>
@@ -189,7 +182,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">고객 정보</h5>
+                    <h5 class="modal-title">顧客情報</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -197,24 +190,23 @@
                         <input type="hidden" id="customerId" name="id">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="customerName" class="form-label">이름 <span class="text-danger">*</span></label>
+                                <label for="customerName" class="form-label">名前</label>
                                 <input type="text" class="form-control" id="customerName" name="name" required>
-                                <div class="invalid-feedback">이름을 입력해주세요.</div>
                             </div>
                             <div class="col-md-6">
-                                <label for="customerAge" class="form-label">나이 <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" id="customerAge" name="age" 
-                                       min="0" max="150" required>
-                                <div class="invalid-feedback">나이를 입력해주세요.</div>
+                                <label for="customerAge" class="form-label">年齢</label>
+                                <input type="number" class="form-control" id="customerAge" name="age" min="0" max="150" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="passportNumber" class="form-label">여권번호 <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="passportNumber" name="passportNumber" 
-                                       placeholder="M12345678" maxlength="9" required>
-                                <div class="invalid-feedback">여권번호를 입력해주세요.</div>
+                                <label for="customerGender" class="form-label">性別</label>
+                                <input type="text" class="form-control" id="customerGender" name="gender" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="passport" class="form-label">Passport</label>
+                                <input type="text" class="form-control" id="passport" name="passport" maxlength="9" required>
                             </div>
                             <div class="col-12">
-                                <label for="customerNotes" class="form-label">비고</label>
+                                <label for="customerNotes" class="form-label">備考</label>
                                 <textarea class="form-control" id="customerNotes" name="notes" rows="2" 
                                           placeholder="고객 관련 특이사항을 입력하세요..."></textarea>
                             </div>
@@ -222,8 +214,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary" id="saveCustomer">저장</button>
+                    <button type="button" class="btn btn-primary" id="saveCustomer">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -242,37 +234,6 @@
                 console.log('Edit customer:', id);
                 const modal = new bootstrap.Modal(document.getElementById('customerModal'));
                 // Load customer data and populate form
-                modal.show();
-            };
-
-            window.viewTravelHistory = function(id) {
-                console.log('View travel history for customer:', id);
-                const modal = new bootstrap.Modal(document.getElementById('travelHistoryModal'));
-                
-                // Sample travel history data
-                const historyData = [
-                    {refNo: 'GF20240115001', destination: '제주도 3박 4일', period: '2024.01.15 ~ 01.18', participants: 2, amount: '₩850,000', status: '완료', satisfaction: '★★★★★'},
-                    {refNo: 'GF20231201002', destination: '부산 2박 3일', period: '2023.12.01 ~ 12.03', participants: 1, amount: '₩320,000', status: '완료', satisfaction: '★★★★☆'},
-                    {refNo: 'GF20230815003', destination: '서울 당일투어', period: '2023.08.15', participants: 1, amount: '₩85,000', status: '완료', satisfaction: '★★★☆☆'}
-                ];
-                
-                const tbody = document.getElementById('travelHistoryBody');
-                tbody.innerHTML = '';
-                
-                historyData.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td><strong>${item.refNo}</strong></td>
-                        <td>${item.destination}</td>
-                        <td>${item.period}</td>
-                        <td><span class="badge bg-info">${item.participants}명</span></td>
-                        <td>${item.amount}</td>
-                        <td><span class="badge bg-success">${item.status}</span></td>
-                        <td>${item.satisfaction}</td>
-                    `;
-                    tbody.appendChild(row);
-                });
-                
                 modal.show();
             };
 
@@ -313,10 +274,6 @@
             // Export functionality
             document.getElementById('exportExcel').addEventListener('click', function() {
                 console.log('Export customers to Excel');
-            });
-
-            document.getElementById('sendMessage').addEventListener('click', function() {
-                console.log('Send group message to customers');
             });
         });
     </script>
