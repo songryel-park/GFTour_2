@@ -38,9 +38,10 @@
         #hotelTable th:nth-child(3) { width: 15%; }
         #hotelTable th:nth-child(4) { width: 10%; }
         #hotelTable th:nth-child(5) { width: 10%; }
-        #hotelTable th:nth-child(6) { width: 10%; }
-        #hotelTable th:nth-child(7) { width: 20%; }
-        #hotelTable th:nth-child(8) { width: 10%; }
+        #hotelTable th:nth-child(6) { width: 15%; }
+        #hotelTable th:nth-child(7) { width: 10%; }
+        #hotelTable th:nth-child(8) { width: 20%; }
+        #hotelTable th:nth-child(9) { width: 10%; }
         #hotelTable th:last-child,
         #hotelTable td:last-child {
             padding-right: 15px;
@@ -115,7 +116,7 @@
         <div class="col">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h2 class="gf-secondary mb-0">
+                    <h2 class="gf-secondary mb-1">
                         <i class="fas fa-tachometer-alt me-2"></i>File Info
                     </h2>
                 </div>
@@ -136,8 +137,16 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
                         <div class="row g-3">
+                            <!-- Group Number -->
+                            <div class="col-md-3">
+                                <label for="destination" class="form-label"><strong>団体番号</strong></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="groupNum" name="groupNum" placeholder="단체번호" required>
+                                </div>
+                            </div>
+
                             <!-- REF.No (Auto-generated) -->
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <label for="refNo" class="form-label"><strong>REF.No</strong></label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="refNo" name="refNo"
@@ -146,13 +155,13 @@
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
                                 </div>
-                                <div class="form-text">REF.No는 GF + YYYYMMDD + 3자리 순번으로 자동생성됩니다.</div>
                             </div>
 
-                            <div class="col-md-3">
-                                <label for="destination" class="form-label"><strong>団体番号</strong></label>
+                            <!-- Category -->
+                            <div class="col-md-2">
+                                <label for="category" class="form-label">団体区分</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="groupNum" name="groupNum" placeholder="단체번호" required>
+                                    <input type="text" class="form-control" id="category" name="category" placeholder="단체구분" required>
                                 </div>
                             </div>
 
@@ -202,10 +211,71 @@
                                 <input type="text" class="form-control" id="post" name="post" placeholder="우편번호" required>
                             </div>
 
-                            <!-- Airport Select -->
+                            <!-- Airport Information -->
+                            <div class="col-md-12">
+                                <div class="card border-1 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="row g-2">
+                                            <div class="col-1 p-1" style="text-align: center">
+                                                <h6 class="mb-0"><strong>出発</strong></h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <input type="date" class="form-control form-control-sm" id="departureDate" name="departureDate">
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="text" class="form-control form-control-sm" id="departureCode" name="departureCode" placeholder="CODE">
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="text" class="form-control form-control-sm" id="departureRoute" name="departureRoute">
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="time" class="form-control" id="departureTime" name="departureTime">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="time" class="form-control" id="arrivalTime" name="arrivalTime">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card border-1 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="row g-2">
+                                            <div class="col-1 p-1" style="text-align: center">
+                                                <h6 class="mb-0"><strong>帰還</strong></h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <input type="date" class="form-control form-control-sm" id="returnDate" name="returnDate">
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="text" class="form-control form-control-sm" id="returnCode" name="returnCode" placeholder="CODE">
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="text" class="form-control form-control-sm" id="returnRoute" name="returnRoute">
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="time" class="form-control" id="returnDepartureTime" name="returnDepartureTime">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="time" class="form-control" id="returnArrivalTime" name="returnArrivalTime">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Travel Duration and Participants -->
                             <div class="col-md-3">
-                                <label class="form-label"></label>
-                                <div class="form-check-container bg-light p-2 rounded" style="text-align: center">
+                                <div class="form-check-container bg-light p-3 rounded" style="text-align: center">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="selAirport" name="airports" value="SEL">
                                         <label class="form-check-label" for="selAirport">SEL</label>
@@ -221,48 +291,50 @@
                                 </div>
                             </div>
 
-                            <!-- Air Code1 -->
-                            <div class="col-md-1">
-                                <label for="manager" class="form-label">CODE</label>
-                                <input type="text" class="form-control" id="code1" name="code1" placeholder="항공코드" required>
-                            </div>
-
-                            <!-- Travel Dates -->
-                            <div class="col-md-3">
-                                <label for="travelStartDate" class="form-label">出発</label>
-                                <input type="datetime-local" class="form-control" id="travelStartDate" name="departDate" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-
-                            <!-- Air Code2 -->
-                            <div class="col-md-1">
-                                <label for="manager" class="form-label">CODE</label>
-                                <input type="text" class="form-control" id="code2" name="code2" placeholder="항공코드" required>
-                            </div>
-
-                            <!-- Travel Dates -->
-                            <div class="col-md-3">
-                                <label for="travelEndDate" class="form-label">帰還</label>
-                                <input type="datetime-local" class="form-control" id="travelEndDate" name="returnDate" required>
-                                <div class="invalid-feedback"></div>
+                            <div class="col-md-9">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-md-2">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number" class="form-control" id="nights" name="nights" min="0" value="0">
+                                                    <span class="input-group-text">泊</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number" class="form-control" id="days" name="days" min="1" value="1">
+                                                    <span class="input-group-text">日</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="number" class="form-control form-control-sm" id="recruitCount" name="recruitCount" min="0" value="0">
+                                            </div>
+                                            <div class="col-md-auto text-center">+</div>
+                                            <div class="col-md-1">
+                                                <input type="number" class="form-control form-control-sm" id="additionalCount" name="additionalCount" min="0" value="0">
+                                            </div>
+                                            <div class="col-md-auto text-center">=</div>
+                                            <div class="col-md-3">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number" class="form-control form-control-sm" id="totalParticipants" name="totalParticipants" min="0" value="0">
+                                                    <span class="input-group-text">人</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Notes -->
                             <div class="col-10">
                                 <label for="notes" class="form-label">etc.</label>
-                                <textarea class="form-control" id="notes" name="notes" rows="4"
+                                <textarea class="form-control" id="notes" name="notes" rows="2"
                                           placeholder="추가 정보나 특이사항을 입력하세요..."></textarea>
                             </div>
 
                             <!-- Customer Count & Guide -->
                             <div class="col-lg-2">
-                                <label for="customerCount" class="form-label">人員</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control text-center" id="customerCount"
-                                           name="customerCount" min="0" max="1000" required>
-                                    <span class="input-group-text">人</span>
-                                </div>
-
                                 <label for="guide" class="form-label">ガイド</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="guide" name="guide">
@@ -275,7 +347,7 @@
 
             <!-- Sidebar -->
             <div class="col-lg-3">
-                <!-- Company Info -->
+                <!-- Company Information -->
                 <div class="card border-1 shadow-sm mb-4">
                     <div class="card-header bg-transparent">
                         <h4 class="mb-0">(株) Good Feel Tour 本社</h4>
@@ -323,7 +395,10 @@
                         <div class="row g-2 text-sm">
                             <div class="col-4 text-muted">State:</div>
                             <div class="col-8">
-                                <span class="badge bg-warning">신규</span>
+                                <span class="badge bg-warning">초안</span>
+                                <span class="badge bg-primary">진행중</span>
+                                <span class="badge bg-success">완료</span>
+                                <span class="badge bg-secondary">취소</span>
                             </div>
                             <div class="col-4 text-muted">作成者:</div>
                             <div class="col-8" sec:authentication="name">사용자명</div>
@@ -357,8 +432,9 @@
                                         <th>ホテル名</th>
                                         <th>宿泊日</th>
                                         <th>食事</th>
-                                        <th>Type</th>
                                         <th>数</th>
+                                        <th>Type</th>
+                                        <th>単価</th>
                                         <th>回答</th>
                                         <th>備考</th>
                                         <th>-</th>
@@ -376,8 +452,9 @@
                                                 <div><input type="checkbox" id="newDinner"><label for="newDinner">夕</label></div>
                                             </div>
                                         </td>
-                                        <td><input type="text" id="newRoom"></td>
                                         <td><input type="number" id="newAmount"></td>
+                                        <td><input type="text" id="newRoom"></td>
+                                        <td><input type="text" id="newPrice"></td>
                                         <td><input type="text" id="newReply"></td>
                                         <td><input type="text" id="newComment"></td>
                                         <td>
@@ -620,26 +697,9 @@
 
         // REF.No generation
         document.getElementById('generateRefNo').addEventListener('click', function() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const sequence = String(Math.floor(Math.random() * 999) + 1).padStart(3, '0');
+            const sequence = String(Math.floor(Math.random() * 999999) + 1).padStart(6, '0');
 
-            document.getElementById('refNo').value = `GF${year}${month}${day}${sequence}`;
-        });
-
-        // Travel date validation
-        document.getElementById('travelStartDate').addEventListener('change', function() {
-            const startDate = this.value;
-            const endDateInput = document.getElementById('travelEndDate');
-
-            if (startDate) {
-                endDateInput.min = startDate;
-                if (endDateInput.value && endDateInput.value < startDate) {
-                    endDateInput.value = startDate;
-                }
-            }
+            document.getElementById('refNo').value = `${sequence}`;
         });
 
         // Hotel inline editing
@@ -659,8 +719,9 @@
         document.getElementById('saveHotelRow').addEventListener('click', function() {
             const hotelName = document.getElementById('newHotelName').value;
             const stayDate = document.getElementById('newStayDate').value;
-            const room = document.getElementById('newRoom').value;
             const amount = document.getElementById('newAmount').value;
+            const room = document.getElementById('newRoom').value;
+            const price = document.getElementById('newPrice').value;
             const reply = document.getElementById('newReply').value;
             const comment = document.getElementById('newComment').value;
 
@@ -670,15 +731,16 @@
             const dinner = document.getElementById('newDinner').checked ? '夕' : '';
             const meals = [breakfast, lunch, dinner].filter(meal => meal).join(' ');
 
-            addHotelToTable(hotelName, stayDate, meals, room, amount, reply, comment);
+            addHotelToTable(hotelName, stayDate, meals, amount, room, price, reply, comment);
             hideHotelInputRow();
         });
 
         function clearHotelInputs() {
             document.getElementById('newHotelName').value = '';
             document.getElementById('newStayDate').value = '';
-            document.getElementById('newRoom').value = '';
             document.getElementById('newAmount').value = '';
+            document.getElementById('newRoom').value = '';
+            document.getElementById('newPrice').value = '';
             document.getElementById('newReply').value = '';
             document.getElementById('newComment').value = '';
             document.getElementById('newBreakfast').checked = false;
@@ -691,7 +753,7 @@
             document.getElementById('addInfo1').disabled = false;
         }
 
-        function addHotelToTable(hotelName, stayDate, meals, room, amount, reply, comment) {
+        function addHotelToTable(hotelName, stayDate, meals, amount, room, price, reply, comment) {
             const tbody = document.getElementById('hotelList');
             const noHotel = document.getElementById('noHotel');
             const inputRow = document.getElementById('hotelInputRow');
@@ -701,8 +763,9 @@
                 <td>${hotelName}</td>
                 <td>${stayDate || '-'}</td>
                 <td>${meals || '-'}</td>
-                <td>${room || '-'}</td>
                 <td>${amount || '-'}</td>
+                <td>${room || '-'}</td>
+                <td>${price || '-'}</td>
                 <td>${reply || '-'}</td>
                 <td>
                     <div class="d-flex align-items-center">
@@ -745,9 +808,10 @@
             // Fill input row with existing data
             document.getElementById('newHotelName').value = cells[0].textContent;
             document.getElementById('newStayDate').value = cells[1].textContent === '-' ? '' : cells[1].textContent;
-            document.getElementById('newRoom').value = cells[3].textContent === '-' ? '' : cells[3].textContent;
-            document.getElementById('newAmount').value = cells[4].textContent === '-' ? '' : cells[4].textContent;
-            document.getElementById('newReply').value = cells[5].textContent === '-' ? '' : cells[5].textContent;
+            document.getElementById('newAmount').value = cells[3].textContent === '-' ? '' : cells[3].textContent;
+            document.getElementById('newRoom').value = cells[4].textContent === '-' ? '' : cells[4].textContent;
+            document.getElementById('newPrice').value = cells[5].textContent === '-' ? '' : cells[5].textContent;
+            document.getElementById('newReply').value = cells[6].textContent === '-' ? '' : cells[6].textContent;
 
             // Set meal checkboxes
             const meals = cells[2].textContent;
@@ -756,7 +820,7 @@
             document.getElementById('newDinner').checked = meals.includes('夕');
 
             // Set comment
-            const commentSpan = cells[6].querySelector('span');
+            const commentSpan = cells[7].querySelector('span');
             document.getElementById('newComment').value = commentSpan.getAttribute('title') || '';
 
             // Remove the row being edited
@@ -1196,6 +1260,61 @@
         // Initialize totals
         updateEstimateTotals();
         updateArrangementTotals();
+
+        // Additional flight info and participants calculation
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateTotalParticipants() {
+                const recruitCount = parseInt(document.getElementById('recruitCount').value) || 0;
+                const additionalCount = parseInt(document.getElementById('additionalCount').value) || 0;
+                const total = recruitCount + additionalCount;
+                document.getElementById('totalParticipants').textContent = total + '人';
+            }
+
+            ['recruitCount', 'additionalCount'].forEach(id => {
+                document.getElementById(id).addEventListener('input', updateTotalParticipants);
+            });
+
+            function calculateTripDuration() {
+                const departureDate = document.getElementById('departureDate').value;
+                const returnDate = document.getElementById('returnDate').value;
+
+                if (departureDate && returnDate) {
+                    const departure = new Date(departureDate);
+                    const returnD = new Date(returnDate);
+                    const timeDiff = returnD.getTime() - departure.getTime();
+                    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                    if (daysDiff > 0) {
+                        document.getElementById('days').value = daysDiff + 1; // Include departure day
+                        document.getElementById('nights').value = daysDiff;
+                    }
+                }
+            }
+
+            ['departureDate', 'returnDate'].forEach(id => {
+                document.getElementById(id).addEventListener('change', calculateTripDuration);
+            });
+            updateTotalParticipants();
+
+            // Ensure only one airport can be selected per departure/return
+            function setupAirportExclusivity(groupName) {
+                const checkboxes = document.querySelectorAll(`input[name="${groupName}"]`);
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        if (this.checked) {
+                            checkboxes.forEach(otherCheckbox => {
+                                if (otherCheckbox !== this) {
+                                    otherCheckbox.checked = false;
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            setupAirportExclusivity('departureAirport');
+            setupAirportExclusivity('returnAirport');
+        });
     });
 </script>
 </body>
