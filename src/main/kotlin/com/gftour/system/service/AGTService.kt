@@ -19,11 +19,8 @@ class AGTService(
             agencies = request.agencies,
             manager = request.manager,
             address = request.address,
-            region = request.region,
             tellNumber = request.tellNumber,
-            email = request.email,
             post = request.post,
-            notes = request.notes,
         )
         
         val savedAGT = agtRepository.save(agt)
@@ -39,11 +36,8 @@ class AGTService(
             agencies = request.agencies,
             manager = request.manager,
             address = request.address,
-            region = request.region,
             tellNumber = request.tellNumber,
-            email = request.email,
             post = request.post,
-            notes = request.notes,
             updatedAt = LocalDateTime.now()
         )
         
@@ -85,11 +79,8 @@ class AGTService(
             agencies = agt.agencies,
             manager = agt.manager,
             address = agt.address,
-            region = agt.region,
             tellNumber = agt.tellNumber,
-            email = agt.email,
             post = agt.post,
-            notes = agt.notes,
             createdAt = agt.createdAt,
             updatedAt = agt.updatedAt
         )

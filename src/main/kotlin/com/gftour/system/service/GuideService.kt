@@ -25,11 +25,9 @@ class GuideService(
                 guideName = request.guideName,
                 guidePhone = request.guidePhone,
                 schedule = request.schedule,
-                safetyRules = request.safetyRules,
                 precautions = request.precautions,
                 groupActionPlan = request.groupActionPlan,
                 meetingPoint = request.meetingPoint,
-                emergencyContact = request.emergencyContact,
                 status = request.status ?: existingGuide.status,
                 updatedAt = LocalDateTime.now()
             )
@@ -40,11 +38,9 @@ class GuideService(
                 guideName = request.guideName,
                 guidePhone = request.guidePhone,
                 schedule = request.schedule,
-                safetyRules = request.safetyRules,
                 precautions = request.precautions,
                 groupActionPlan = request.groupActionPlan,
                 meetingPoint = request.meetingPoint,
-                emergencyContact = request.emergencyContact,
                 status = request.status ?: GuideStatus.DRAFT
             )
         }
@@ -102,11 +98,9 @@ class GuideService(
             guideName = guide.guideName,
             guidePhone = guide.guidePhone,
             schedule = guide.schedule,
-            safetyRules = guide.safetyRules,
             precautions = guide.precautions,
             groupActionPlan = guide.groupActionPlan,
             meetingPoint = guide.meetingPoint,
-            emergencyContact = guide.emergencyContact,
             status = guide.status,
             createdAt = guide.createdAt,
             updatedAt = guide.updatedAt

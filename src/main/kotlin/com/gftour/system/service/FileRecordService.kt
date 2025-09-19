@@ -22,7 +22,9 @@ class FileRecordService(
         
         val fileRecord = FileRecord(
             refNo = refNo,
-            destination = request.destination,
+            groupNumber = request.groupNumber,
+            group = request.group,
+            tourTitle = request.tourTitle,
             manager = request.manager,
             agency = request.agency,
             travelStartDate = request.travelStartDate,
@@ -42,7 +44,9 @@ class FileRecordService(
             .orElseThrow { IllegalArgumentException("파일을 찾을 수 없습니다") }
         
         val updatedRecord = fileRecord.copy(
-            destination = request.destination,
+            groupNumber = request.groupNumber,
+            group = request.group,
+            tourTitle = request.tourTitle,
             manager = request.manager,
             agency = request.agency,
             travelStartDate = request.travelStartDate,
@@ -79,7 +83,7 @@ class FileRecordService(
         val pageable = PageRequest.of(page, size)
         val files = fileRecordRepository.searchFiles(
             refNo = searchRequest.refNo,
-            destination = searchRequest.destination,
+            groupNumber = searchRequest.groupNumber,
             manager = searchRequest.manager,
             status = searchRequest.status,
             pageable = pageable
@@ -145,7 +149,9 @@ class FileRecordService(
         return FileRecordDto(
             id = fileRecord.id,
             refNo = fileRecord.refNo,
-            destination = fileRecord.destination,
+            groupNumber = fileRecord.groupNumber,
+            group = fileRecord.group,
+            tourTitle = fileRecord.tourTitle,
             manager = fileRecord.manager,
             agency = fileRecord.agency,
             travelStartDate = fileRecord.travelStartDate,

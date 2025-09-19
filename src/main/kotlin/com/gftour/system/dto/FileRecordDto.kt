@@ -5,9 +5,11 @@ import java.time.LocalDateTime
 
 // File Record DTOs
 data class FileRecordCreateRequest(
-    val destination: String,
+    val groupNumber: String,
+    val group: String? = null,
+    val tourTitle: String,
     val manager: String,
-    val agency: String? = null,
+    val agency: String,
     val travelStartDate: LocalDateTime? = null,
     val travelEndDate: LocalDateTime? = null,
     val customerCount: Int = 0,
@@ -15,9 +17,11 @@ data class FileRecordCreateRequest(
 )
 
 data class FileRecordUpdateRequest(
-    val destination: String,
+    val groupNumber: String,
+    val group: String? = null,
+    val tourTitle: String,
     val manager: String,
-    val agency: String? = null,
+    val agency: String,
     val travelStartDate: LocalDateTime? = null,
     val travelEndDate: LocalDateTime? = null,
     val customerCount: Int = 0,
@@ -28,9 +32,11 @@ data class FileRecordUpdateRequest(
 data class FileRecordDto(
     val id: Long,
     val refNo: String,
-    val destination: String,
+    val groupNumber: String,
+    val group: String? = null,
+    val tourTitle: String,
     val manager: String,
-    val agency: String?,
+    val agency: String,
     val travelStartDate: LocalDateTime?,
     val travelEndDate: LocalDateTime?,
     val customerCount: Int,
@@ -42,7 +48,7 @@ data class FileRecordDto(
 
 data class FileSearchRequest(
     val refNo: String? = null,
-    val destination: String? = null,
+    val groupNumber: String? = null,
     val manager: String? = null,
     val status: FileStatus? = null
 )

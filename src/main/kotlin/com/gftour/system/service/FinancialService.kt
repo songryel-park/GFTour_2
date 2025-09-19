@@ -93,7 +93,7 @@ class FinancialService(
         
         return FinancialReceiptDto(
             refNo = fileRecord.refNo,
-            destination = fileRecord.destination,
+            groupNumber = fileRecord.groupNumber,
             manager = fileRecord.manager,
             salesAmount = financialRecord.salesAmount,
             receiptAmount = financialRecord.receiptAmount,

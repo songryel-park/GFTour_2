@@ -46,16 +46,16 @@ class FileRecordController(
     @Operation(summary = "파일 검색", description = "조건에 따른 파일 검색")
     fun searchFiles(
         @RequestParam(required = false) refNo: String?,
-        @RequestParam(required = false) destination: String?,
+        @RequestParam(required = false) groupNumber: String?,
         @RequestParam(required = false) manager: String?,
         @RequestParam(required = false) status: String?,
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "20") size: Int
+        @RequestParam(defaultValue = "10") size: Int
     ): ResponseEntity<ApiResponse<Page<FileRecordDto>>> {
         return try {
             val searchRequest = FileSearchRequest(
                 refNo = refNo,
-                destination = destination,
+                groupNumber = groupNumber,
                 manager = manager,
                 status = status?.let { com.gftour.system.entity.FileStatus.valueOf(it.uppercase()) }
             )

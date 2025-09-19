@@ -17,12 +17,12 @@ interface FileRecordRepository : JpaRepository<FileRecord, Long> {
     
     @Query("SELECT f FROM FileRecord f WHERE " +
            "(:refNo IS NULL OR f.refNo LIKE %:refNo%) AND " +
-           "(:destination IS NULL OR f.destination LIKE %:destination%) AND " +
+           "(:destination IS NULL OR f.groupNumber LIKE %:destination%) AND " +
            "(:manager IS NULL OR f.manager LIKE %:manager%) AND " +
            "(:status IS NULL OR f.status = :status)")
     fun searchFiles(
         @Param("refNo") refNo: String?,
-        @Param("destination") destination: String?,
+        @Param("groupNumber") groupNumber: String?,
         @Param("manager") manager: String?,
         @Param("status") status: FileStatus?,
         pageable: Pageable

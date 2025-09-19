@@ -17,15 +17,19 @@ data class FileRecord(
     @Column(nullable = false, length = 100)
     val groupNumber: String = "",
 
+    @Column(length = 100)
+    val group: String? = null,
+
     @Column(nullable = false, columnDefinition = "TEXT")
     val tourTitle: String = "",
     
     @NotBlank(message = "담당자는 필수입니다")
     @Column(nullable = false, length = 50)
     val manager: String = "",
-    
-    @Column(length = 100)
-    val agency: String? = null,
+
+    @NotBlank(message = "AGT는 필수입니다")
+    @Column(nullable = false, length = 100)
+    val agency: String = "",
     
     @Column(name = "travel_start_date")
     val travelStartDate: LocalDateTime? = null,

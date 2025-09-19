@@ -41,7 +41,7 @@ data class FinancialCommissionDto(
 
 data class FinancialReceiptDto(
     val refNo: String,
-    val destination: String,
+    val groupNumber: String,
     val manager: String,
     val salesAmount: BigDecimal,
     val receiptAmount: BigDecimal,
