@@ -13,6 +13,33 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts - Noto Sans KR -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        #searchResultsTable {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        #searchResultsTable th:nth-child(1) { width: 3%; }
+        #searchResultsTable th:nth-child(2) { width: 15%; }
+        #searchResultsTable th:nth-child(3) { width: 10%; }
+        #searchResultsTable th:nth-child(4) { width: 30%; }
+        #searchResultsTable th:nth-child(5) { width: 15%; }
+        #searchResultsTable th:nth-child(6) { width: 20%; }
+        #searchResultsTable th:nth-child(7) { width: 10%; }
+        #searchResultsTable th:nth-child(8) { width: 10%; }
+        #searchResultsTable th:last-child,
+        #searchResultsTable td:last-child {
+            text-align: left;
+            padding-right: 15px;
+        }
+    </style>
 </head>
 <body>
     <div th:block="content">
@@ -27,7 +54,7 @@
                     </div>
                     <div>
                         <a th:href="@{/}" class="btn btn-outline-secondary me-2">
-                            <i class="fas fa-home"></i>
+                            <i class="fas fa-home me-1"></i>Home
                         </a>
                     </div>
                 </div>
@@ -44,25 +71,33 @@
                         </h6>
                         <form method="get" th:action="@{/files}" class="row g-3">
                             <div class="col-md-2">
-                                <label for="refNo" class="form-label">REF.No</label>
-                                <input type="text" class="form-control" id="refNo" name="refNo" 
-                                       placeholder="GF20240101001" th:value="${param.refNo}">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="refNo" name="refNo" th:value="${param.refNo}" placeholder="REF.No">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="groupNumber" name="groupNumber" th:value="${param.groupNumber}" placeholder="団体番号">
+                                </div>
                             </div>
                             
                             <div class="col-md-2">
-                                <label for="groupNumber" class="form-label">団体番号</label>
-                                <input type="text" class="form-control" id="groupNumber" name="groupNumber"
-                                       placeholder="" th:value="${param.groupNumber}">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="tourTitle" name="tourTitle" th:value="${param.tourTitle}" placeholder="ツアー名">
+                                </div>
                             </div>
-                            
+
                             <div class="col-md-2">
-                                <label for="manager" class="form-label">担葬者</label>
-                                <input type="text" class="form-control" id="manager" name="manager" 
-                                       placeholder="" th:value="${param.manager}">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="agt" name="agt" th:value="${param.agt}" placeholder="AGT">
+                                </div>
                             </div>
-                            
-                            <div class="col-md-2">
-                                <label for="status" class="form-label">State</label>
+
+                            <div class="col-md-1">
                                 <select class="form-select" id="status" name="status">
                                     <option value="">전체</option>
                                     <option value="DRAFT" th:selected="${param.status == 'DRAFT'}">신규</option>
@@ -73,7 +108,6 @@
                             </div>
 
                             <div class="col-md-2" style="margin: 1%">
-                                <label for="status" class="form-label"></label>
                                 <div class="btn-group w-100" role="group">
                                     <button type="button" class="btn btn-outline-primary" id="searchBtn">
                                         <i class="fas fa-search me-1"></i>search
@@ -112,18 +146,18 @@
                             <table class="table table-hover mb-0" id="searchResultsTable">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col" width="3%">
+                                        <th scope="col">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="selectAllResults">
                                             </div>
                                         </th>
-                                        <th scope="col">REF No</th>
                                         <th scope="col">団体番号</th>
+                                        <th scope="col">REF.No</th>
                                         <th scope="col">ツアー名</th>
-                                        <th scope="col">担葬者</th>
+                                        <th scope="col">AGT</th>
                                         <th scope="col">日程</th>
                                         <th scope="col">State</th>
-                                        <th scope="col" width="10%"></th>
+                                        <th scope="col">-</th>
                                     </tr>
                                 </thead>
                                 <tbody id="searchResults">
@@ -134,8 +168,8 @@
                                                 <input class="form-check-input" type="checkbox" value="1">
                                             </div>
                                         </td>
-                                        <td><strong>GF20240115001</strong></td>
                                         <td><strong>H120204-1</strong></td>
+                                        <td><strong>032198</strong></td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div>
@@ -173,8 +207,8 @@
                                                 <input class="form-check-input" type="checkbox" value="2">
                                             </div>
                                         </td>
-                                        <td><strong>GF20240201002</strong></td>
                                         <td><strong>H120704-3</strong></td>
+                                        <td><strong>547961</strong></td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div>
@@ -213,8 +247,8 @@
                                                 <input class="form-check-input" type="checkbox" value="3">
                                             </div>
                                         </td>
-                                        <td><strong>GF20240220003</strong></td>
                                         <td><strong>H120402-2</strong></td>
+                                        <td><strong>345610</strong></td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div>
@@ -380,11 +414,11 @@
                                     <input type="text" class="form-control" id="advRefNo" placeholder="GF20240101001">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="advDestination" class="form-label">여행지</label>
-                                    <input type="text" class="form-control" id="advDestination" placeholder="제주도, 부산 등">
+                                    <label for="advTourTitle" class="form-label">ツアー名</label>
+                                    <input type="text" class="form-control" id="advTourTitle" placeholder="제주도, 부산 등">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="advManager" class="form-label">담당자</label>
+                                    <label for="advManager" class="form-label">担葬者</label>
                                     <input type="text" class="form-control" id="advManager" placeholder="담당자명">
                                 </div>
                                 <div class="col-md-6">
@@ -434,22 +468,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // File management functions
-            window.viewFile = function(id) {
-                console.log('View file:', id);
-                // Redirect to file detail view
-                window.location.href = `/files/${id}`;
-            };
-
             window.editFile = function(id) {
                 console.log('Edit file:', id);
                 // Redirect to file edit form
                 window.location.href = `/files/${id}/edit`;
-            };
-
-            window.copyFile = function(id) {
-                console.log('Copy file:', id);
-                if (confirm('이 파일을 복사하시겠습니까?')) {
-                }
             };
 
             window.deleteFile = function(id) {
@@ -601,8 +623,33 @@
             // Export functionality
             document.getElementById('exportBtn')?.addEventListener('click', function() {
                 console.log('Export search results');
-                alert('검색 결과를 Excel로 내보냅니다.');
             });
+            function exportToExcel() {
+                let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+                csvContent += "REF.No,団体番号,ツアー名,担葬者,日程,State\n";
+
+                filteredData.forEach(fileRecord => {
+                    const row = [
+                        fileRecord.refNo || '',
+                        fileRecord.groupNumber || '',
+                        fileRecord.tourTitle || '',
+                        fileRecord.manager || '',
+                        fileRecord.state || '',
+                        agt.faxNumber || ''
+                    ].map(field => `"${field}"`).join(",");
+                    csvContent += row + "\n";
+                });
+
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "File_list.csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                showAlert('Excel 파일이 다운로드되었습니다.', 'success');
+            }
 
             // Quick search functionality
             let searchTimeout;

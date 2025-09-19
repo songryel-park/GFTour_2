@@ -15,6 +15,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
         .table th, .table td {
             vertical-align: middle;
             text-align: center;
@@ -24,7 +28,11 @@
         }
         .table th:last-child, .table td:last-child {
             text-align: right;
-            padding-right: 15px;
+            padding-right: 10px;
+        }
+
+        .col-lg-2 {
+            margin-left: -1%;
         }
 
         /* 호텔 테이블 정렬 */
@@ -47,6 +55,42 @@
             padding-right: 15px;
         }
 
+        /* 식당 테이블 정리 */
+        #restaurantTable {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        #restaurantTable th:nth-child(1) { width: 15%; }
+        #restaurantTable th:nth-child(2) { width: 15%; }
+        #restaurantTable th:nth-child(3) { width: 15%; }
+        #restaurantTable th:nth-child(4) { width: 30%; }
+        #restaurantTable th:nth-child(5) { width: 10%; }
+        #restaurantTable th:nth-child(6) { width: 25%; }
+        #restaurantTable th:nth-child(7) { width: 15%; }
+        #restaurantTable th:nth-child(8) { width: 10%; }
+        #restaurantTable th:last-child,
+        #restaurantTable td:last-child {
+            padding-right: 15px;
+        }
+
+        /* 질의응답 테이블 정렬 */
+        #communityTable {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        #communityTable th:nth-child(1) { width: 25%; }
+        #communityTable th:nth-child(2) { width: 40%; }
+        #communityTable th:nth-child(3) { width: 15%; }
+        #communityTable th:nth-child(4) { width: 40%; }
+        #communityTable th:nth-child(5) { width: 25%; }
+        #communityTable th:nth-child(6) { width: 10%; }
+        #communityTable th:last-child,
+        #communityTable td:last-child {
+            padding-right: 15px;
+        }
+
         /* 고객 테이블 정렬 */
         #customerTable {
             table-layout: fixed;
@@ -65,7 +109,6 @@
 
         /* 금액 테이블 정렬 */
         .total-row {
-            background-color: #f8f9fa;
             font-weight: bold;
             border-top: 2px solid #dee2e6;
         }
@@ -92,7 +135,7 @@
         .input-row input, .input-row select {
             border: 1px solid #ced4da;
             padding: 0.25rem 0.5rem;
-            font-size: 0.875rem;
+            font-size: 1rem;
             width: 100%;
         }
         .meal-checkboxes {
@@ -139,7 +182,7 @@
                         <div class="row g-3">
                             <!-- Group Number -->
                             <div class="col-md-3">
-                                <label for="destination" class="form-label"><strong>団体番号</strong></label>
+                                <label for="groupNum" class="form-label"><strong>団体番号</strong></label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="groupNum" name="groupNum" placeholder="단체번호" required>
                                 </div>
@@ -167,8 +210,8 @@
 
                             <!-- Destination -->
                             <div class="col-md-5">
-                                <label for="destination" class="form-label">ツアー名</label>
-                                <input type="text" class="form-control" id="destination" name="destination" placeholder="여행주제" required>
+                                <label for="tourTitle" class="form-label">ツアー名</label>
+                                <input type="text" class="form-control" id="tourTitle" name="tourTitle" placeholder="여행주제" required>
                             </div>
 
                             <!-- Agency -->
@@ -213,7 +256,7 @@
 
                             <!-- Airport Information -->
                             <div class="col-md-12">
-                                <div class="card border-1 shadow-sm">
+                                <div class="card border-1">
                                     <div class="card-body">
                                         <div class="row g-2">
                                             <div class="col-1 p-1" style="text-align: center">
@@ -223,10 +266,10 @@
                                                 <input type="date" class="form-control form-control-sm" id="departureDate" name="departureDate">
                                             </div>
                                             <div class="col-2">
-                                                <input type="text" class="form-control form-control-sm" id="departureCode" name="departureCode" placeholder="CODE">
+                                                <input type="text" class="form-control form-control-sm" style="text-align: center" id="departureCode" name="departureCode" placeholder="CODE">
                                             </div>
                                             <div class="col-2">
-                                                <input type="text" class="form-control form-control-sm" id="departureRoute" name="departureRoute">
+                                                <input type="text" class="form-control form-control-sm"  style="text-align: center" id="departureRoute" name="departureRoute" placeholder=" -> ">
                                             </div>
                                             <div class="col-2">
                                                 <div class="input-group input-group-sm">
@@ -243,7 +286,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="card border-1 shadow-sm">
+                                <div class="card border-1">
                                     <div class="card-body">
                                         <div class="row g-2">
                                             <div class="col-1 p-1" style="text-align: center">
@@ -253,10 +296,10 @@
                                                 <input type="date" class="form-control form-control-sm" id="returnDate" name="returnDate">
                                             </div>
                                             <div class="col-2">
-                                                <input type="text" class="form-control form-control-sm" id="returnCode" name="returnCode" placeholder="CODE">
+                                                <input type="text" class="form-control form-control-sm" style="text-align: center" id="returnCode" name="returnCode" placeholder="CODE">
                                             </div>
                                             <div class="col-2">
-                                                <input type="text" class="form-control form-control-sm" id="returnRoute" name="returnRoute">
+                                                <input type="text" class="form-control form-control-sm" style="text-align: center" id="returnRoute" name="returnRoute" placeholder=" -> ">
                                             </div>
                                             <div class="col-2">
                                                 <div class="input-group input-group-sm">
@@ -275,7 +318,7 @@
 
                             <!-- Travel Duration and Participants -->
                             <div class="col-md-3">
-                                <div class="form-check-container bg-light p-3 rounded" style="text-align: center">
+                                <div class="form-check-container bg-light p-1 rounded" style="text-align: center">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="selAirport" name="airports" value="SEL">
                                         <label class="form-check-label" for="selAirport">SEL</label>
@@ -291,53 +334,43 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-9">
-                                <div class="card border-0 shadow-sm">
-                                    <div class="card-body">
-                                        <div class="row g-3 align-items-center">
-                                            <div class="col-md-2">
-                                                <div class="input-group input-group-sm">
-                                                    <input type="number" class="form-control" id="nights" name="nights" min="0" value="0">
-                                                    <span class="input-group-text">泊</span>
-                                                </div>
+                            <!-- Customer Count & Guide -->
+                            <div class="col-lg-7">
+                                <div class="card border-0">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="col-md-2">
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" id="nights" name="nights" min="0" value="0">
+                                                <span class="input-group-text">泊</span>
                                             </div>
-                                            <div class="col-md-2">
-                                                <div class="input-group input-group-sm">
-                                                    <input type="number" class="form-control" id="days" name="days" min="1" value="1">
-                                                    <span class="input-group-text">日</span>
-                                                </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" id="days" name="days" min="1" value="1">
+                                                <span class="input-group-text">日</span>
                                             </div>
-                                            <div class="col-md-2">
-                                                <input type="number" class="form-control form-control-sm" id="recruitCount" name="recruitCount" min="0" value="0">
-                                            </div>
-                                            <div class="col-md-auto text-center">+</div>
-                                            <div class="col-md-1">
-                                                <input type="number" class="form-control form-control-sm" id="additionalCount" name="additionalCount" min="0" value="0">
-                                            </div>
-                                            <div class="col-md-auto text-center">=</div>
-                                            <div class="col-md-3">
-                                                <div class="input-group input-group-sm">
-                                                    <input type="number" class="form-control form-control-sm" id="totalParticipants" name="totalParticipants" min="0" value="0">
-                                                    <span class="input-group-text">人</span>
-                                                </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="number" class="form-control form-control-sm" id="recruitCount" name="recruitCount" min="0" value="0">
+                                        </div>
+                                        <div class="col-md-auto text-center">+</div>
+                                        <div class="col-md-2">
+                                            <input type="number" class="form-control form-control-sm" id="additionalCount" name="additionalCount" min="0" value="0">
+                                        </div>
+                                        <div class="col-md-auto text-center">=</div>
+                                        <div class="col-md-2">
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control form-control-sm" id="totalParticipants" name="totalParticipants" min="0" value="0">
+                                                <span class="input-group-text">人</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Notes -->
-                            <div class="col-10">
-                                <label for="notes" class="form-label">etc.</label>
-                                <textarea class="form-control" id="notes" name="notes" rows="2"
-                                          placeholder="추가 정보나 특이사항을 입력하세요..."></textarea>
-                            </div>
-
-                            <!-- Customer Count & Guide -->
                             <div class="col-lg-2">
-                                <label for="guide" class="form-label">ガイド</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="guide" name="guide">
+                                    <input type="text" class="form-control" id="guide" name="guide" placeholder="ガイド">
                                 </div>
                             </div>
                         </div>
@@ -355,14 +388,14 @@
                     <div class="card-body">
                         <div class="d-grid gap-2">
                             <div class="col-12">
-                                <i class="fas fa-map-location-dot text-muted me-1"> : ソウル特別市 東大門区 祭基路 103-161 2階</i>
+                                <i class="fas fa-map-location-dot text-muted me-1"></i> : ソウル特別市 東大門区 祭基路 103-161 2階
                             </div>
                             <div class="col-12">
-                                <i class="fas fa-phone text-muted me-1"> : 090-8958-4546 /</i>
-                                <i class="fas fa-fax text-muted me-1"> : 02-963-7559</i>
+                                <i class="fas fa-phone text-muted me-1"></i> : 090-8958-4546 /
+                                <i class="fas fa-fax text-muted me-1"></i> : 02-963-7559
                             </div>
                             <div class="col-12">
-                                <i class="fas fa-envelope text-muted me-1"></i>: gftour@goodfeeltour.co.kr
+                                <i class="fas fa-envelope text-muted me-2"></i>: gftour@goodfeeltour.co.kr
                             </div>
                         </div>
                     </div>
@@ -381,24 +414,21 @@
                                 <button type="button" class="btn btn-outline-primary me-2">
                                     <i class="fas fa-save me-3"></i>Save
                                 </button>
-                                <button type="button" class="btn btn-outline-warning me-1">
+                                <button type="button" class="btn btn-outline-secondary me-1">
                                     <i class="fas fa-rotate-left me-2"></i>Cancel
                                 </button>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- File Status -->
-                <div class="card border-1 shadow-sm mb-3">
+                    <!-- File Status -->
                     <div class="card-body">
                         <div class="row g-2 text-sm">
                             <div class="col-4 text-muted">State:</div>
                             <div class="col-8">
                                 <span class="badge bg-warning">초안</span>
-                                <span class="badge bg-primary">진행중</span>
+                                <span class="badge bg-info">진행중</span>
                                 <span class="badge bg-success">완료</span>
-                                <span class="badge bg-secondary">취소</span>
+                                <span class="badge bg-danger">취소</span>
                             </div>
                             <div class="col-4 text-muted">作成者:</div>
                             <div class="col-8" sec:authentication="name">사용자명</div>
@@ -412,7 +442,7 @@
             <!-- Hotel Information and Customer Information Row -->
             <div class="row">
                 <!-- Hotel Information -->
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-transparent">
                             <div class="d-flex justify-content-between align-items-center">
@@ -456,7 +486,9 @@
                                         <td><input type="text" id="newRoom"></td>
                                         <td><input type="text" id="newPrice"></td>
                                         <td><input type="text" id="newReply"></td>
-                                        <td><input type="text" id="newComment"></td>
+                                        <td>
+                                            <textarea id="newComment" class="form-control form-control-sm resizable-textarea" rows="1"></textarea>
+                                        </td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-success me-1" id="saveHotelRow">
                                                 <i class="fas fa-check"></i>
@@ -475,48 +507,54 @@
                 </div>
 
                 <!-- Customer Information -->
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-transparent">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">
-                                    <i class="fas fa-users me-2"></i>顧客名簿
+                                    <i class="fas fa-utensils me-2"></i>食堂
                                 </h5>
-                                <button type="button" class="btn btn-sm btn-outline-success" id="addInfo2">
+                                <button type="button" class="btn btn-sm btn-outline-success" id="addInfo6">
                                     <i class="fas fa-plus me-1"></i>追加
                                 </button>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-sm" id="customerTable">
+                                <table class="table table-sm" id="restaurantTable">
                                     <thead class="bg-light">
                                     <tr>
-                                        <th>名前</th>
-                                        <th>年齢</th>
-                                        <th>性別</th>
-                                        <th>Passport</th>
+                                        <th>日字</th>
+                                        <th>費目</th>
+                                        <th>去來先</th>
+                                        <th>内容</th>
+                                        <th>回答</th>
+                                        <th>備考</th>
+                                        <th>回答日</th>
                                         <th>-</th>
                                     </tr>
                                     </thead>
-                                    <tbody id="customerList">
+                                    <tbody id="restaurantList">
                                     <!-- Customer input row - initially hidden -->
-                                    <tr id="customerInputRow" class="input-row" style="display: none;">
-                                        <td><input type="text" id="newCustomerName"></td>
-                                        <td><input type="number" id="newCustomerAge"></td>
-                                        <td><input type="text" id="newCustomerGender"></td>
-                                        <td><input type="text" id="newCustomerPassport"></td>
+                                    <tr id="restaurantInputRow" class="input-row" style="display: none;">
+                                        <td><input type="text" id="newRestaurantDate"></td>
+                                        <td><input type="text" id="newRestaurantMeal"></td>
+                                        <td><input type="text" id="newRestaurantName"></td>
+                                        <td><input type="text" id="newRestaurantContents"></td>
+                                        <td><input type="text" id="newRestaurantReply"></td>
+                                        <td><input type="text" id="newRestaurantComment"></td>
+                                        <td><input type="text" id="newRestaurantRTime"></td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-success me-1" id="saveCustomerRow">
+                                            <button type="button" class="btn btn-sm btn-success me-1" id="saveRestaurantRow">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         </td>
                                     </tr>
-                                    <!-- Customer rows will be added dynamically -->
+                                    <!-- Restaurant rows will be added dynamically -->
                                     </tbody>
                                 </table>
-                                <div id="noCustomers" class="text-center text-muted py-3">
-                                    <i class="fas fa-user-plus fa-2x mb-2"></i>
+                                <div id="noRestaurants" class="text-center text-muted py-3">
+                                    <i class="fas fa-plus fa-2x mb-2"></i>
                                 </div>
                             </div>
                         </div>
@@ -525,15 +563,119 @@
             </div>
 
             <!-- Schedule Information -->
-            <div class="col-12">
-                <div class="card border-0 mb-4">
-                    <div class="card-header bg-transparent">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">
-                                <i class="fas fa-calendar-alt me-2"></i>日程
-                            </h5>
+            <div class="row">
+                <div class="col-8">
+                    <div class="card border-0 mb-4">
+                        <div class="card-header bg-transparent">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-calendar-alt me-2"></i>日程
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="card-header bg-transparent">
                             <div class="card-body">
-                                <textarea class="form-control" id="schedule" name="schedule" rows="7"></textarea>
+                                <div>
+                                    <input type="text" class="form-control" id="newBreakfastNote" placeholder="朝食">
+                                    <input type="text" class="form-control" id="newLunchNote" placeholder="昼食">
+                                    <input type="text" class="form-control" id="newDinnerNote" placeholder="夕食">
+                                </div>
+                                <textarea class="form-control" id="schedule" name="schedule" rows="14"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Customer Information -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-transparent">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-clipboard me-2"></i>ホテル以外
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <textarea class="form-control" id="etc" name="etc" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-transparent">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-users me-2"></i>名簿情報
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <textarea class="form-control" id="customers" name="customers" rows="10"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Information -->
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-transparent">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-comment-alt me-2"></i>韓国連結
+                                </h5>
+                                <button type="button" class="btn btn-sm btn-outline-success" id="addInfo5">
+                                    <i class="fas fa-plus me-1"></i>追加
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm" id="communityTable">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th>質問時間</th>
+                                        <th>本社の質問</th>
+                                        <th>確認</th>
+                                        <th>現地の回答</th>
+                                        <th>回答時間</th>
+                                        <th>-</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="communityList">
+                                    <!-- Customer input row - initially hidden -->
+                                    <tr id="communityInputRow" class="input-row" style="display: none;">
+                                        <td><input type="text" id="newQTime" class="form-control form-control-sm" readonly></td>
+                                        <td>
+                                            <textarea id="newQuestion" class="form-control form-control-sm resizable-textarea" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <select id="newCheck" class="form-select form-select-sm">
+                                                <option value="">선택</option>
+                                                <option value="クレーム">クレーム</option>
+                                                <option value="途中">途中</option>
+                                                <option value="済み">済み</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <textarea id="newAnswer" class="form-control form-control-sm resizable-textarea" rows="1"></textarea>
+                                        </td>
+                                        <td><input type="text" id="newATime" class="form-control form-control-sm" readonly></td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-success me-1" id="saveCommunityRow">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <!-- Customer rows will be added dynamically -->
+                                    </tbody>
+                                </table>
+                                <div id="noCommunity" class="text-center text-muted py-3">
+                                    <i class="fas fa-comments fa-2x mb-2"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -694,6 +836,8 @@
     document.addEventListener('DOMContentLoaded', function() {
         let hotelIndex = 0;
         let customerIndex = 0;
+        let restaurantIndex = 0;
+        let communityCounter = 0;
 
         // REF.No generation
         document.getElementById('generateRefNo').addEventListener('click', function() {
@@ -701,6 +845,359 @@
 
             document.getElementById('refNo').value = `${sequence}`;
         });
+
+        // Restaurant Table Management
+        const addInfo6Button = document.getElementById('addInfo6');
+        if (addInfo6Button) {
+            addInfo6Button.addEventListener('click', function() {
+                showRestaurantInputRow();
+            });
+        }
+
+        // Restaurant function
+        function showRestaurantInputRow() {
+            const inputRow = document.getElementById('restaurantInputRow');
+            const noRestaurants = document.getElementById('noRestaurants');
+            const addButton = document.getElementById('addInfo6');
+
+            if (inputRow && inputRow.style.display === 'none') {
+                clearRestaurantInputs();
+                inputRow.style.display = '';
+                addButton.disabled = true;
+                if (noRestaurants) {
+                    noRestaurants.style.display = 'none';
+                }
+                document.getElementById('newRestaurantDate').focus();
+            }
+        }
+
+        function clearRestaurantInputs() {
+            document.getElementById('newRestaurantDate').value = '';
+            document.getElementById('newRestaurantMeal').value = '';
+            document.getElementById('newRestaurantName').value = '';
+            document.getElementById('newRestaurantContents').value = '';
+            document.getElementById('newRestaurantReply').value = '';
+            document.getElementById('newRestaurantComment').value = '';
+            document.getElementById('newRestaurantRTime').value = '';
+        }
+
+        document.getElementById('saveRestaurantRow').addEventListener('click', function() {
+            const date = document.getElementById('newRestaurantDate').value;
+            const meal = document.getElementById('newRestaurantMeal').value;
+            const time = document.getElementById('newRestaurantName').value;
+            const name = document.getElementById('newRestaurantContents').value;
+            const reply = document.getElementById('newRestaurantReply').value;
+            const comment = document.getElementById('newRestaurantComment').value;
+            const rTime = document.getElementById('newRestaurantRTime').value;
+
+            addRestaurantToTable(date, meal, time, name, reply, comment, rTime);
+            hideRestaurantInputRow();
+        });
+
+        function addRestaurantToTable(date, meal, time, name, reply, comment, rTime) {
+            const tbody = document.getElementById('restaurantList');
+            const noRestaurants = document.getElementById('noRestaurants');
+            const inputRow = document.getElementById('restaurantInputRow');
+
+            if (!tbody || !inputRow) {
+                console.error('필요한 테이블 요소를 찾을 수 없습니다');
+                return;
+            }
+
+            restaurantIndex++;
+            const row = document.createElement('tr');
+            row.id = `restaurantRow_${restaurantIndex}`;
+            row.innerHTML = `
+            <td>${date}</td>
+            <td>${meal || '-'}</td>
+            <td>${time}</td>
+            <td class="text-start">${name || ''}</td>
+            <td>${reply || '-'}</td>
+            <td class="text-start">
+                <span title="${comment}">${comment ? (comment.length > 6 ? comment.substring(0, 6) + '...' : comment) : ''}</span>
+            </td>
+            <td>${rTime}</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteRestaurantRow(${restaurantIndex})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        `;
+
+            row.addEventListener('dblclick', function(e) {
+                if (!e.target.closest('button')) {
+                    editRestaurantRow(restaurantIndex);
+                }
+            });
+
+            tbody.insertBefore(row, inputRow);
+            if (noRestaurants) {
+                noRestaurants.style.display = 'none';
+            }
+        }
+
+        function hideRestaurantInputRow() {
+            const inputRow = document.getElementById('restaurantInputRow');
+            const addButton = document.getElementById('addInfo6');
+
+            if (inputRow) {
+                inputRow.style.display = 'none';
+            }
+            if (addButton) {
+                addButton.disabled = false;
+            }
+        }
+
+        window.editRestaurantRow = function(index) {
+            const row = document.getElementById(`restaurantRow_${index}`);
+            if (!row) return;
+
+            const cells = row.querySelectorAll('td');
+            showRestaurantInputRow();
+
+            document.getElementById('newRestaurantDate').value = cells[0].textContent;
+            document.getElementById('newRestaurantMeal').value = cells[1].textContent;
+            document.getElementById('newRestaurantName').value = cells[2].textContent === '-' ? '' : cells[2].textContent;
+            document.getElementById('newRestaurantContents').value = cells[3].textContent === '-' ? '' : cells[3].textContent;
+            document.getElementById('newRestaurantReply').value = cells[4].textContent === '-' ? '' : cells[4].textContent;
+
+            const commentSpan = cells[5].querySelector('span');
+            document.getElementById('newRestaurantComment').value = commentSpan ? (commentSpan.getAttribute('title') || '') : '';
+            document.getElementById('newRestaurantRTime').value = cells[6].textContent === '-' ? '' : cells[6].textContent;
+
+            row.remove();
+        };
+
+        window.deleteRestaurantRow = function(index) {
+            if (confirm('이 식당 정보를 삭제하시겠습니까?')) {
+                const row = document.getElementById(`restaurantRow_${index}`);
+                const tbody = document.getElementById('restaurantList');
+                const noRestaurants = document.getElementById('noRestaurants');
+
+                if (row) {
+                    row.remove();
+                    const visibleRows = tbody.querySelectorAll('tr:not(#restaurantInputRow)');
+                    if (visibleRows.length === 0 && noRestaurants) {
+                        noRestaurants.style.display = 'block';
+                    }
+                }
+            }
+        };
+
+        // Community Table Management
+        const addInfo5Button = document.getElementById('addInfo5');
+        if (addInfo5Button) {
+            addInfo5Button.addEventListener('click', function() {
+                showCommunityInputRow();
+            });
+        }
+
+        // Community function
+        function showCommunityInputRow() {
+            const inputRow = document.getElementById('communityInputRow');
+            const noCommunity = document.getElementById('noCommunity');
+
+            if (!inputRow) {
+                console.error('communityInputRow 를 찾을 수 없습니다');
+                return;
+            }
+
+            resetCommunityInputRow();
+            inputRow.style.display = '';
+            if (noCommunity) {
+                noCommunity.style.display = 'none';
+            }
+
+            setupConfirmationSelect();
+            setupSaveButton();
+
+            const firstInput = document.getElementById('newQTime');
+            if (firstInput) {
+                firstInput.focus();
+            }
+        }
+
+        function resetCommunityInputRow() {
+            const qTimeInput = document.getElementById('newQTime');
+            const questionInput = document.getElementById('newQuestion');
+            const answerInput = document.getElementById('newAnswer');
+            const aTimeInput = document.getElementById('newATime');
+
+            if (qTimeInput) qTimeInput.value = '';
+            if (questionInput) questionInput.value = '';
+            if (answerInput) answerInput.value = '';
+            if (aTimeInput) aTimeInput.value = '';
+
+            const checkCell = document.querySelector('#communityInputRow td:nth-child(3)');
+            if (checkCell) {
+                checkCell.innerHTML = `
+                <select id="newCheck" class="form-select form-select-sm">
+                    <option value="">선택</option>
+                    <option value="クレーム">クレーム</option>
+                    <option value="途中">途中</option>
+                    <option value="済み">済み</option>
+                </select>
+            `;
+            }
+        }
+
+        function setupConfirmationSelect() {
+            const confirmSelect = document.getElementById('newCheck');
+            if (confirmSelect) {
+                confirmSelect.addEventListener('change', function() {
+                    if (this.value && !document.getElementById('newQTime').value) {
+                        document.getElementById('newQTime').value = getCurrentDateTime();
+                    }
+                });
+            }
+        }
+
+        function setupSaveButton() {
+            const saveButton = document.getElementById('saveCommunityRow');
+            if (saveButton) {
+                saveButton.onclick = function() {
+                    saveCommunityRow();
+                };
+            }
+        }
+
+        function saveCommunityRow() {
+            const qTime = document.getElementById('newQTime')?.value || '';
+            const question = document.getElementById('newQuestion')?.value?.trim() || '';
+            const check = document.getElementById('newCheck')?.value || '';
+            const answer = document.getElementById('newAnswer')?.value?.trim() || '';
+            const aTime = document.getElementById('newATime')?.value || '';
+
+            if (!question) {
+                alert('本社の質問을 입력해주세요.');
+                document.getElementById('newQuestion')?.focus();
+                return;
+            }
+
+            if (!check) {
+                alert('確認 상태를 선택해주세요.');
+                document.getElementById('newCheck')?.focus();
+                return;
+            }
+
+            // 現地の回答이 있으면서 回答時間이 없는 경우 자동 설정
+            let finalATime = aTime;
+            if (answer && !aTime) {
+                finalATime = getCurrentDateTime();
+                const aTimeInput = document.getElementById('newATime');
+                if (aTimeInput) aTimeInput.value = finalATime;
+            }
+
+            addCommunityRow(qTime, question, check, answer, finalATime);
+            hideCommunityInputRow();
+        }
+
+        function addCommunityRow(qTime, question, check, answer, aTime) {
+            communityCounter++;
+            const tbody = document.getElementById('communityList');
+            const inputRow = document.getElementById('communityInputRow');
+
+            if (!tbody || !inputRow) {
+                console.error('필요한 테이블 요소를 찾을 수 없습니다');
+                return;
+            }
+
+            const newRow = document.createElement('tr');
+            newRow.id = `communityRow_${communityCounter}`;
+
+            let statusClass = '';
+            switch(check) {
+                case 'クレーム': break;
+                case '途中': break;
+                case '済み': break;
+            }
+
+            newRow.innerHTML = `
+            <td>${formatDateTime(qTime)}</td>
+            <td class="text-start">${escapeHtml(question)}</td>
+            <td><span class="badge bg-secondary ${statusClass}">${check}</span></td>
+            <td class="text-start">${escapeHtml(answer)}</td>
+            <td>${formatDateTime(aTime)}</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteCommunityRow(${communityCounter})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        `;
+
+            newRow.addEventListener('dblclick', function(e) {
+                if (!e.target.closest('button')) {
+                    editCommunityRow(communityCounter);
+                }
+            });
+            tbody.insertBefore(newRow, inputRow);
+        }
+
+        function hideCommunityInputRow() {
+            const inputRow = document.getElementById('communityInputRow');
+            const communityList = document.getElementById('communityList');
+            const noCommunity = document.getElementById('noCommunity');
+
+            if (inputRow) {
+                inputRow.style.display = 'none';
+            }
+
+            if (communityList && noCommunity) {
+                const visibleRows = communityList.querySelectorAll('tr:not(#communityInputRow)');
+                if (visibleRows.length === 0) {
+                    noCommunity.style.display = 'block';
+                }
+            }
+        }
+
+        window.editCommunityRow = function(counter) {
+            const row = document.getElementById(`communityRow_${counter}`);
+            if (!row) return;
+
+            const cells = row.querySelectorAll('td');
+
+            // 시간 데이터 파싱 (MM/DD HH:mm 형식으로 변환)
+            const qTimeText = cells[0].textContent;
+            const aTimeText = cells[4].textContent;
+
+            showCommunityInputRow();
+            document.getElementById('newQTime').value = qTimeText;
+            document.getElementById('newQuestion').value = cells[1].textContent;
+            document.getElementById('newAnswer').value = cells[3].textContent;
+            document.getElementById('newATime').value = aTimeText;
+
+            // 상태 선택
+            const badgeText = cells[2].querySelector('.badge').textContent;
+            const checkCell = document.querySelector('#communityInputRow td:nth-child(3)');
+            if (checkCell) {
+                checkCell.innerHTML = `
+                <select id="newCheck" class="form-select form-select-sm">
+                    <option value="">선택</option>
+                    <option value="クレーム" ${badgeText === 'クレーム' ? 'selected' : ''}>クレーム</option>
+                    <option value="途中" ${badgeText === '途中' ? 'selected' : ''}>途中</option>
+                    <option value="済み" ${badgeText === '済み' ? 'selected' : ''}>済み</option>
+                </select>
+            `;
+            }
+            row.remove();
+        };
+
+        window.deleteCommunityRow = function(counter) {
+            if (confirm('이 질의응답을 삭제하시겠습니까?')) {
+                const row = document.getElementById(`communityRow_${counter}`);
+                const tbody = document.getElementById('communityList');
+                const noCommunity = document.getElementById('noCommunity');
+
+                if (row) {
+                    row.remove();
+
+                    const visibleRows = tbody.querySelectorAll('tr:not(#communityInputRow)');
+                    if (visibleRows.length === 0 && noCommunity) {
+                        noCommunity.style.display = 'block';
+                    }
+                }
+            }
+        };
 
         // Hotel inline editing
         document.getElementById('addInfo1').addEventListener('click', function() {
@@ -769,7 +1266,7 @@
                 <td>${reply || '-'}</td>
                 <td>
                     <div class="d-flex align-items-center">
-                        <span class="me-2" title="${comment}">${comment ? (comment.length > 25 ? comment.substring(0, 25) + '...' : comment) : '-'}</span>
+                        <span class="me-2" title="${comment}">${comment ? (comment.length > 10 ? comment.substring(0, 10) + '...' : comment) : ''}</span>
                     </div>
                 </td>
                 <td>
@@ -834,101 +1331,107 @@
         }
 
         // Customer inline editing
-        document.getElementById('addInfo2').addEventListener('click', function() {
-            const inputRow = document.getElementById('customerInputRow');
-            const addButton = document.getElementById('addInfo2');
-
-            if (inputRow.style.display === 'none') {
-                clearCustomerInputs();
-                inputRow.style.display = '';
-                addButton.disabled = true;
-                document.getElementById('newCustomerName').focus();
-            }
-        });
-
-        document.getElementById('saveCustomerRow').addEventListener('click', function() {
-            const name = document.getElementById('newCustomerName').value;
-            const age = document.getElementById('newCustomerAge').value;
-            const gender = document.getElementById('newCustomerGender').value;
-            const passport = document.getElementById('newCustomerPassport').value;
-
-            addCustomerToTable(name, age, gender, passport);
-            hideCustomerInputRow();
-            updateCustomerCount();
-        });
-
-        function clearCustomerInputs() {
-            document.getElementById('newCustomerName').value = '';
-            document.getElementById('newCustomerAge').value = '';
-            document.getElementById('newCustomerGender').value = '';
-            document.getElementById('newCustomerPassport').value = '';
-        }
-
-        function hideCustomerInputRow() {
-            document.getElementById('customerInputRow').style.display = 'none';
-            document.getElementById('addInfo2').disabled = false;
-        }
-
-        function addCustomerToTable(name, age, gender, passport) {
-            const tbody = document.getElementById('customerList');
-            const noCustomers = document.getElementById('noCustomers');
-            const inputRow = document.getElementById('customerInputRow');
-
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${name}</td>
-                <td>${age || '-'}</td>
-                <td>${gender || '-'}</td>
-                <td>${passport || '-'}</td>
-                <td>
-                    <button type="button" class="btn btn-sm btn-outline-danger remove-customer">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </td>
-            `;
-
-            tbody.insertBefore(row, inputRow);
-            noCustomers.style.display = 'none';
-            customerIndex++;
-
-            row.querySelector('.remove-customer').addEventListener('click', function() {
-                if (confirm('이 고객정보를 삭제하시겠습니까?')) {
-                    row.remove();
-                    updateCustomerCount();
-                    if (tbody.children.length === 1) { // Only input row left
-                        noCustomers.style.display = 'block';
-                    }
-                }
-            });
-
-            // Add double-click edit functionality
-            row.addEventListener('dblclick', function(e) {
-                if (!e.target.closest('button')) {
-                    editCustomerRow(row);
-                }
-            });
-        }
-
-        function editCustomerRow(row) {
-            const cells = row.querySelectorAll('td');
-
-            document.getElementById('newCustomerName').value = cells[0].textContent;
-            document.getElementById('newCustomerAge').value = cells[1].textContent === '-' ? '' : cells[1].textContent;
-            document.getElementById('newCustomerGender').value = cells[2].textContent === '-' ? '' : cells[2].textContent;
-            document.getElementById('newCustomerPassport').value = cells[3].textContent === '-' ? '' : cells[3].textContent;
-
-            row.remove();
-
-            const inputRow = document.getElementById('customerInputRow');
-            inputRow.style.display = '';
-            document.getElementById('addInfo2').disabled = true;
-            document.getElementById('newCustomerName').focus();
-        }
-
-        function updateCustomerCount() {
-            const count = document.getElementById('customerList').children.length - 1; // Subtract input row
-            document.getElementById('customerCount').value = count;
-        }
+        // document.getElementById('addInfo2').addEventListener('click', function() {
+        //     const inputRow = document.getElementById('customerInputRow');
+        //     const addButton = document.getElementById('addInfo2');
+        //
+        //     if (inputRow.style.display === 'none') {
+        //         clearCustomerInputs();
+        //         inputRow.style.display = '';
+        //         addButton.disabled = true;
+        //         // noCustomers 요소 숨기기
+        //         if (noCustomers) {
+        //             noCustomers.style.display = 'none';
+        //         }
+        //         document.getElementById('newCustomerName').focus();
+        //     }
+        // });
+        //
+        // document.getElementById('saveCustomerRow').addEventListener('click', function() {
+        //     const name = document.getElementById('newCustomerName').value;
+        //     const age = document.getElementById('newCustomerAge').value;
+        //     const gender = document.getElementById('newCustomerGender').value;
+        //     const passport = document.getElementById('newCustomerPassport').value;
+        //
+        //     addCustomerToTable(name, age, gender, passport);
+        //     hideCustomerInputRow();
+        //     updateCustomerCount();
+        // });
+        //
+        // function clearCustomerInputs() {
+        //     document.getElementById('newCustomerName').value = '';
+        //     document.getElementById('newCustomerAge').value = '';
+        //     document.getElementById('newCustomerGender').value = '';
+        //     document.getElementById('newCustomerPassport').value = '';
+        // }
+        //
+        // function hideCustomerInputRow() {
+        //     document.getElementById('customerInputRow').style.display = 'none';
+        //     document.getElementById('addInfo2').disabled = false;
+        // }
+        //
+        // function addCustomerToTable(name, age, gender, passport) {
+        //     const tbody = document.getElementById('customerList');
+        //     const noCustomers = document.getElementById('noCustomers');
+        //     const inputRow = document.getElementById('customerInputRow');
+        //
+        //     const row = document.createElement('tr');
+        //     row.innerHTML = `
+        //         <td>${name}</td>
+        //         <td>${age || '-'}</td>
+        //         <td>${gender || '-'}</td>
+        //         <td>${passport || '-'}</td>
+        //         <td>
+        //             <button type="button" class="btn btn-sm btn-outline-danger remove-customer">
+        //                 <i class="fas fa-trash"></i>
+        //             </button>
+        //         </td>
+        //     `;
+        //
+        //     tbody.insertBefore(row, inputRow);
+        //     noCustomers.style.display = 'none';
+        //     customerIndex++;
+        //
+        //     row.querySelector('.remove-customer').addEventListener('click', function() {
+        //         if (confirm('이 고객정보를 삭제하시겠습니까?')) {
+        //             row.remove();
+        //             updateCustomerCount();
+        //             if (tbody.children.length === 1) { // Only input row left
+        //                 noCustomers.style.display = 'block';
+        //             }
+        //         }
+        //     });
+        //
+        //     // Add double-click edit functionality
+        //     row.addEventListener('dblclick', function(e) {
+        //         if (!e.target.closest('button')) {
+        //             editCustomerRow(row);
+        //         }
+        //     });
+        // }
+        //
+        // function editCustomerRow(row) {
+        //     const cells = row.querySelectorAll('td');
+        //     document.getElementById('newCustomerName').value = cells[0].textContent;
+        //     document.getElementById('newCustomerAge').value = cells[1].textContent === '-' ? '' : cells[1].textContent;
+        //     document.getElementById('newCustomerGender').value = cells[2].textContent === '-' ? '' : cells[2].textContent;
+        //     document.getElementById('newCustomerPassport').value = cells[3].textContent === '-' ? '' : cells[3].textContent;
+        //
+        //     row.remove();
+        //
+        //     const inputRow = document.getElementById('customerInputRow');
+        //     inputRow.style.display = '';
+        //     document.getElementById('addInfo2').disabled = true;
+        //     document.getElementById('newCustomerName').focus();
+        // }
+        //
+        // function updateCustomerCount() {
+        //     const count = document.getElementById('customerList').children.length - 1;
+        //     const customerCountElement = document.getElementById('customerCount');
+        //     if (customerCountElement) {
+        //         customerCountElement.value = count;
+        //     }
+        // }
 
         // Estimate inline editing
         document.getElementById('addInfo3').addEventListener('click', function() {
@@ -1260,6 +1763,61 @@
         // Initialize totals
         updateEstimateTotals();
         updateArrangementTotals();
+
+        // Utility Time function
+        function getCurrentDateTime() {
+            const now = new Date();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+
+            return `${month}/${day} ${hours}:${minutes}`;
+        }
+
+        function formatDateTime(dateTime) {
+            if (!dateTime) return '';
+
+            // 이미 MM/DD HH:mm 형식인지 확인
+            if (dateTime.includes('/') && !dateTime.includes('-')) {
+                return dateTime; // 이미 올바른 형식
+            }
+
+            // ISO 형식이면 변환
+            const date = new Date(dateTime);
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${month}/${day} ${hours}:${minutes}`;
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        document.addEventListener('input', function(e) {
+            if (e.target && e.target.id === 'newAnswer') {
+                const answerValue = e.target.value.trim();
+                const aTimeInput = document.getElementById('newATime');
+
+                if (aTimeInput) {
+                    if (answerValue && !aTimeInput.value) {
+                        aTimeInput.value = getCurrentDateTime();
+                    } else if (!answerValue) {
+                        aTimeInput.value = '';
+                    }
+                }
+            }
+        });
 
         // Additional flight info and participants calculation
         document.addEventListener('DOMContentLoaded', function() {
