@@ -13,12 +13,43 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts - Noto Sans KR -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- SheetJS for Excel export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #f8f9fa;
             padding: 20px;
+        }
+
+        /* 고객 테이블 정렬 */
+        #customerTable {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        #customerTable th:nth-child(1) { width: 5%; }
+        #customerTable th:nth-child(2) { width: 25%; }
+        #customerTable th:nth-child(3) { width: 15%; }
+        #customerTable th:nth-child(4) { width: 15%; }
+        #customerTable th:nth-child(5) { width: 30%; }
+        #customerTable th:nth-child(6) { width: 15%; }
+        #customerTable th:last-child,
+        #customerTable td:last-child {
+            padding-right: 15px;
+        }
+
+        /* 인라인 편집 행 스타일 */
+        .input-row {
+            background-color: #f8f9fa;
+            border: 2px dashed #dee2e6;
+        }
+        .input-row input, .input-row select {
+            border: 1px solid #ced4da;
+            padding: 0.25rem 0.4rem;
+            font-size: 1rem;
+            width: 100%;
         }
     </style>
 </head>
@@ -44,7 +75,7 @@
 
         <!-- Search and Statistics -->
         <div class="row mb-4">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
                         <div class="row g-3">
@@ -53,9 +84,10 @@
                                     <span class="input-group-text">
                                         <i class="fas fa-search"></i>
                                     </span>
-                                    <input type="text" class="form-control" placeholder="REF.No 검색" id="searchInput">
+                                    <input type="text" class="form-control" placeholder="REF.No" id="searchInput">
                                 </div>
                             </div>
+                            <div class="col-md-1"></div>
                             <div class="col-md-3">
                                 <div class="btn-group w-100" role="group">
                                     <button type="button" class="btn btn-outline-primary" id="searchBtn">
@@ -80,82 +112,58 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h6 class="mb-0">
                                 <i class="fas fa-list me-2"></i>List
-                                <span class="badge bg-info ms-2">3件</span>
                             </h6>
+                            <div class="d-flex gap-3">
+                                <button type="button" class="btn btn-outline-primary" id="addCustomer">
+                                    <i class="fas fa-plus me-1"></i>追加
+                                </button>
+                                <button type="button" class="btn btn-outline-success" id="exportExcel">
+                                    <i class="fas fa-file-excel me-1"></i>Excel
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table table-hover mb-0">
+                            <table class="table table-hover mb-0" id="customerTable">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col">名前</th>
-                                        <th scope="col">年齢</th>
-                                        <th scope="col">性別</th>
-                                        <th scope="col">Passport</th>
-                                        <th scope="col" width="10%">備考</th>
+                                        <th>No</th>
+                                        <th>名前</th>
+                                        <th>年齢</th>
+                                        <th>性別</th>
+                                        <th>Passport</th>
+                                        <th>-</th>
                                     </tr>
                                 </thead>
-                                <tbody id="customerTableBody">
+                                <tbody id="customerList">
                                     <!-- Sample Customer Data -->
-                                    <tr>
+                                    <tr id="customerInputRow" class="input-row" style="display: none;">
+                                        <td><span id="newCustomerNo">1</span></td>
+                                        <td><input type="text" id="newCustomerName"></td>
+                                        <td><input type="number" id="newCustomerAge" min="0" max="120"></td>
                                         <td>
-                                            <div class="d-flex align-items-center">
-                                                <strong>김여행</strong>
-                                            </div>
+                                            <select id="newCustomerGender" class="form-select">
+                                                <option value="">선택</option>
+                                                <option value="男">男</option>
+                                                <option value="女">女</option>
+                                            </select>
                                         </td>
-                                        <td>32</td>
-                                        <td>女</td>
-                                        <td><code>M12345678</code></td>
+                                        <td><input type="text" id="newCustomerPassport" maxlength="25"></td>
                                         <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-success" title="상세보기"
-                                                        onclick="viewFile(1)">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <strong>이관광</strong>
-                                            </div>
-                                        </td>
-                                        <td>16</td>
-                                        <td>男</td>
-                                        <td><code>M87654321</code></td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-success" title="상세보기"
-                                                        onclick="viewFile(1)">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                            </div>
+                                            <button type="button" class="btn btn-sm btn-success me-1" id="saveCustomerRow">
+                                                <i class="fas fa-check"></i>
+                                            </button>
                                         </td>
                                     </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <strong>박투어</strong>
-                                            </div>
-                                        </td>
-                                        <td>73</td>
-                                        <td>男</td>
-                                        <td><code>M11223344</code></td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-outline-success" title="상세보기"
-                                                        onclick="viewFile(1)">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <!-- Customer rows will be added dynamically -->
                                 </tbody>
                             </table>
+                            <div id="emptyCustomers" class="text-center text-muted py-4">
+                                <div class="mb-4">
+                                    <i class="fas fa-user-plus fa-4x text-muted opacity-10"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -185,104 +193,233 @@
         </div>
     </div>
 
-    <!-- Customer Modal -->
-    <div class="modal fade" id="customerModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">顧客情報</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="customerForm" class="needs-validation" novalidate>
-                        <input type="hidden" id="customerId" name="id">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="customerName" class="form-label">名前</label>
-                                <input type="text" class="form-control" id="customerName" name="name" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="customerAge" class="form-label">年齢</label>
-                                <input type="number" class="form-control" id="customerAge" name="age" min="0" max="150" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="customerGender" class="form-label">性別</label>
-                                <input type="text" class="form-control" id="customerGender" name="gender" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="passport" class="form-label">Passport</label>
-                                <input type="text" class="form-control" id="passport" name="passport" maxlength="9" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="customerNotes" class="form-label">備考</label>
-                                <textarea class="form-control" id="customerNotes" name="notes" rows="2" 
-                                          placeholder="고객 관련 특이사항을 입력하세요..."></textarea>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="saveCustomer">Save</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Additional JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Customer management functions
-            window.viewCustomer = function(id) {
-                console.log('View customer:', id);
-                // Implementation for viewing customer details
-            };
+            let customerIndex = 1;
+            let customers = [];
 
-            window.editCustomer = function(id) {
-                console.log('Edit customer:', id);
-                const modal = new bootstrap.Modal(document.getElementById('customerModal'));
-                // Load customer data and populate form
-                modal.show();
-            };
+            // Customer inline editing
+            document.getElementById('addCustomer').addEventListener('click', function() {
+                const inputRow = document.getElementById('customerInputRow');
+                const addButton = document.getElementById('addCustomer');
+                const emptyCustomers = document.getElementById('emptyCustomers');
 
-            // Checkbox selection functionality
-            const selectAll = document.getElementById('selectAll');
-            const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+                clearCustomerInputs();
+                updateCustomerNo();
+                inputRow.style.display = 'table-row';
+                addButton.disabled = true;
 
-            selectAll.addEventListener('change', function() {
-                checkboxes.forEach(cb => cb.checked = this.checked);
+                if (emptyCustomers) {
+                    emptyCustomers.style.display = 'none';
+                }
+                document.getElementById('newCustomerName').focus();
+            });
+
+            document.getElementById('saveCustomerRow').addEventListener('click', function() {
+                const name = document.getElementById('newCustomerName').value.trim();
+                const age = document.getElementById('newCustomerAge').value;
+                const gender = document.getElementById('newCustomerGender').value;
+                const passport = document.getElementById('newCustomerPassport').value.trim();
+                const inputRow = document.getElementById('customerInputRow');
+                const editingId = inputRow.getAttribute('data-editing');
+
+                if (editingId) {
+                    const customer = {
+                        no: parseInt(editingId),
+                        name: name,
+                        age: age || '',
+                        gender: gender || '',
+                        passport: passport || ''
+                    };
+                    customers.push(customer);
+                    inputRow.removeAttribute('data-editing');
+                } else {
+                    const customer = {
+                        no: customers.length + 1,
+                        name: name,
+                        age: age || '',
+                        gender: gender || '',
+                        passport: passport || ''
+                    };
+                    customers.push(customer);
+                }
+
+                renumberCustomers();
+                hideCustomerInputRow();
             });
 
             // Search functionality
             document.getElementById('searchBtn').addEventListener('click', function() {
                 const searchTerm = document.getElementById('searchInput').value;
-                const ageFilter = document.getElementById('ageFilter').value;
-                
-                console.log('Search customers:', { searchTerm, ageFilter });
+                console.log('Search customers:', { searchTerm });
                 // Implement search functionality
+            });
+
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('searchBtn').click();
+                }
             });
 
             document.getElementById('resetBtn').addEventListener('click', function() {
                 document.getElementById('searchInput').value = '';
-                document.getElementById('ageFilter').value = '';
-            });
-
-            // Customer form handling
-            document.getElementById('saveCustomer').addEventListener('click', function() {
-                const form = document.getElementById('customerForm');
-                if (form.checkValidity()) {
-                    console.log('Save customer');
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('customerModal'));
-                    modal.hide();
-                } else {
-                    form.classList.add('was-validated');
-                }
             });
 
             // Export functionality
             document.getElementById('exportExcel').addEventListener('click', function() {
                 console.log('Export customers to Excel');
+                exportToExcel();
             });
+
+            function clearCustomerInputs() {
+                document.getElementById('newCustomerName').value = '';
+                document.getElementById('newCustomerAge').value = '';
+                document.getElementById('newCustomerGender').value = '';
+                document.getElementById('newCustomerPassport').value = '';
+            }
+
+            function updateCustomerNo() {
+                document.getElementById('newCustomerNo').textContent = customers.length + 1;
+            }
+
+            function hideCustomerInputRow() {
+                const inputRow = document.getElementById('customerInputRow');
+                const addButton = document.getElementById('addCustomer');
+                const emptyCustomers = document.getElementById('emptyCustomers');
+
+                inputRow.style.display = 'none';
+                addButton.disabled = false;
+
+                if (customers.length === 0) {
+                    emptyCustomers.style.display = 'block';
+                }
+            }
+
+            function addCustomerToTable(customer) {
+                const emptyCustomers = document.getElementById('emptyCustomers');
+
+                addCustomerRowOnly(customer);
+                emptyCustomers.style.display = 'none';
+            }
+
+            function editCustomerRow(customer, row) {
+                customers = customers.filter(c => c.no !== customer.no);
+                row.remove();
+
+                document.getElementById('newCustomerNo').textContent = customer.no;
+                document.getElementById('newCustomerName').value = customer.name;
+                document.getElementById('newCustomerAge').value = customer.age;
+                document.getElementById('newCustomerGender').value = customer.gender;
+                document.getElementById('newCustomerPassport').value = customer.passport;
+
+                const inputRow = document.getElementById('customerInputRow');
+                inputRow.style.display = 'table-row';
+                document.getElementById('addCustomer').disabled = true;
+                document.getElementById('newCustomerName').focus();
+
+                inputRow.setAttribute('data-editing', customer.no);
+            }
+
+            function renumberCustomers() {
+                // customers 배열의 번호를 1부터 순차적으로 재정렬
+                customers.forEach((customer, index) => {
+                    customer.no = index + 1;
+                });
+
+                const tbody = document.getElementById('customerList');
+                const inputRow = document.getElementById('customerInputRow');
+
+                const existingRows = tbody.querySelectorAll('tr:not(#customerInputRow)');
+                existingRows.forEach(row => row.remove());
+
+                customers.forEach(customer => {
+                    addCustomerRowOnly(customer);
+                });
+            }
+
+            function addCustomerRowOnly(customer) {
+                const tbody = document.getElementById('customerList');
+                const inputRow = document.getElementById('customerInputRow');
+
+                const row = document.createElement('tr');
+                row.setAttribute('data-customer-id', customer.no);
+                row.innerHTML = `
+                    <td>${customer.no}</td>
+                    <td>${customer.name}</td>
+                    <td>${customer.age || '-'}</td>
+                    <td>${customer.gender || '-'}</td>
+                    <td>${customer.passport || '-'}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-warning me-1 edit-customer">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger remove-customer">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.insertBefore(row, inputRow);
+
+                row.querySelector('.remove-customer').addEventListener('click', function() {
+                    if (confirm('이 고객정보를 삭제하시겠습니까?')) {
+                        const customerId = parseInt(row.getAttribute('data-customer-id'));
+                        customers = customers.filter(c => c.no !== customerId);
+                        row.remove();
+                        renumberCustomers();
+
+                        const emptyCustomers = document.getElementById('emptyCustomers');
+                        if (customers.length === 0) {
+                            emptyCustomers.style.display = 'block';
+                        }
+                    }
+                });
+
+                row.querySelector('.edit-customer').addEventListener('click', function() {
+                    editCustomerRow(customer, row);
+                });
+
+                // Add double-click edit functionality
+                row.addEventListener('dblclick', function(e) {
+                    if (!e.target.closest('button')) {
+                        editCustomerRow(customer, row);
+                    }
+                });
+            }
+
+            function exportToExcel() {
+                if (customers.length === 0) {
+                    alert('내보낼 데이터가 없습니다.');
+                    return;
+                }
+
+                try {
+                    const excelData = customers.map((customer) => ({
+                        'No.': customer.no,
+                        '名前': customer.name,
+                        '年齢': customer.age || '',
+                        '性別': customer.gender || '',
+                        'Passport': customer.passport || ''
+                    }));
+
+                    // 워크북 생성
+                    const ws = XLSX.utils.json_to_sheet(excelData);
+                    const wb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wb, ws, "顧客名簿");
+
+                    const now = new Date();
+                    const dateStr = now.getFullYear() + '-' +
+                        String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                        String(now.getDate()).padStart(2, '0');
+
+                    const filename = `顧客名簿_${dateStr}.xlsx`;
+                    XLSX.writeFile(wb, filename);
+                } catch (error) {
+                    console.error('Excel export error:', error);
+                    alert('Excel 내보내기 중 오류가 발생했습니다.');
+                }
+            }
         });
     </script>
 </body>

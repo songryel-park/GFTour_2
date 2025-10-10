@@ -91,19 +91,19 @@
             padding-right: 15px;
         }
 
-        /* 고객 테이블 정렬 */
-        #customerTable {
+        /* 차량 테이블 정렬 */
+        #busTable {
             table-layout: fixed;
             width: 100%;
         }
 
-        #customerTable th:nth-child(1) { width: 25%; }
-        #customerTable th:nth-child(2) { width: 15%; }
-        #customerTable th:nth-child(3) { width: 15%; }
-        #customerTable th:nth-child(4) { width: 30%; }
-        #customerTable th:nth-child(5) { width: 10%; }
-        #customerTable th:last-child,
-        #customerTable td:last-child {
+        #busTable th:nth-child(1) { width: 20%; }
+        #busTable th:nth-child(2) { width: 20%; }
+        #busTable th:nth-child(3) { width: 20%; }
+        #busTable th:nth-child(4) { width: 30%; }
+        #busTable th:nth-child(5) { width: 10%; }
+        #busTable th:last-child,
+        #busTable td:last-child {
             padding-right: 15px;
         }
 
@@ -134,7 +134,7 @@
         }
         .input-row input, .input-row select {
             border: 1px solid #ced4da;
-            padding: 0.25rem 0.5rem;
+            padding: 0.25rem 0.3rem;
             font-size: 1rem;
             width: 100%;
         }
@@ -216,53 +216,73 @@
 
                             <!-- Agency -->
                             <div class="col-md-3">
-                                <label for="manager" class="form-label">AGT</label>
+                                <label for="agency" class="form-label-sm">AGT</label>
                                 <input type="text" class="form-control" id="agency" name="agency" placeholder="에이전트" required>
                             </div>
 
                             <!-- Branch -->
-                            <div class="col-md-3">
-                                <label for="branch" class="form-label">支店/代理店</label>
+                            <div class="col-md-2">
+                                <label for="branch" class="form-label-sm">支店/代理店</label>
                                 <input type="text" class="form-control" id="branch" name="branch" placeholder="지점/대리점">
                             </div>
 
-                            <!-- Address -->
-                            <div class="col-md-6">
-                                <label for="agency" class="form-label">住所</label>
-                                <input type="text" class="form-control" id="address" name="address" placeholder="주소">
-                            </div>
-
                             <!-- Manager -->
-                            <div class="col-md-3">
-                                <label for="manager" class="form-label">担葬者</label>
+                            <div class="col-md-2">
+                                <label for="manager" class="form-label-sm">担葬者</label>
                                 <input type="text" class="form-control" id="manager" name="manager" placeholder="담당자" required>
                             </div>
 
+                            <!-- Address -->
+                            <div class="col-md-5">
+                                <label for="address" class="form-label-sm">住所</label>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="주소">
+                            </div>
+
                             <!-- Tel -->
-                            <div class="col-md-3">
-                                <label for="manager" class="form-label">戦火</label>
+                            <div class="col-md-2">
+                                <label for="telNumber" class="form-label-sm">電話</label>
                                 <input type="text" class="form-control" id="telNumber" name="telNum" placeholder="전화번호" required>
                             </div>
 
-                            <div class="col-md-3">
-                                <label for="manager" class="form-label">FAX</label>
+                            <div class="col-md-2">
+                                <label for="faxNumber" class="form-label-sm">FAX</label>
                                 <input type="text" class="form-control" id="faxNumber" name="faxNum" placeholder="FAX번호" required>
                             </div>
 
-                            <div class="col-md-3">
-                                <label for="manager" class="form-label">郵便</label>
+                            <div class="col-md-2">
+                                <label for="post" class="form-label-sm">郵便</label>
                                 <input type="text" class="form-control" id="post" name="post" placeholder="우편번호" required>
                             </div>
 
+                            <!-- Participants Counts -->
+                            <div class="col-md-2 p-2">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" style="text-align: center" id="recruitCount" name="recruitCount" min="0" value="0">
+                                    <span class="input-group-text">+</span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 p-2">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" style="text-align: center" id="additionalCount" name="additionalCount" min="0" value="0">
+                                    <span class="input-group-text">=</span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 p-2">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" style="text-align: center" id="totalParticipants" name="totalParticipants" min="0" value="0" readonly>
+                                    <span class="input-group-text"><strong>人</strong></span>
+                                </div>
+                            </div>
+
                             <!-- Airport Information -->
-                            <div class="col-md-12">
+                            <div class="col-md-8">
                                 <div class="card border-1">
                                     <div class="card-body">
-                                        <div class="row g-2">
+                                        <div class="row g-3">
                                             <div class="col-1 p-1" style="text-align: center">
                                                 <h6 class="mb-0"><strong>出発</strong></h6>
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-auto">
                                                 <input type="date" class="form-control form-control-sm" id="departureDate" name="departureDate">
                                             </div>
                                             <div class="col-2">
@@ -271,12 +291,12 @@
                                             <div class="col-2">
                                                 <input type="text" class="form-control form-control-sm"  style="text-align: center" id="departureRoute" name="departureRoute" placeholder=" -> ">
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col-auto">
                                                 <div class="input-group input-group-sm">
                                                     <input type="time" class="form-control" id="departureTime" name="departureTime">
                                                 </div>
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col-auto">
                                                 <div class="input-group input-group-sm">
                                                     <input type="time" class="form-control" id="arrivalTime" name="arrivalTime">
                                                 </div>
@@ -285,14 +305,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+
+                            <!-- Travel Duration -->
+                            <div class="col-md-2 p-2">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" style="text-align: center" id="nights" name="nights" min="0" value="0" readonly>
+                                    <span class="input-group-text">泊</span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 p-2">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" style="text-align: center" id="days" name="days" min="1" value="1" readonly>
+                                    <span class="input-group-text">日</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
                                 <div class="card border-1">
                                     <div class="card-body">
-                                        <div class="row g-2">
+                                        <div class="row g-3">
                                             <div class="col-1 p-1" style="text-align: center">
                                                 <h6 class="mb-0"><strong>帰還</strong></h6>
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-auto">
                                                 <input type="date" class="form-control form-control-sm" id="returnDate" name="returnDate">
                                             </div>
                                             <div class="col-2">
@@ -301,12 +336,12 @@
                                             <div class="col-2">
                                                 <input type="text" class="form-control form-control-sm" style="text-align: center" id="returnRoute" name="returnRoute" placeholder=" -> ">
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col-auto">
                                                 <div class="input-group input-group-sm">
                                                     <input type="time" class="form-control" id="returnDepartureTime" name="returnDepartureTime">
                                                 </div>
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col-auto">
                                                 <div class="input-group input-group-sm">
                                                     <input type="time" class="form-control" id="returnArrivalTime" name="returnArrivalTime">
                                                 </div>
@@ -316,61 +351,22 @@
                                 </div>
                             </div>
 
-                            <!-- Travel Duration and Participants -->
-                            <div class="col-md-3">
-                                <div class="form-check-container bg-light p-1 rounded" style="text-align: center">
+                            <!-- Select Travel Region -->
+                            <div class="col-md-1"></div>
+                            <div class="col-md-auto">
+                                <div class="form-check-container bg-light p-3 rounded" style="text-align: center">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="selAirport" name="airports" value="SEL">
-                                        <label class="form-check-label" for="selAirport">SEL</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="pusAirport" name="airports" value="PUS">
-                                        <label class="form-check-label" for="pusAirport">PUS</label>
+                                        <input class="form-check-input" type="checkbox" id="sel" name="tourRegion" value="SEL">
+                                        <label class="form-check-label" for="sel">SEL</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="cjuAirport" name="airports" value="CJU">
-                                        <label class="form-check-label" for="cjuAirport">CJU</label>
+                                        <input class="form-check-input" type="checkbox" id="pus" name="tourRegion" value="PUS">
+                                        <label class="form-check-label" for="pus">PUS</label>
                                     </div>
-                                </div>
-                            </div>
-
-                            <!-- Customer Count & Guide -->
-                            <div class="col-lg-7">
-                                <div class="card border-0">
-                                    <div class="row g-3 align-items-center">
-                                        <div class="col-md-2">
-                                            <div class="input-group input-group-sm">
-                                                <input type="number" class="form-control" id="nights" name="nights" min="0" value="0">
-                                                <span class="input-group-text">泊</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="input-group input-group-sm">
-                                                <input type="number" class="form-control" id="days" name="days" min="1" value="1">
-                                                <span class="input-group-text">日</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="number" class="form-control form-control-sm" id="recruitCount" name="recruitCount" min="0" value="0">
-                                        </div>
-                                        <div class="col-md-auto text-center">+</div>
-                                        <div class="col-md-2">
-                                            <input type="number" class="form-control form-control-sm" id="additionalCount" name="additionalCount" min="0" value="0">
-                                        </div>
-                                        <div class="col-md-auto text-center">=</div>
-                                        <div class="col-md-2">
-                                            <div class="input-group input-group-sm">
-                                                <input type="number" class="form-control form-control-sm" id="totalParticipants" name="totalParticipants" min="0" value="0">
-                                                <span class="input-group-text">人</span>
-                                            </div>
-                                        </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="cju" name="tourRegion" value="CJU">
+                                        <label class="form-check-label" for="cju">CJU</label>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-2">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="guide" name="guide" placeholder="ガイド">
                                 </div>
                             </div>
                         </div>
@@ -405,7 +401,7 @@
                 <div class="card border-1 shadow-sm mb-3">
                     <div class="card-header bg-transparent">
                         <h6 class="mb-0">
-                            <i class="fas fa-cog me-2"></i>
+                            <i class="fas fa-cog me-3"></i>
                         </h6>
                     </div>
                     <div class="card-body">
@@ -415,7 +411,7 @@
                                     <i class="fas fa-save me-3"></i>Save
                                 </button>
                                 <button type="button" class="btn btn-outline-secondary me-1">
-                                    <i class="fas fa-rotate-left me-2"></i>Cancel
+                                    <i class="fas fa-rotate-left me-3"></i>Cancel
                                 </button>
                             </div>
                         </div>
@@ -423,23 +419,20 @@
                     <!-- File Status -->
                     <div class="card-body">
                         <div class="row g-2 text-sm">
-                            <div class="col-4 text-muted">State:</div>
-                            <div class="col-8">
-                                <span class="badge bg-warning">초안</span>
-                                <span class="badge bg-info">진행중</span>
-                                <span class="badge bg-success">완료</span>
-                                <span class="badge bg-danger">취소</span>
-                            </div>
                             <div class="col-4 text-muted">作成者:</div>
                             <div class="col-8" sec:authentication="name">사용자명</div>
                             <div class="col-4 text-muted">作成時間:</div>
                             <div class="col-8" th:text="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm')}">작성시간</div>
+                            <div class="col-4 text-muted">進行状況:</div>
+                            <div class="col-7">
+                                <textarea class="form-control form-control-sm" id="state" name="state" rows="2"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Hotel Information and Customer Information Row -->
+            <!-- Hotel & Bus Information Row -->
             <div class="row">
                 <!-- Hotel Information -->
                 <div class="col-md-7">
@@ -447,7 +440,7 @@
                         <div class="card-header bg-transparent">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">
-                                    <i class="fas fa-hotel me-2"></i>Hotel
+                                    <i class="fas fa-hotel me-2"></i>ホテル
                                 </h5>
                                 <button type="button" class="btn btn-sm btn-outline-success" id="addInfo1">
                                     <i class="fas fa-plus me-1"></i>追加
@@ -506,54 +499,47 @@
                     </div>
                 </div>
 
-                <!-- Customer Information -->
+                <!-- Bus Information -->
                 <div class="col-md-5">
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-transparent">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">
-                                    <i class="fas fa-utensils me-2"></i>食堂
+                                    <i class="fas fa-bus-alt me-2"></i>車両
                                 </h5>
-                                <button type="button" class="btn btn-sm btn-outline-success" id="addInfo6">
+                                <button type="button" class="btn btn-sm btn-outline-success" id="addInfo2">
                                     <i class="fas fa-plus me-1"></i>追加
                                 </button>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-sm" id="restaurantTable">
+                                <table class="table table-sm" id="busTable">
                                     <thead class="bg-light">
                                     <tr>
-                                        <th>日字</th>
-                                        <th>費目</th>
-                                        <th>去來先</th>
-                                        <th>内容</th>
-                                        <th>回答</th>
-                                        <th>備考</th>
-                                        <th>回答日</th>
+                                        <th>車両番号</th>
+                                        <th>運転手</th>
+                                        <th>車種</th>
+                                        <th>Tel.</th>
                                         <th>-</th>
                                     </tr>
                                     </thead>
-                                    <tbody id="restaurantList">
-                                    <!-- Customer input row - initially hidden -->
-                                    <tr id="restaurantInputRow" class="input-row" style="display: none;">
-                                        <td><input type="text" id="newRestaurantDate"></td>
-                                        <td><input type="text" id="newRestaurantMeal"></td>
-                                        <td><input type="text" id="newRestaurantName"></td>
-                                        <td><input type="text" id="newRestaurantContents"></td>
-                                        <td><input type="text" id="newRestaurantReply"></td>
-                                        <td><input type="text" id="newRestaurantComment"></td>
-                                        <td><input type="text" id="newRestaurantRTime"></td>
+                                    <tbody id="busList">
+                                    <!-- Bus input row - initially hidden -->
+                                    <tr id="busInputRow" class="input-row" style="display: none;">
+                                        <td><input type="text" class="form-control form-control-sm" id="newBusNumber"></td>
+                                        <td><input type="text" class="form-control form-control-sm" id="newDriver"></td>
+                                        <td><input type="text" class="form-control form-control-sm" id="newType"></td>
+                                        <td><input type="text" class="form-control form-control-sm" id="newBusPhone"></td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-success me-1" id="saveRestaurantRow">
+                                            <button type="button" class="btn btn-sm btn-success me-1" id="saveBusRow">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         </td>
                                     </tr>
-                                    <!-- Restaurant rows will be added dynamically -->
                                     </tbody>
                                 </table>
-                                <div id="noRestaurants" class="text-center text-muted py-3">
+                                <div id="noBus" class="text-center text-muted py-3">
                                     <i class="fas fa-plus fa-2x mb-2"></i>
                                 </div>
                             </div>
@@ -562,31 +548,9 @@
                 </div>
             </div>
 
-            <!-- Schedule Information -->
+            <!-- ECT Information Row -->
             <div class="row">
-                <div class="col-8">
-                    <div class="card border-0 mb-4">
-                        <div class="card-header bg-transparent">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">
-                                    <i class="fas fa-calendar-alt me-2"></i>日程
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="card-header bg-transparent">
-                            <div class="card-body">
-                                <div>
-                                    <input type="text" class="form-control" id="newBreakfastNote" placeholder="朝食">
-                                    <input type="text" class="form-control" id="newLunchNote" placeholder="昼食">
-                                    <input type="text" class="form-control" id="newDinnerNote" placeholder="夕食">
-                                </div>
-                                <textarea class="form-control" id="schedule" name="schedule" rows="14"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Customer Information -->
-                <div class="col-md-4">
+                <div class="col-md-7">
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-transparent">
                             <div class="d-flex justify-content-between align-items-center">
@@ -601,26 +565,49 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="col-md-5">
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-transparent">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">
-                                    <i class="fas fa-users me-2"></i>名簿情報
+                                    <i class="fas fa-utensils me-2"></i>メニュー
                                 </h5>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <textarea class="form-control" id="customers" name="customers" rows="10"></textarea>
+                            <div>
+                                <input type="text" class="form-control" id="newBreakfastNote" placeholder="朝食">
+                                <input type="text" class="form-control" id="newLunchNote" placeholder="昼食">
+                                <input type="text" class="form-control" id="newDinnerNote" placeholder="夕食">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Community Information -->
+            <!-- Schedule & Community  Information Row -->
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-7">
+                    <!-- Schedule Information -->
+                    <div class="card border-0 mb-4">
+                        <div class="card-header bg-transparent">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-calendar-alt me-2"></i>日程
+                                </h5>
+                                <div class="col-lg-2">
+                                    <input type="text" class="form-control" id="guide" name="guide" placeholder="ガイド" style="text-align: center">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <textarea class="form-control" id="schedule" name="schedule" rows="14"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Community Information -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-transparent">
                             <div class="d-flex justify-content-between align-items-center">
@@ -676,6 +663,77 @@
                                 <div id="noCommunity" class="text-center text-muted py-3">
                                     <i class="fas fa-comments fa-2x mb-2"></i>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restaurant & Customer Information Row -->
+                <div class="col-md-5">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-transparent">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-utensils me-2"></i>食堂
+                                </h5>
+                                <button type="button" class="btn btn-sm btn-outline-success" id="addInfo6">
+                                    <i class="fas fa-plus me-1"></i>追加
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm" id="restaurantTable">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th>日字</th>
+                                        <th>費目</th>
+                                        <th>去來先</th>
+                                        <th>内容</th>
+                                        <th>回答</th>
+                                        <th>備考</th>
+                                        <th>回答日</th>
+                                        <th>-</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="restaurantList">
+                                    <!-- Customer input row - initially hidden -->
+                                    <tr id="restaurantInputRow" class="input-row" style="display: none;">
+                                        <td><input type="text" id="newRestaurantDate"></td>
+                                        <td><input type="text" id="newRestaurantMeal"></td>
+                                        <td><input type="text" id="newRestaurantName"></td>
+                                        <td><input type="text" id="newRestaurantContents"></td>
+                                        <td><input type="text" id="newRestaurantReply"></td>
+                                        <td><input type="text" id="newRestaurantComment"></td>
+                                        <td><input type="text" id="newRestaurantRTime"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-success me-1" id="saveRestaurantRow">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <!-- Restaurant rows will be added dynamically -->
+                                    </tbody>
+                                </table>
+                                <div id="noRestaurants" class="text-center text-muted py-3">
+                                    <i class="fas fa-plus fa-2x mb-2"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customer Information -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-transparent">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-users me-2"></i>顧客情報
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <textarea class="form-control" id="customers" name="customers" rows="10"></textarea>
                             </div>
                         </div>
                     </div>
@@ -835,8 +893,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let hotelIndex = 0;
-        let customerIndex = 0;
         let restaurantIndex = 0;
+        let busIndex = 0;
         let communityCounter = 0;
 
         // REF.No generation
@@ -845,6 +903,46 @@
 
             document.getElementById('refNo').value = `${sequence}`;
         });
+
+        // Travel Duration Information
+        const departureDate = document.getElementById('departureDate');
+        const returnDate = document.getElementById('returnDate');
+        const nights = document.getElementById('nights');
+        const days = document.getElementById('days');
+
+        function calcDates() {
+            const dep = departureDate.value;
+            const ret = returnDate.value;
+            if (dep && ret) {
+                const depDate = new Date(dep);
+                const retDate = new Date(ret);
+                // 1박 2일: 출발 2025-09-22, 귀환 2025-09-23 -> nights: 1, days: 2
+                const msPerDay = 1000 * 60 * 60 * 24;
+                const diff = Math.floor((retDate - depDate) / msPerDay);
+                nights.value = diff;
+                days.value = diff + 1;
+            } else {
+                nights.value = 0;
+                days.value = 1;
+            }
+        }
+
+        departureDate.addEventListener('change', calcDates);
+        returnDate.addEventListener('change', calcDates);
+
+        // Participants Counts
+        const recruitCount = document.getElementById('recruitCount');
+        const additionalCount = document.getElementById('additionalCount');
+        const totalParticipants = document.getElementById('totalParticipants');
+
+        function calcParticipants() {
+            const r = parseInt(recruitCount.value, 10) || 0;
+            const a = parseInt(additionalCount.value, 10) || 0;
+            totalParticipants.value = r + a;
+        }
+
+        recruitCount.addEventListener('input', calcParticipants);
+        additionalCount.addEventListener('input', calcParticipants);
 
         // Restaurant Table Management
         const addInfo6Button = document.getElementById('addInfo6');
@@ -1330,108 +1428,127 @@
             document.getElementById('newHotelName').focus();
         }
 
-        // Customer inline editing
-        // document.getElementById('addInfo2').addEventListener('click', function() {
-        //     const inputRow = document.getElementById('customerInputRow');
-        //     const addButton = document.getElementById('addInfo2');
-        //
-        //     if (inputRow.style.display === 'none') {
-        //         clearCustomerInputs();
-        //         inputRow.style.display = '';
-        //         addButton.disabled = true;
-        //         // noCustomers 요소 숨기기
-        //         if (noCustomers) {
-        //             noCustomers.style.display = 'none';
-        //         }
-        //         document.getElementById('newCustomerName').focus();
-        //     }
-        // });
-        //
-        // document.getElementById('saveCustomerRow').addEventListener('click', function() {
-        //     const name = document.getElementById('newCustomerName').value;
-        //     const age = document.getElementById('newCustomerAge').value;
-        //     const gender = document.getElementById('newCustomerGender').value;
-        //     const passport = document.getElementById('newCustomerPassport').value;
-        //
-        //     addCustomerToTable(name, age, gender, passport);
-        //     hideCustomerInputRow();
-        //     updateCustomerCount();
-        // });
-        //
-        // function clearCustomerInputs() {
-        //     document.getElementById('newCustomerName').value = '';
-        //     document.getElementById('newCustomerAge').value = '';
-        //     document.getElementById('newCustomerGender').value = '';
-        //     document.getElementById('newCustomerPassport').value = '';
-        // }
-        //
-        // function hideCustomerInputRow() {
-        //     document.getElementById('customerInputRow').style.display = 'none';
-        //     document.getElementById('addInfo2').disabled = false;
-        // }
-        //
-        // function addCustomerToTable(name, age, gender, passport) {
-        //     const tbody = document.getElementById('customerList');
-        //     const noCustomers = document.getElementById('noCustomers');
-        //     const inputRow = document.getElementById('customerInputRow');
-        //
-        //     const row = document.createElement('tr');
-        //     row.innerHTML = `
-        //         <td>${name}</td>
-        //         <td>${age || '-'}</td>
-        //         <td>${gender || '-'}</td>
-        //         <td>${passport || '-'}</td>
-        //         <td>
-        //             <button type="button" class="btn btn-sm btn-outline-danger remove-customer">
-        //                 <i class="fas fa-trash"></i>
-        //             </button>
-        //         </td>
-        //     `;
-        //
-        //     tbody.insertBefore(row, inputRow);
-        //     noCustomers.style.display = 'none';
-        //     customerIndex++;
-        //
-        //     row.querySelector('.remove-customer').addEventListener('click', function() {
-        //         if (confirm('이 고객정보를 삭제하시겠습니까?')) {
-        //             row.remove();
-        //             updateCustomerCount();
-        //             if (tbody.children.length === 1) { // Only input row left
-        //                 noCustomers.style.display = 'block';
-        //             }
-        //         }
-        //     });
-        //
-        //     // Add double-click edit functionality
-        //     row.addEventListener('dblclick', function(e) {
-        //         if (!e.target.closest('button')) {
-        //             editCustomerRow(row);
-        //         }
-        //     });
-        // }
-        //
-        // function editCustomerRow(row) {
-        //     const cells = row.querySelectorAll('td');
-        //     document.getElementById('newCustomerName').value = cells[0].textContent;
-        //     document.getElementById('newCustomerAge').value = cells[1].textContent === '-' ? '' : cells[1].textContent;
-        //     document.getElementById('newCustomerGender').value = cells[2].textContent === '-' ? '' : cells[2].textContent;
-        //     document.getElementById('newCustomerPassport').value = cells[3].textContent === '-' ? '' : cells[3].textContent;
-        //
-        //     row.remove();
-        //
-        //     const inputRow = document.getElementById('customerInputRow');
-        //     inputRow.style.display = '';
-        //     document.getElementById('addInfo2').disabled = true;
-        //     document.getElementById('newCustomerName').focus();
-        // }
-        //
-        // function updateCustomerCount() {
-        //     const count = document.getElementById('customerList').children.length - 1;
-        //     const customerCountElement = document.getElementById('customerCount');
-        //     if (customerCountElement) {
-        //         customerCountElement.value = count;
-        //     }
-        // }
+        // Bus Table Management
+        const addInfo2Button = document.getElementById('addInfo2');
+        if (addInfo2Button) {
+            addInfo2Button.addEventListener('click', function() {
+                showBusInputRow();
+            });
+        }
+
+        // Bus functions
+        function showBusInputRow() {
+            const inputRow = document.getElementById('busInputRow');
+            const noBus = document.getElementById('noBus');
+            const addButton = document.getElementById('addInfo2');
+
+            if (inputRow && inputRow.style.display === 'none') {
+                clearBusInputs();
+                inputRow.style.display = '';
+                addButton.disabled = true;
+                if (noBus) {
+                    noBus.style.display = 'none';
+                }
+                document.getElementById('newBusNumber').focus();
+            }
+        }
+
+        function clearBusInputs() {
+            document.getElementById('newBusNumber').value = '';
+            document.getElementById('newDriver').value = '';
+            document.getElementById('newType').value = '';
+            document.getElementById('newBusPhone').value = '';
+        }
+
+        document.getElementById('saveBusRow').addEventListener('click', function() {
+            const busNumber = document.getElementById('newBusNumber').value.trim();
+            const driver = document.getElementById('newDriver').value.trim();
+            const type = document.getElementById('newType').value.trim();
+            const phone = document.getElementById('newBusPhone').value.trim();
+
+            addBusToTable(busNumber, driver, type, phone);
+            hideBusInputRow();
+        });
+
+        function addBusToTable(busNumber, driver, type, phone) {
+            const tbody = document.getElementById('busList');
+            const noBus = document.getElementById('noBus');
+            const inputRow = document.getElementById('busInputRow');
+
+            if (!tbody || !inputRow) {
+                console.error('필요한 테이블 요소를 찾을 수 없습니다');
+                return;
+            }
+
+            busIndex++;
+            const row = document.createElement('tr');
+            row.id = `busRow_${busIndex}`;
+                row.innerHTML = `
+                <td class="text-start">${busNumber || '-'}</td>
+                <td>${driver || '-'}</td>
+                <td>${type || '-'}</td>
+                <td>${phone || '-'}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteBusRow(${busIndex})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+
+            row.addEventListener('dblclick', function(e) {
+                if (!e.target.closest('button')) {
+                    editBusRow(busIndex);
+                }
+            });
+
+            tbody.insertBefore(row, inputRow);
+            if (noBus) {
+                noBus.style.display = 'none';
+            }
+        }
+
+        function hideBusInputRow() {
+            const inputRow = document.getElementById('busInputRow');
+            const addButton = document.getElementById('addInfo2');
+
+            if (inputRow) {
+                inputRow.style.display = 'none';
+            }
+            if (addButton) {
+                addButton.disabled = false;
+            }
+        }
+
+        window.editBusRow = function(index) {
+            const row = document.getElementById(`busRow_${index}`);
+            if (!row) return;
+
+            const cells = row.querySelectorAll('td');
+            showBusInputRow();
+
+            document.getElementById('newBusNumber').value = cells[0].textContent;
+            document.getElementById('newDriver').value = cells[1].textContent === '-' ? '' : cells[1].textContent;
+            document.getElementById('newType').value = cells[2].textContent === '-' ? '' : cells[2].textContent;
+            document.getElementById('newBusPhone').value = cells[3].textContent === '-' ? '' : cells[3].textContent;
+
+            row.remove();
+        };
+
+        window.deleteBusRow = function(index) {
+            if (confirm('이 차량 정보를 삭제하시겠습니까?')) {
+                const row = document.getElementById(`busRow_${index}`);
+                const tbody = document.getElementById('busList');
+                const noBus = document.getElementById('noBus');
+
+                if (row) {
+                    row.remove();
+                    const visibleRows = tbody.querySelectorAll('tr:not(#busInputRow)');
+                    if (visibleRows.length === 0 && noBus) {
+                        noBus.style.display = 'block';
+                    }
+                }
+            }
+        };
 
         // Estimate inline editing
         document.getElementById('addInfo3').addEventListener('click', function() {
