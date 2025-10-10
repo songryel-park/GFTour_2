@@ -1301,11 +1301,13 @@
         document.getElementById('addInfo1').addEventListener('click', function() {
             const inputRow = document.getElementById('hotelInputRow');
             const addButton = document.getElementById('addInfo1');
+            const noHotel = document.getElementById('noHotel');
 
             if (inputRow.style.display === 'none') {
                 // Clear inputs
                 clearHotelInputs();
                 inputRow.style.display = '';
+                noHotel.style.display = 'none';
                 addButton.disabled = true;
                 document.getElementById('newHotelName').focus();
             }
