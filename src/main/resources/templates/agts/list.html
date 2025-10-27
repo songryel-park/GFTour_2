@@ -68,6 +68,7 @@
                             <i class="fas fa-filter me-2"></i>検索条件
                         </h6>
                         <div class="row g-3">
+                            <div class="col-md-auto"></div>
                             <div class="col-md-3">
                                 <div class="input-group">
                                     <span class="input-group-text">
@@ -77,12 +78,7 @@
                                            id="searchInput">
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <select class="form-select" id="pageSize">
-                                    <option value="10">10個ずつ</option>
-                                    <option value="30">30個ずつ</option>
-                                    <option value="100">100個ずつ</option>
-                                </select>
+                            <div class="col-md-auto">
                             </div>
                             <div class="col-md-2" style="margin: 1%">
                                 <div class="btn-group w-100" role="group">
@@ -160,8 +156,6 @@
                             </a>
                         </li>
                         <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item">
                             <a class="page-link" href="#" aria-label="다음">
                                 <span aria-hidden="true">&raquo;</span>
@@ -218,7 +212,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" id="saveAGT">Save</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -230,7 +223,7 @@
         let agtData = [];
         let filteredData = [...agtData]; // 필터링된 데이터
         let currentPage = 1;
-        let pageSize = 10;
+        let pageSize = 25;
         let agtModal;
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -357,7 +350,6 @@
         function renderTable(data) {
             const tbody = document.getElementById('agtTableBody');
             const totalCount = document.getElementById('totalCount');
-            const emptyState = document.getElementById('emptyState');
 
             if (!tbody || !totalCount) {
                 console.error('Required elements not found');

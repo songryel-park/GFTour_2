@@ -192,8 +192,7 @@
                             <div class="col-md-2">
                                 <label for="refNo" class="form-label"><strong>REF.No</strong></label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="refNo" name="refNo"
-                                           value="" readonly>
+                                    <input type="text" class="form-control" id="refNo" name="refNo" value="" readonly>
                                     <button class="btn btn-outline-secondary" type="button" id="generateRefNo">
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
@@ -217,7 +216,12 @@
                             <!-- Agency -->
                             <div class="col-md-3">
                                 <label for="agency" class="form-label-sm">AGT</label>
-                                <input type="text" class="form-control" id="agency" name="agency" placeholder="에이전트" required>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="agency" name="agency" placeholder="에이전트" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="generateAgency">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
 
                             <!-- Branch -->

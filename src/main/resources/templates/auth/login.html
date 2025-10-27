@@ -15,7 +15,7 @@
     <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #F4D03F 0%, #58D68D 100%);
+            background: linear-gradient(135deg, #face13 0%, #46f83d 100%);
             min-height: 100vh;
         }
         .login-container {
@@ -54,30 +54,23 @@
                         <!-- Logo and Header -->
                         <div class="text-center mb-4">
                             <div class="mb-3">
-                                <i class="fas fa-plane fa-3x text-primary"></i>
+                                <i class="fas fa-plane fa-3x text-warning"></i>
                             </div>
-                            <h3 class="fw-bold text-primary">Good Feel Tour</h3>
-                        </div>
-
-                        <!-- Alert Messages -->
-                        <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-circle me-2"></i>
-                            이메일 또는 비밀번호가 올바르지 않습니다.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            <h3 class="fw-bold text-success">Good Feel Tour</h3>
                         </div>
 
                         <!-- Login Form -->
                         <form th:action="@{/login}" method="post">
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="username" name="username" 
-                                       placeholder="이메일" required>
+                                <input type="text" class="form-control" id="username" name="username"
+                                       placeholder="이름" required>
                                 <label for="username">
-                                    <i class="fas fa-envelope me-2"></i>E-mail
+                                    <i class="fas fa-user me-2"></i>Name
                                 </label>
                             </div>
                             
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="password" name="password" 
+                                <input type="password" class="form-control" id="password" name="password"
                                        placeholder="비밀번호" required>
                                 <label for="password">
                                     <i class="fas fa-lock me-2"></i>Password
@@ -86,11 +79,16 @@
                             
                             <div class="form-check mb-3">
                                 <input type="checkbox" class="form-check-input" id="remember" name="remember-me">
-                                <label class="form-check-label" for="remember">
-                                    로그인 상태 유지
+                                <label class="form-check-label" for="remember">로그인 상태 유지
                                 </label>
                             </div>
-                            
+
+                            <!-- Alert Messages -->
+                            <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-circle me-2"></i>正しい情報を入力してください。
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+
                             <div class="d-grid mb-3">
                                 <button type="submit" class="btn btn-gf-primary btn-lg">
                                     <i class="fas fa-sign-in-alt me-2"></i>Log-in
@@ -112,8 +110,7 @@
                         <hr class="my-4">
                         <div class="text-center">
                             <small class="text-muted">
-                                <i class="fas fa-shield-alt me-1"></i>
-                                시스템 관리자에게 문의하세요.
+                                <i class="fas fa-shield-alt me-1"></i>오류시 시스템 관리자에게 문의하세요.
                             </small>
                         </div>
                     </div>
